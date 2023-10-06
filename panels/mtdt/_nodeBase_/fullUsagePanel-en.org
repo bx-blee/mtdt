@@ -31,12 +31,49 @@
 *   /Ancestors/  :: [[elisp:(blee:bnsm:panel-goto "/bisos/git/auth/bxRepos/blee-binders/blee-core/blee-pkgs/_nodeBase_")][ =blee-pkgs= ]] *|* [[elisp:(blee:bnsm:panel-goto "/bisos/git/auth/bxRepos/blee-binders/blee-core/_nodeBase_")][ =blee-core= ]] *|* [[elisp:(blee:bnsm:panel-goto "/bisos/git/auth/bxRepos/blee-binders/_nodeBase_")][ =blee-binders= ]] *|*
 *                                   _━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━_                          [[elisp:(org-shifttab)][<)]] E|
 ####+END
-####+BEGIN: blee:bxPanel:foldingSection :outLevel 1 :title "Overview" :anchor "Panel"
-* [[elisp:(show-all)][(>]]  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_  _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_       [[elisp:(outline-show-subtree+toggle)][| *Overview:* |]] <<Panel>>   [[elisp:(org-shifttab)][<)]] E|
+####+BEGIN: blee:bxPanel:foldingSection :outLevel 1 :title "Overview and Roadmap" :anchor "Panel"
+* [[elisp:(show-all)][(>]]  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_  _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_       [[elisp:(outline-show-subtree+toggle)][| *Overview and Roadmap:* |]] <<Panel>>   [[elisp:(org-shifttab)][<)]] E|
 ####+END
-**
-** Overview Comes Here.
+** +
+** Scope of this panel is the MTDT Emacs Package.
+** MTDT is part of Blee and BISOS. See the blee-core/mail/mailing panel for related information.
+** Start with  mental model of MTDT in blee-core/mail/mailing/mtdt-conceptAndDesign.
 ** B|
+####+BEGIN: blee:bxPanel:foldingSection :outLevel 1 :sep t :title "BLEE-MTDT-PKG -- Elisp Design" :anchor "" :extraInfo ""
+* /[[elisp:(beginning-of-buffer)][|^]]  [[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]] [[elisp:(delete-other-windows)][|1]]/
+* [[elisp:(show-all)][(>]]  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_  _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_       [[elisp:(outline-show-subtree+toggle)][| *BLEE-MTDT-PKG -- Elisp Design:* |]]    [[elisp:(org-shifttab)][<)]] E|
+####+END
+** Overview And Direction:
+There are two layers
+MTDT consists of:
+1)   mtdt-lib.el    --- General purpose libraries
+2)   mtdt-newMail.el   --- Initial outgoing email -- User Interface (currently mtdt-if.el)
+3)   mtdt-contextedMail.el  --- Replies and Forwards
+User documentation is primarily limited to mtdt-if.el
+B|
+####+BEGIN: blee:bxPanel:foldingSection :outLevel 1 :sep t :title "Elisp Implementation Plan" :anchor "" :extraInfo "TODOs"
+* /[[elisp:(beginning-of-buffer)][|^]]  [[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]] [[elisp:(delete-other-windows)][|1]]/
+* [[elisp:(show-all)][(>]]  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_  _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_       [[elisp:(outline-show-subtree+toggle)][| *Elisp Implementation Plan:* |]]  TODOs  [[elisp:(org-shifttab)][<)]] E|
+####+END
+** +
+** TODO Package mtdt for elpa
+** TODO Revisit bueMailingStatic.sh templates -- Headers becomes a single file, no directory of its own
+** TODO After creating unsent mail buffer, save it as "unsent mailing"
+** TODO Revisit bueMailingStatic.sh templates -- Add "unsent mailing" as a buffer visit
+** TODO On entry into "unsent mailing" buffer, update all dblocks
+** TODO Revisit, to save current all tex buffers then  [[elisp:(lsip-local-run-command-here "lcntProc.sh -v -n showRun -i buildResultsRelease")][lcntProc.sh -v -n showRun -i buildResultsRelease]]
+** TODO Modernize mailing.ttytex buffer
+** WAITING Look into org-mime and org-msg
+** TODO Figure how to deal with mail citations -- htmlized supercite
+** TODO Adopt and automate LaTeX email quoting ---  https://tex.stackexchange.com/questions/49587/typesetting-email-with-internet-style-quoting-using-latex
+** -
+####+BEGIN: blee:bxPanel:foldingSection :outLevel 2 :sep t :title "mtdt-if.el" :anchor "" :extraInfo "file:/bisos/blee/env3/boot/mtdt-if.el"
+** /[[elisp:(beginning-of-buffer)][|^]]  [[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]] [[elisp:(delete-other-windows)][|1]]/
+** [[elisp:(show-all)][(>]]  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_  _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_       [[elisp:(outline-show-subtree+toggle)][| /mtdt-if.el:/ |]]  file:/bisos/blee/env2/boot/mtdt-if.el  [[elisp:(org-shifttab)][<)]] E|
+####+END
+*** +
+*** Per Mailing commands creation
+*** B|
 ####+BEGIN: blee:bxPanel:separator :outLevel 1
 * /[[elisp:(beginning-of-buffer)][|^]] [[elisp:(blee:menu-sel:navigation:popupMenu)][==]] [[elisp:(delete-other-windows)][|1]]/
 ####+END

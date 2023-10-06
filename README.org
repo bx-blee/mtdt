@@ -1,8 +1,7 @@
 #+title: MTDT: Mail Templating, Distribution and Tracking Emacs Package
 
-*  MTDT: Mail Templating, Distribution and Tracking
 
 MTDT is part of Blee. Its documentation is in the form of a series of
 related panels.
 
-Primary MTDT Blee-Panel is file:./panels/mtdt/_nodeBase_/fullUsagePanel-en.org
+Primary MTDT Blee-Panel is [[file:./panels/mtdt/_nodeBase_/fullUsagePanel-en.org]]
