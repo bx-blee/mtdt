@@ -10,7 +10,8 @@
   "Adds this as a submenu to menu labeled <menuLabel at specified delimited <menuDelimiter."
 
   ;; Determine starting value of mtdt:compose:fashion
-  (setq  mtdt:compose:fashion mtdt:compose:fashion::basic)
+  ;;(setq  mtdt:compose:fashion mtdt:compose:fashion::basic)
+  (setq  mtdt:compose:fashion mtdt:compose:fashion::orgMsg)
   (when org-msg-mode
     (setq  mtdt:compose:fashion mtdt:compose:fashion::orgMsg))
   (mtdt:compose:fashion/setup mtdt:compose:fashion)

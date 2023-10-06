@@ -65,7 +65,7 @@
 (defconst mtdt:compose:fashion::latex "LaTeX" "LaTeX Mail Composition.")
 
 (defvar mtdt:compose:fashion
-  mtdt:compose:fashion::basic
+  mtdt:compose:fashion::orgMsg
   "Selected and Effective compose fashion.")
 
 (defvar mtdt:reply:templates:base
