@@ -1,4 +1,4 @@
-;;; b:email.el --- FILE DESCRIPTION COMES HERE  -*- lexical-binding: t; -*-
+;;; b:mtdt:recipients.el --- FILE DESCRIPTION COMES HERE  -*- lexical-binding: t; -*-
 
 (orgCmntBegin "
 * Summary:
@@ -58,12 +58,17 @@ Module description comes here.
 ;;;#+END:
 
 
-(defgroup b:email nil
-  "Blee Email Common Library. Used by mtdt: mrm: abstract-mua, etc."
+(defgroup b:mtdt:recipients nil
+  "Blee MTDT Recipients Abstractions. Used by b:mtdt:distr."
   :group 'blee
-  :prefix "b:email:"
+  :prefix "b:mtdt:recipients:"
   :link '(file-link "/bisos/panels/blee-core/mail/_nodeBase_/fullUsagePanel-en.org")
   )
+
+(defvar b:mtdt:recipients:cur
+  (list)
+  "Current recipient. Used as a plist.")
+
 
 ;;;#+BEGIN: blee:bxPanel:foldingSection :outLevel 0 :title "Common Facilities" :extraInfo "Library Candidates"
 (orgCmntBegin "
@@ -71,77 +76,78 @@ Module description comes here.
 " orgCmntEnd)
 ;;;#+END:
 
-;;;#+BEGIN:  b:elisp:defs/cl-defun :defName "b:email|oorr" :advice ()
+;;;#+BEGIN:  b:elisp:defs/cl-defun :defName "b:mtdt:recipients|curSet" :advice ()
 (orgCmntBegin "
-*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  cl-defun   [[elisp:(outline-show-subtree+toggle)][||]]  <<b:email|oorr>>  --   [[elisp:(org-cycle)][| ]]
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  cl-defun   [[elisp:(outline-show-subtree+toggle)][||]]  <<b:mtdt:recipients|curSet>>  --   [[elisp:(org-cycle)][| ]]
 " orgCmntEnd)
-(cl-defun b:email|oorr (
+(cl-defun b:mtdt:recipients|curSet (
 ;;;#+END:
                          &key
-                         (addr nil)
-                         (bbdb nil)
-                         (vcard nil)
+                         (to nil)
+                         (cc nil)
+                         (bcc nil)
                         )
    " #+begin_org
-** DocStr: Return an email address based on one of the specified keywords.
-and side-effects are documented here
+** DocStr: Set =b:mtdt:recipients:cur= as specified.
+=to= is mandatory. =cc= and =bcc= are optional.
 #+end_org "
    (let* (
           ($inHere (b:log|entry (b:func$entry)))
-          ($result "")
+          ($to (or (plist-get b:mtdt:recipients:cur :to) nil))
+          ($cc (or (plist-get b:mtdt:recipients:cur :cc) nil))
+          ($bcc (or (plist-get b:mtdt:recipients:cur :bcc) nil))
          )
-     (cond (addr
-            (setq $result addr))
-           (bbdb
-            (setq $result "NOTYET-bbdb"))
-           (vcard
-            (setq $result "NOTYET-"))
-           (t
-            (b::error $inHere
-                      (s-lex-format
-                       "Missing named argument")))
-           )
-           $result))
+
+     (if-when (or $to $cc $bcc)
+       (b::error $inHere
+                 (s-lex-format
+                  "Bad usage: b:mtdt:recipients:cur already set -- (b:mtdt:recipients|curUnSet)")))
+     (else-unless (or $to $cc $bcc)
+       (if-unless to
+         (b::error $inHere
+                   (s-lex-format
+                    "Missing :to named argument")))
+       (else-when to
+         (setq b:mtdt:recipients:cur (plist-put b:mtdt:recipients:cur ':to to)))
+       (setq b:mtdt:recipients:cur (plist-put b:mtdt:recipients:cur ':cc cc))
+       (setq b:mtdt:recipients:cur (plist-put b:mtdt:recipients:cur ':bcc bcc)))))
 
 (orgCmntBegin "
 ** Basic Usage:
 #+BEGIN_SRC emacs-lisp
-(b:email|oorr)
+(b:mtdt:recipients|curSet
+    :to `(,(b:email|oorr :addr (symbol-name 'mohsen.banan.byname@gmail.com)))
+    :bcc `(,(b:email|oorr :addr (symbol-name 'mohsen.banan.byname@gmail.com)))
+  )
 #+END_SRC
 " orgCmntEnd)
 
-
-;;;#+BEGIN:  b:elisp:defs/defun :defName "b:email:address|insert" :advice ()
+;;;#+BEGIN:  b:elisp:defs/cl-defun :defName "b:mtdt:recipients|curUnSet" :advice ()
 (orgCmntBegin "
-*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  defun      [[elisp:(outline-show-subtree+toggle)][||]]  <<b:email:address|insert>>  --   [[elisp:(org-cycle)][| ]]
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  cl-defun   [[elisp:(outline-show-subtree+toggle)][||]]  <<b:mtdt:recipients|curUnSet>>  --   [[elisp:(org-cycle)][| ]]
 " orgCmntEnd)
-(defun b:email:address|insert (
+(cl-defun b:mtdt:recipients|curUnSet (
 ;;;#+END:
-                               addrStr
-                               )
+                                      )
    " #+begin_org
-** DocStr: Insert =addrStr= at point. Comma separate it if needed.
+** DocStr: UnSet =b:mtdt:recipients:cur= by setting it to the empty list.
 #+end_org "
    (let* (
           ($inHere (b:log|entry (b:func$entry)))
-          ($precedingChar (string (preceding-char)))
+          ($result nil)
          )
-     (if-when (string= $precedingChar " ")
-       (insert addrStr))
-     (else-unless (string= $precedingChar " ")
-       (insert (s-lex-format ", ${addrStr}")))
-     ))
+     (setq b:mtdt:recipients:cur (list))
+     $result))
 
 (orgCmntBegin "
 ** Basic Usage:
 #+BEGIN_SRC emacs-lisp
-(b:email:address|insert (symbol-name 'user@example.com))
+(b:mtdt:recipients|curUnSet)
 #+END_SRC
 " orgCmntEnd)
-
 
 ;;;#+BEGIN: b:elisp:file/provide :modName nil
-(provide 'b:email)
+(provide 'b:mtdt:recipients)
 ;;;#+END:
 
 ;;;#+BEGIN: b:prog:file/endOfFile :extraParams nil
