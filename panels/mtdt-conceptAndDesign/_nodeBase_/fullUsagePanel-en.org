@@ -66,7 +66,7 @@
 4) Dynamic -- Ready to be sent -- templated content -- info inserted at execution time.
 ** B|
 * +
-* Pkgs Base: file:/bisos/git/bxRepos/blee/mcdt   -- To be replaced by mtdt
+* Pkgs Base: file:/bisos/git/bxRepos/blee/mcdt   -- To be replaqced by mtdt
 * Pkgs Base: file:/bisos/git/bxRepos/blee/mtdt
 * Mailing LCNT Templates: file:/bisos/apps/defaults/mailing/compose/enFa/lcntMailing
 * B|

@@ -95,7 +95,6 @@ Returns /nothing/.
 #+end_org "
    (let* (
           ($inHere (b:log|entry (b:func$entry)))
-          ($result "")
           )
      (if-unless mailings
        (b::error $inHere
@@ -206,7 +205,6 @@ Returns /nothing/.
 #+end_org "
    (let* (
           ($inHere (b:log|entry (b:func$entry)))
-          ($result "")
           )
      (if-unless mailings
        (b::error $inHere
