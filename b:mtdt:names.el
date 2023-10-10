@@ -66,9 +66,9 @@ Module description comes here.
   )
 
 
-;;;#+BEGIN: blee:bxPanel:foldingSection :outLevel 0 :title "Common Facilities" :extraInfo "Library Candidates"
+;;;#+BEGIN: blee:bxPanel:foldingSection :outLevel 0 :title "Input: Read and Process Names" :extraInfo "File, Buffer and Lines"
 (orgCmntBegin "
-*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*     [[elisp:(outline-show-subtree+toggle)][| _Common Facilities_: |]]  Library Candidates  [[elisp:(org-shifttab)][<)]] E|
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*     [[elisp:(outline-show-subtree+toggle)][| _Input: Read and Process Names_: |]]  File, Buffer and Lines  [[elisp:(org-shifttab)][<)]] E|
 " orgCmntEnd)
 ;;;#+END:
 
@@ -96,7 +96,7 @@ Module description comes here.
                   "Bad usage: b:mtdt:recipients:cur already set -- (b:mtdt:recipients|curUnSet)")))
      (else-when inFile
        (message "read in the file")
-       )
+       )))
 
 (orgCmntBegin "
 ** Basic Usage:
@@ -133,7 +133,7 @@ Module description comes here.
                   "Bad usage: b:mtdt:recipients:cur already set -- (b:mtdt:recipients|curUnSet)")))
      (else-when inFile
        (message "read in the file")
-       )
+       )))
 
 (orgCmntBegin "
 ** Basic Usage:
@@ -145,6 +145,289 @@ Module description comes here.
 #+END_SRC
 " orgCmntEnd)
 
+;;;#+BEGIN:  b:elisp:defs/cl-defun :defName "b:mtdt:names/processBufferForBbdbRecip" :advice ()
+(orgCmntBegin "
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  cl-defun   [[elisp:(outline-show-subtree+toggle)][||]]  <<b:mtdt:names/processBufferForBbdbRecip>>  --   [[elisp:(org-cycle)][| ]]
+" orgCmntEnd)
+(cl-defun b:mtdt:names/processBufferForBbdbRecip (
+;;;#+END:
+                                        &key
+                                        (recipsFile nil)
+                                        )
+   " #+begin_org
+** DocStr: Given current buffer of names, process each line
+#+end_org "
+   (interactive)
+   (let* (
+          ($inHere (b:log|entry (b:func$entry)))
+          ($outFile)
+         )
+
+     (defun recipsFileName ()
+       (let* (
+              ($result recipsFile)
+              ($noExt (f-no-ext buffer-file-name))
+              )
+         (unless $result
+           (setq $result (s-lex-format "${$noExt}-bbdbRecips.el")))
+         $result))
+
+     (defun appendToDest (<text)
+       (f-append-text <text 'utf-8 (recipsFileName))
+       )
+
+     (setq $outFile (recipsFileName))
+     (f-write-text "" 'utf-8 $outFile)
+     (appendToDest "`(")
+     (goto-char (point-min))
+     (while (not (eobp))
+       (beginning-of-line)
+       (appendToDest
+        (b:mtdt:names|inProcessLineWith  'b:mtdt:names|processLineForBbdbRecip))
+       (forward-line 1))
+     (appendToDest "\n )")
+     (message (s-lex-format "${$outFile} -- ${$inHere}"))))
+
+
+;;;#+BEGIN:  b:elisp:defs/cl-defun :defName "b:mtdt:names/processBufferForAddrRecip" :advice ()
+(orgCmntBegin "
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  cl-defun   [[elisp:(outline-show-subtree+toggle)][||]]  <<b:mtdt:names/processBufferForAddrRecip>>  --   [[elisp:(org-cycle)][| ]]
+" orgCmntEnd)
+(cl-defun b:mtdt:names/processBufferForAddrRecip (
+;;;#+END:
+                                        &key
+                                        (recipsFile nil)
+                                        )
+   " #+begin_org
+** DocStr: Given current buffer of names, process each line
+#+end_org "
+   (interactive)
+   (let* (
+          ($inHere (b:log|entry (b:func$entry)))
+          ($outFile)
+         )
+
+     (defun recipsFileName ()
+       (let* (
+              ($result recipsFile)
+              ($noExt (f-no-ext buffer-file-name))
+              )
+         (unless $result
+           (setq $result (s-lex-format "${$noExt}-addrRecips.el")))
+         $result))
+
+     (defun appendToDest (<text)
+       (f-append-text <text 'utf-8 (recipsFileName))
+       )
+
+     (setq $outFile (recipsFileName))
+     (f-write-text "" 'utf-8 $outFile)
+     (appendToDest "`(")
+     (goto-char (point-min))
+     (while (not (eobp))
+       (beginning-of-line)
+       (appendToDest
+        (b:mtdt:names|inProcessLineWith  'b:mtdt:names|processLineForAddrRecip))
+       (forward-line 1))
+     (appendToDest "\n )")
+     (message (s-lex-format "${$outFile} -- ${$inHere}"))))
+
+
+;;;#+BEGIN:  b:elisp:defs/cl-defun :defName "b:mtdt:names|inProcessLineWith" :advice ()
+(orgCmntBegin "
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  cl-defun   [[elisp:(outline-show-subtree+toggle)][||]]  <<b:mtdt:names|inProcessLineWith>>  --   [[elisp:(org-cycle)][| ]]
+" orgCmntEnd)
+(cl-defun b:mtdt:names|inProcessLineWith (
+;;;#+END:
+                                          <lineProcessor
+                                          )
+   " #+begin_org
+** DocStr: Abstract line processor. Invoke =<lineProcessor= with current line as argument.
+Returns
+#+end_org "
+   (let* (
+          ($inHere (b:log|entry (b:func$entry)))
+          ($curLine)
+          ($result nil)
+          ($continue t)
+         )
+     (while $continue
+       (beginning-of-line)
+       (setq $curLine (buffer-substring (point)
+				     (progn (end-of-line) (point))))
+
+       (message (s-lex-format "Processing curLine: ${$curLine}"))
+
+       (cond
+        ((string= "" $curLine)
+	 (message "Skipping Empty Line")
+         (forward-line 1)
+         )
+        ((string-match "^\\#" $curLine)
+	 (message "Skipping #Line")
+         (forward-line 1)
+         )
+        ((string-match "^\\;;" $curLine)
+         ;; Comment Line
+	 (message "Skipping #Line")
+         (forward-line 1)
+         )
+        (t
+         (setq $result (apply `(,<lineProcessor ,$curLine)))
+         (setq $continue nil)  ;; Break
+         )))
+     $result))
+
+
+(orgCmntBegin "
+** Basic Usage:
+#+BEGIN_SRC emacs-lisp
+(b:mtdt:names|inProcessLine 'b:mtdt:names|processLineForBbdbRecip)
+#+END_SRC
+" orgCmntEnd)
+
+
+;;;#+BEGIN:  b:elisp:defs/cl-defun :defName "b:mtdt:names|processLineForBbdbRecip" :advice ()
+(orgCmntBegin "
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  cl-defun   [[elisp:(outline-show-subtree+toggle)][||]]  <<b:mtdt:names|processLineForBbdbRecip>>  --   [[elisp:(org-cycle)][| ]]
+" orgCmntEnd)
+(cl-defun b:mtdt:names|processLineForBbdbRecip (
+;;;#+END:
+                                             <line
+                                             )
+   " #+begin_org
+** DocStr: With =<line= produce an entry for :to recipient.
+#+end_org "
+   (let* (
+          ($inHere (b:log|entry (b:func$entry)))
+          ($result nil)
+         )
+     (setq $result
+           (s-lex-format "
+  (b:mtdt:recipients|curSet
+   :to `(,(b:email|oorr :bbdb \"${<line}\"))
+   )"
+     ))))
+
+(orgCmntBegin "
+** Basic Usage:
+#+BEGIN_SRC emacs-lisp
+(b:mtdt:names|processLineForBbdbRecips (symbol-name 'contentOfLine))
+#+END_SRC
+
+" orgCmntEnd)
+
+
+
+;;;#+BEGIN: blee:bxPanel:foldingSection :outLevel 0 :title "Output: Write and Record Names" :extraInfo "BBDB2 -- Obsolete Code"
+(orgCmntBegin "
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*     [[elisp:(outline-show-subtree+toggle)][| _Output: Write and Record Names_: |]]  BBDB2 -- Obsolete Code  [[elisp:(org-shifttab)][<)]] E|
+" orgCmntEnd)
+;;;#+END:
+
+
+(defun bbdb2-a-namesOutGen (records)
+  ""
+  (setq bbdb-names-dirname (concat bbdb-a-public-dir-name "/Names/"))
+  (setq bbdb-names-new-filename (concat bbdb-names-dirname "freshFolks.names"))
+
+
+  (if bbdb-action-isFirstRecord
+      (let ((file-name
+	     (expand-file-name
+	      (read-file-name "Write To File: "
+			      bbdb-names-new-filename)))
+	    (completion-ignore-case t))
+	(setq bbdb-a-namesGen-output-buffer (find-file file-name))
+	(if (if (> (buffer-size) 0)
+		(not (yes-or-no-p "File is not empty; delete contents "))
+	      nil)
+	    nil
+	  (delete-region (point-min) (point-max))
+	  ;(setq bbdb-action-isFirstRecord nil)
+	  )))
+
+   (let* (
+	  ;;(first-letter (substring (concat (bbdb-record-sortkey record) "?") 0 1))
+	  ;; raw fields
+	  (name (bbdb-record-name (car records)))
+	  (net (bbdb-record-net (car records)))
+	  (primary-net (car net))
+	  )
+     (save-excursion
+       (set-buffer bbdb-a-namesGen-output-buffer)
+       (if (null primary-net)
+	   (progn
+	     (insert (format "#%s\n" name))
+	     (message "Skiped name"))
+	 (insert (format "%s\n" name))))
+     ))
+
+
+;; (setq bbdb-action-alist nil)
+
+;; (setq bbdb2-action-alist
+;;   (append
+;;    bbdb-action-alist
+;;    '(("names-out-gen"
+;;       ;;
+;;       (setq bbdb-action-hook nil)
+;;       (add-hook 'bbdb-action-hook 'bbdb-a-namesOutGen)
+;;       ;(setq bbdb-action-isFirstRecord t)
+;;       ))))
+
+(defun bbdb2-a-namesOutAppend (records)
+  ""
+  ;(interactive (list (if (bbdb-do-all-records-p)
+  ;			 (mapcar 'car bbdb-records)
+  ;		       (bbdb-current-record))))
+
+  ;;(ding)
+
+  (setq bbdb-names-dirname (concat bbdb-a-public-dir-name "/Names/"))
+  (setq bbdb-names-new-filename (concat bbdb-names-dirname "newFolks.names"))
+
+  (if bbdb-action-isFirstRecord
+      (let ((file-name
+	     (expand-file-name
+	      (read-file-name "Write To File: "
+			      bbdb-names-new-filename
+			      )))
+	    (completion-ignore-case t))
+	(setq bbdb-a-namesGen-output-buffer (find-file file-name))
+	))
+
+   (let* (
+	  ;;(first-letter (substring (concat (bbdb-record-sortkey record) "?") 0 1))
+	  ;; raw fields
+	  (name (bbdb-record-name (car records)))
+	  (net (bbdb-record-net (car records)))
+	  (primary-net (car net))
+	  )
+     (save-excursion
+       (set-buffer bbdb-a-namesGen-output-buffer)
+       (goto-char (point-max))
+       (if (null primary-net)
+	   (progn
+	     (insert (format "#%s\n" name))
+	     (message "Skiped name"))
+	 (insert (format "%s\n" name)))
+       (save-buffer)
+       (kill-buffer bbdb-a-namesGen-output-buffer))
+     ))
+
+
+;; (setq bbdb-action-alist nil)
+
+;; (setq bbdb2-action-alist
+;;   (append
+;;    bbdb-action-alist
+;;    '(("names-out-append"
+;;       ;;
+;;       (setq bbdb-action-hook nil)
+;;       (add-hook 'bbdb-action-hook 'bbdb-a-namesOutAppend)
+;;       ;(setq bbdb-action-isFirstRecord t)
+;;       ))))
 
 
 ;;;#+BEGIN: b:elisp:file/provide :modName nil

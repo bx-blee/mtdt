@@ -51,6 +51,8 @@ Module description comes here.
 " orgCmntEnd)
 ;;;#+END:
 
+;;(require b:mtdt:bbdb3)
+
 ;;;#+BEGIN: blee:bxPanel:foldingSection :outLevel 1 :title "Variables And Constants" :extraInfo "defvar, defcustom"
 (orgCmntBegin "
 *  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*       [[elisp:(outline-show-subtree+toggle)][| *Variables And Constants:* |]]  defvar, defcustom  [[elisp:(org-shifttab)][<)]] E|
@@ -93,7 +95,7 @@ and side-effects are documented here
      (cond (addr
             (setq $result addr))
            (bbdb
-            (setq $result "NOTYET-bbdb"))
+            (setq $result (b:mtdt:bbdb3|addrForNameGet bbdb)))
            (vcard
             (setq $result "NOTYET-"))
            (t
@@ -106,9 +108,25 @@ and side-effects are documented here
 (orgCmntBegin "
 ** Basic Usage:
 #+BEGIN_SRC emacs-lisp
-(b:email|oorr)
+(b:email|oorr :addr (symbol-name 'user@example.com))
 #+END_SRC
+
+#+RESULTS:
+: user@example.com
+
 " orgCmntEnd)
+
+(orgCmntBegin "
+** Basic Usage:
+#+BEGIN_SRC emacs-lisp
+(b:email|oorr :bbdb (symbol-name 'exampleBbdbEntry))
+#+END_SRC
+
+#+RESULTS:
+: No Records
+
+" orgCmntEnd)
+
 
 
 ;;;#+BEGIN:  b:elisp:defs/defun :defName "b:email:address|insert" :advice ()
@@ -120,7 +138,7 @@ and side-effects are documented here
                                addrStr
                                )
    " #+begin_org
-** DocStr: Insert =addrStr= at point. Comma separate it if needed.
+** DocStr: Insert =addrStr= at point. Comma separate it if needed. Used for entry of addresses in mail headers.
 #+end_org "
    (let* (
           ($inHere (b:log|entry (b:func$entry)))
