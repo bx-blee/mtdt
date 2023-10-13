@@ -71,6 +71,10 @@ Module description comes here.
   :link '(file-link "/bisos/panels/blee-core/mail/_nodeBase_/fullUsagePanel-en.org")
   )
 
+;;;
+;;; NOTYET, b:mtdt:compose:fashion should become b:mtdt:compose:framework
+;;;
+
 (defconst b:mtdt:compose:fashion::basic "Basic" "Basic Plain Text Mail Composition.")
 (defconst b:mtdt:compose:fashion::orgMsg "OrgMsg" "OrgMsg Mail Composition.")
 (defconst b:mtdt:compose:fashion::latex "LaTeX" "LaTeX Mail Composition.")
@@ -93,6 +97,64 @@ Module description comes here.
 
 (defvar b:mtdt:compose:ephemera:base "/bisos/tmp"
   "Basedir of where ephemera compositions go.")
+
+(defvar b:mtdt:mailings:cur
+  nil
+  "Current Mailing.")
+
+
+;;;#+BEGIN:  b:elisp:defs/defun :defName "b:mtdt:mailings|curSet" :advice ()
+(orgCmntBegin "
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  defun      [[elisp:(outline-show-subtree+toggle)][||]]  <<b:mtdt:mailings|curSet>>  --   [[elisp:(org-cycle)][| ]]
+" orgCmntEnd)
+(defun b:mtdt:mailings|curSet (
+;;;#+END:
+                               <mailingFunc
+                               )
+  " #+begin_org
+** DocStr: Get the first email address for =<nameStr= if it is unique.
+Return 'No Records' if =<nameStr=  is not found.
+Return 'Nu of Records=' if multiple records are found for =<nameStr=.
+#+end_org "
+  (let* (
+          ($inHere (b:log|entry (b:func$entry)))
+          ($result <mailingFunc)
+          )
+     (setq b:mtdt:mailings:cur <mailingFunc)
+     $result))
+
+(orgCmntBegin "
+** Basic Usage:
+#+BEGIN_SRC emacs-lisp
+(b:mtdt:mailings|curSet )
+#+END_SRC
+
+#+RESULTS:
+: promptSend
+
+" orgCmntEnd)
+
+
+;;;#+BEGIN:  b:elisp:defs/defun :defName "b:mtdt:mailings|framedComposeWithFn" :advice ()
+(orgCmntBegin "
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  defun      [[elisp:(outline-show-subtree+toggle)][||]]  <<b:mtdt:mailings|framedComposeWithFn>>  --   [[elisp:(org-cycle)][| ]]
+" orgCmntEnd)
+(defun b:mtdt:mailings|framedComposeWithFn (
+;;;#+END:
+                                            <mailingFunc
+                                            )
+  " #+begin_org
+** DocStr: Create a frame, select it, then invoked =<mailingFunc=.
+#+end_org "
+  (select-frame (make-frame-command))
+  (call-interactively <mailingFunc)
+  )
+
+(orgCmntBegin "
+** Basic Usage:
+#+BEGIN_SRC emacs-lisp
+#+END_SRC
+" orgCmntEnd)
 
 
 ;;;#+BEGIN: blee:bxPanel:foldingSection :outLevel 0 :title "Common Facilities" :extraInfo "Library Candidates"
@@ -601,13 +663,48 @@ params can be retrieved with plist."
   (concat "b:mtdt:originate/" <mailingName))
 
 
+(defun b:mtdt:derive/withFile (<mailingFilePath)
+  "Given a mailing file, initiate an outgoing message."
+  (interactive)
+  (let* (
+        ($inHere (b:log|entry (b:func$entry)))
+	($mailingName nil)
+	($mailingBuf nil)
+	($funcSymbol nil)
+	)
+
+    (save-excursion
+      ;;(find-file-read-only <mailingFilePath)
+      ;;(setq $mailingBuf (current-buffer))
+      (setq $mailingBuf (find-file-read-only <mailingFilePath))
+      (setq $mailingName (b:mtdt:mailing:getName/with-buffer $mailingBuf))
+      (setq $funcSymbol (intern (b:mtdt:mailing:compose|get-function-name $mailingName)))
+      (unless (commandp $funcSymbol)
+        (b:mtdt:setup$with-filePath <mailingFilePath))
+      ;;(kill-buffer (current-buffer))
+      (kill-buffer $mailingBuf)
+      )
+
+      (message (s-lex-format "Derived  ${$funcSymbol} from ${<mailingFilePath}"))
+      $funcSymbol
+      ))
+
+(defun b:mtdt:derive/withFilesList (<mailingFilesList)
+  ""
+  (interactive)
+  (dolist ($eachMailingFile <mailingFilesList)
+    (b:mtdt:derive/withFile $eachMailingFile)))
+
+
+(defun b:mtdt:derive/withFileAndCurSet (<mailingFilePath)
+  ""
+  (interactive)
+  (b:mtdt:mailings|curSet (b:mtdt:derive/withFile <mailingFilePath)))
+
+
 (defun b:mtdt:setup-and-compose/with-file (<mailingFilePath)
-  "Given a mailing file, initiate an outgoing message.
-Used for example, in dblocks such as bxPanel:mailing/compose.
-  - visit the file
-  - setup  b:mtdt:compose/mailingName if needed
-  - invoke b:mtdt:compose/mailingName go to the to field
- "
+  "Given a mailing file, derive the compose commands based on mailingName and invoke it."
+
   (interactive)
   (let (
 	($mailingName nil)

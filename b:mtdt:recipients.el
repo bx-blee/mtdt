@@ -67,7 +67,7 @@ Module description comes here.
 
 (defvar b:mtdt:recipients:cur
   (list)
-  "Current recipient. Used as a plist.")
+  "Current recipients. Used as a plist.")
 
 
 ;;;#+BEGIN: blee:bxPanel:foldingSection :outLevel 0 :title "Common Facilities" :extraInfo "Library Candidates"

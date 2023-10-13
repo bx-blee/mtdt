@@ -115,11 +115,11 @@ Module description comes here.
 
 " orgCmntEnd)
 
-;;;#+BEGIN:  b:elisp:defs/defun :defName "b:mtdt:menuItem:selected|define" :advice ()
+;;;#+BEGIN:  b:elisp:defs/defun :defName "b:mtdt:menuItem:define|compose" :advice ()
 (orgCmntBegin "
-*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  defun      [[elisp:(outline-show-subtree+toggle)][||]]  <<b:mtdt:menuItem:selected|define>>  --   [[elisp:(org-cycle)][| ]]
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  defun      [[elisp:(outline-show-subtree+toggle)][||]]  <<b:mtdt:menuItem:define|compose>>  --   [[elisp:(org-cycle)][| ]]
 " orgCmntEnd)
-(defun b:mtdt:menuItem:selected|define (
+(defun b:mtdt:menuItem:define|compose (
 ;;;#+END:
                                         )
   " #+begin_org
@@ -136,11 +136,270 @@ Module description comes here.
       ]
      )))
 
-;;;#+BEGIN:  b:elisp:defs/defun :defName "b:mtdt:menuItem:setup-withCurBuffer|define" :advice ()
+;;;#+BEGIN:  b:elisp:defs/defun :defName "b:mtdt:menuItem:define|setup-withCurBuffer" :advice ()
 (orgCmntBegin "
-*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  defun      [[elisp:(outline-show-subtree+toggle)][||]]  <<b:mtdt:menuItem:setup-withCurBuffer|define>>  --   [[elisp:(org-cycle)][| ]]
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  defun      [[elisp:(outline-show-subtree+toggle)][||]]  <<b:mtdt:menuItem:define|setup-withCurBuffer>>  --   [[elisp:(org-cycle)][| ]]
 " orgCmntEnd)
-(defun b:mtdt:menuItem:setup-withCurBuffer|define (
+(defun b:mtdt:menuItem:define|setup-withCurBuffer (
+;;;#+END:
+                                                   )
+  " #+begin_org
+** DocStr: Return a menuItem vector. Requires dynamic update.
+#+end_org "
+  (car
+   `(
+     [,(format "MTDT Setup/Derive With Current Buffer")
+      (mtdt:setup/with-curBuffer)
+      :help "Mail Composition Distribution and Tracking (MTDT) Setup With Current Buffer -- (mtdt:setup/with-curBuffer)"
+      :active t
+      :visible t
+      ]
+     )))
+
+;;;#+BEGIN:  b:elisp:defs/defun :defName "b:mtdt:menu:define|sendExtentSelect" :advice ()
+(orgCmntBegin "
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  defun      [[elisp:(outline-show-subtree+toggle)][||]]  <<b:mtdt:menu:define|sendExtentSelect>>  --   [[elisp:(org-cycle)][| ]]
+" orgCmntEnd)
+(defun b:mtdt:menu:define|sendExtentSelect (
+;;;#+END:
+                                            )
+  " #+begin_org
+** DocStr: Return b:mtdt:menu:sendExtentSelect
+#+end_org "
+  (let (
+	($thisFuncName (compile-time-function-name))
+	)
+
+    (defun describeMenuItem ()
+      (car
+       `(
+         [,(s-lex-format "Describe b:mtdt:send:extent -- ${b:mtdt:send:extent}")
+          (describe-variable 'b:mtdt:send:extent)
+          :help "Mail Composition Distribution and Tracking (MTDT) Setup With Current Buffer -- (mtdt:setup/with-curBuffer)"
+          :active t
+          :visible t
+          ]
+         )))
+
+    (defun selections ()
+      "Static Selections"
+      '(
+        b:mtdt:send:extent::doSend
+        b:mtdt:send:extent::promptSend
+        ))
+
+    (easy-menu-define
+      b:mtdt:menu:sendExtentSelect
+      nil
+      ""
+      (append
+       `(,(s-lex-format "Select/Describe: b:mtdt:send:extent -- ${b:mtdt:send:extent}"))
+       (list :help "Send Extent is one of sendIt or promptSend")
+       (list (s-- 3))
+       (list (s-- 4))
+       (mapcar (lambda (<each)
+		 (vector (s-lex-format "Set b:mtdt:send:extent to ${<each}")
+			 `(b:mtdt:send:extent|set ,<each)
+			   :help (s-lex-format "Set b:mtdt:send:extent to ${<each}")
+			 ))
+	       (selections))
+       (list (s-- 5))
+       (list (s-- 6))
+       ))
+
+    (easy-menu-add-item b:mtdt:menu:sendExtentSelect nil (describeMenuItem) (s-- 3))
+
+    (easy-menu-add-item
+     b:mtdt:menu:sendExtentSelect
+     nil
+     (bx:menu:panelAndHelp|define
+      "/bisos/panels/blee-core/mail/_nodeBase_"
+      $thisFuncName
+      (intern (symbol-name (gensym))))
+     (s-- 5))
+
+    'b:mtdt:menu:sendExtentSelect
+    ))
+
+(orgCmntBegin "
+** Basic Usage:
+[[elisp:(popup-menu (symbol-value (b:mtdt:menu:define|sendExtentSelect)))][This menu as an org link]]
+#+BEGIN_SRC emacs-lisp
+(popup-menu (symbol-value (b:mtdt:menu:define|sendExtentSelect)))
+#+END_SRC
+" orgCmntEnd)
+
+
+;;;#+BEGIN:  b:elisp:defs/defun :defName "b:mtdt:menu:define|curMailingSelect" :advice ()
+(orgCmntBegin "
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  defun      [[elisp:(outline-show-subtree+toggle)][||]]  <<b:mtdt:menu:define|curMailingSelect>>  --   [[elisp:(org-cycle)][| ]]
+" orgCmntEnd)
+(defun b:mtdt:menu:define|curMailingSelect (
+;;;#+END:
+                                            )
+  " #+begin_org
+** DocStr: Return b:mtdt:menu:curMailingSelect
+#+end_org "
+  (let (
+	($thisFuncName (compile-time-function-name))
+	)
+
+    (defun describeMenuItem ()
+      (car
+       `(
+         [,(s-lex-format "Describe b:mtdt:mailings:cur -- ${b:mtdt:mailings:cur}")
+          (describe-variable 'b:mtdt:mailings:cur)
+          :help "Mail Composition Distribution and Tracking (MTDT) Setup With Current Buffer -- (mtdt:setup/with-curBuffer)"
+          :active t
+          :visible t
+          ]
+         )))
+
+    (defun selections ()
+      "Dynamic Selections"
+      (apropos-internal "b:mtdt:compose/" 'commandp))
+
+
+    (easy-menu-define
+      b:mtdt:menu:curMailingSelect
+      nil
+      ""
+      (append
+       `(,(s-lex-format "Select/Describe: Current Mailing:: ${b:mtdt:mailings:cur}"))
+       (list :help "Current Mailing can be set in a variety of ways.")
+       (list (s-- 3))
+       (list (s-- 4))
+       (mapcar (lambda (<each)
+		 (vector (s-lex-format "Set b:mtdt:mailings:cur to ${<each}")
+			 `(b:mtdt:mailings|curSet ',<each)
+			   :help (s-lex-format "Set b:mtdt:mailings:cur to ${<each}")
+			 ))
+	       (selections))
+       (list (s-- 5))
+       (list (s-- 6))
+       ))
+
+    (easy-menu-add-item b:mtdt:menu:curMailingSelect nil (describeMenuItem) (s-- 3))
+
+    (easy-menu-add-item
+     b:mtdt:menu:curMailingSelect
+     nil
+     (bx:menu:panelAndHelp|define
+      "/bisos/panels/blee-core/mail/_nodeBase_"
+      $thisFuncName
+      (intern (symbol-name (gensym))))
+     (s-- 5))
+
+    'b:mtdt:menu:curMailingSelect
+    ))
+
+(orgCmntBegin "
+** Basic Usage:
+[[elisp:(popup-menu (symbol-value (b:mtdt:menu:define|curMailingSelect)))][This menu as an org link]]
+#+BEGIN_SRC emacs-lisp
+(popup-menu (symbol-value (b:mtdt:menu:define|curMailingSelect)))
+#+END_SRC
+" orgCmntEnd)
+
+;;;#+BEGIN:  b:elisp:defs/defun :defName "b:mtdt:menu:define|derivedMailingInvoke" :advice ()
+(orgCmntBegin "
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  defun      [[elisp:(outline-show-subtree+toggle)][||]]  <<b:mtdt:menu:define|derivedMailingInvoke>>  --   [[elisp:(org-cycle)][| ]]
+" orgCmntEnd)
+(defun b:mtdt:menu:define|derivedMailingInvoke (
+;;;#+END:
+                                            )
+  " #+begin_org
+** DocStr: Return b:mtdt:menu:curMailingSelect
+#+end_org "
+  (let (
+	($thisFuncName (compile-time-function-name))
+	)
+
+    (defun describeMenuItem ()
+      (car
+       `(
+         [,(s-lex-format "Describe b:mtdt:mailings:cur -- ${b:mtdt:mailings:cur}")
+          (describe-variable 'b:mtdt:mailings:cur)
+          :help "Mail Composition Distribution and Tracking (MTDT) Setup With Current Buffer -- (mtdt:setup/with-curBuffer)"
+          :active t
+          :visible t
+          ]
+         )))
+
+    (defun selections ()
+      "Dynamic Selections"
+      (apropos-internal "b:mtdt:compose/" 'commandp))
+
+    (easy-menu-define
+      b:mtdt:menu:curMailingSelect
+      nil
+      ""
+      (append
+       `(,(s-lex-format "Select and Invoke Derived Mailing"))
+       (list :help "Applies to derived mailings.")
+       (list (s-- 3))
+       (list (s-- 4))
+       (mapcar (lambda (<each)
+		 (vector (s-lex-format "Invoke Derived Mailing: ${<each}")
+			 `(funcall #'b:mtdt:mailings|framedComposeWithFn ',<each)
+			   :help (s-lex-format "Invoke Derived Mailing: ${<each}")
+			 ))
+	       (selections))
+       (list (s-- 5))
+       (list (s-- 6))
+       ))
+
+    (easy-menu-add-item b:mtdt:menu:curMailingSelect nil (describeMenuItem) (s-- 3))
+
+    (easy-menu-add-item
+     b:mtdt:menu:curMailingSelect
+     nil
+     (bx:menu:panelAndHelp|define
+      "/bisos/panels/blee-core/mail/_nodeBase_"
+      $thisFuncName
+      (intern (symbol-name (gensym))))
+     (s-- 5))
+
+    'b:mtdt:menu:curMailingSelect
+    ))
+
+
+(orgCmntBegin "
+** Basic Usage:
+[[elisp:(popup-menu (symbol-value (b:mtdt:menu:define|curMailingSelect)))][This menu as an org link]]
+#+BEGIN_SRC emacs-lisp
+(popup-menu (symbol-value (b:mtdt:menu:define|derivedMailingInvoke)))
+#+END_SRC
+" orgCmntEnd)
+
+
+
+;;;#+BEGIN:  b:elisp:defs/defun :defName "b:mtdt:menuItem:define|curRecipsDescribe" :advice ()
+(orgCmntBegin "
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  defun      [[elisp:(outline-show-subtree+toggle)][||]]  <<b:mtdt:menuItem:define|curRecipsDescribe>>  --   [[elisp:(org-cycle)][| ]]
+" orgCmntEnd)
+(defun b:mtdt:menuItem:define|curRecipsDescribe (
+;;;#+END:
+                                                   )
+  " #+begin_org
+** DocStr: Return a menuItem vector. Requires dynamic update.
+#+end_org "
+  (car
+   `(
+     [,(s-lex-format "Describe Current Recipients b:mtdt:recipients:cur is ${b:mtdt:recipients:cur}")
+      (describe-variable 'b:mtdt:recipients:cur)
+      :help "There are various different ways of setting b:mtdt:recipients:cur"
+      :active t
+      :visible t
+      ]
+     )))
+
+
+;;;#+BEGIN:  b:elisp:defs/defun :defName "b:mtdt:menuItem:define|curMailingCompose" :advice ()
+(orgCmntBegin "
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  defun      [[elisp:(outline-show-subtree+toggle)][||]]  <<b:mtdt:menuItem:define|curMailingCompose>>  --   [[elisp:(org-cycle)][| ]]
+" orgCmntEnd)
+(defun b:mtdt:menuItem:define|curMailingCompose (
 ;;;#+END:
                                         )
   " #+begin_org
@@ -148,7 +407,67 @@ Module description comes here.
 #+end_org "
   (car
    `(
-     [,(format "MTDT Setup With Current Buffer")
+     [,(format "Compose Current Mailing: curMailing")
+      (mtdt:setup/with-curBuffer)
+      :help "Mail Composition Distribution and Tracking (MTDT) Setup With Current Buffer -- (mtdt:setup/with-curBuffer)"
+      :active t
+      :visible t
+      ]
+     )))
+
+;;;#+BEGIN:  b:elisp:defs/defun :defName "b:mtdt:menuItem:define|curMailingOriginate" :advice ()
+(orgCmntBegin "
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  defun      [[elisp:(outline-show-subtree+toggle)][||]]  <<b:mtdt:menuItem:define|curMailingOriginate>>  --   [[elisp:(org-cycle)][| ]]
+" orgCmntEnd)
+(defun b:mtdt:menuItem:define|curMailingOriginate (
+;;;#+END:
+                                        )
+  " #+begin_org
+** DocStr: Return a menuItem vector. Requires dynamic update.
+#+end_org "
+  (car
+   `(
+     [,(format "Originate Current Mailing: curMailing")
+      (mtdt:setup/with-curBuffer)
+      :help "Mail Composition Distribution and Tracking (MTDT) Setup With Current Buffer -- (mtdt:setup/with-curBuffer)"
+      :active t
+      :visible t
+      ]
+     )))
+
+;;;#+BEGIN:  b:elisp:defs/defun :defName "b:mtdt:menuItem:define|curMailingSend" :advice ()
+(orgCmntBegin "
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  defun      [[elisp:(outline-show-subtree+toggle)][||]]  <<b:mtdt:menuItem:define|curMailingSend>>  --   [[elisp:(org-cycle)][| ]]
+" orgCmntEnd)
+(defun b:mtdt:menuItem:define|curMailingSend (
+;;;#+END:
+                                              )
+  " #+begin_org
+** DocStr: Return a menuItem vector. Requires dynamic update.
+#+end_org "
+  (car
+   `(
+     [,(format "Send Current Mailing: curMailing, curRecips, sendExtent")
+      (mtdt:setup/with-curBuffer)
+      :help "Mail Composition Distribution and Tracking (MTDT) Setup With Current Buffer -- (mtdt:setup/with-curBuffer)"
+      :active t
+      :visible t
+      ]
+     )))
+
+;;;#+BEGIN:  b:elisp:defs/defun :defName "b:mtdt:menuItem:define|curMailingDistribute" :advice ()
+(orgCmntBegin "
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  defun      [[elisp:(outline-show-subtree+toggle)][||]]  <<b:mtdt:menuItem:define|curMailingDistribute>>  --   [[elisp:(org-cycle)][| ]]
+" orgCmntEnd)
+(defun b:mtdt:menuItem:define|curMailingDistribute (
+;;;#+END:
+                                              )
+  " #+begin_org
+** DocStr: Return a menuItem vector. Requires dynamic update.
+#+end_org "
+  (car
+   `(
+     [,(format "Distribute Current Mailing: curMailing, curRecipsList, sendExtent")
       (mtdt:setup/with-curBuffer)
       :help "Mail Composition Distribution and Tracking (MTDT) Setup With Current Buffer -- (mtdt:setup/with-curBuffer)"
       :active t
@@ -157,21 +476,16 @@ Module description comes here.
      )))
 
 
-;;
-;; [[elisp:(popup-menu (symbol-value (browsers:menu:help|define)))][This Menu]]
-;; (popup-menu (symbol-value (mtdt:menu:select|define)))
-;;
-
 ;;;#+BEGIN:  b:elisp:defs/defun :defName "b:mtdt:menu:main|define" :advice ()
 (orgCmntBegin "
 *  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  defun      [[elisp:(outline-show-subtree+toggle)][||]]  <<b:mtdt:menu:main|define>>  --   [[elisp:(org-cycle)][| ]]
 " orgCmntEnd)
 (defun b:mtdt:menu:main|define (
 ;;;#+END:
-                                  &rest <namedArgs
-                                        )
+                                &rest <namedArgs
+                                      )
   " #+begin_org
-** DocStr: Return b:mtdt:menu:select
+** DocStr: Return b:mtdt:menu:main
 :active and :visible can be specified as <namedArgs.
 #+end_org "
   (let (
@@ -181,13 +495,14 @@ Module description comes here.
 	)
 
     (easy-menu-define
-      b:mtdt:menu:select
+      b:mtdt:menu:main
       nil
       "MTDT Menu --- for selection of composition framework"
       `(,(format (s-lex-format "MTDT Menu -- Compose Framework:: ${b:mtdt:compose:fashion}"))
 	:help "MTDT (Mail Templating Distribution and Tracking"
 	:visible ,<visible
 	:active ,<active
+	,(s-- 2)
 	,(s-- 3)
 	[
 	,(format (s-lex-format "MTDT Menu -- Compose Framework:: ${b:mtdt:compose:fashion}"))
@@ -228,40 +543,69 @@ Module description comes here.
 	 ,(s-- 6)
 	 ,(s-- 7)
 	 ,(s-- 8)
+	 ,(s-- 9)
 	 ))
 
-    (easy-menu-add-item
-     b:mtdt:menu:select
-     nil
-     (b:mtdt:menuItem:selected|define)
-     (s-- 6))
+    (easy-menu-add-item b:mtdt:menu:main nil
+                        (b:mtdt:menu:define|derivedMailingInvoke)
+                        (s-- 2))
+
+    (easy-menu-add-item b:mtdt:menu:main nil
+                        (b:mtdt:menuItem:define|compose)
+                        (s-- 5))
+
+    (easy-menu-add-item b:mtdt:menu:main nil
+                        (b:mtdt:menuItem:define|setup-withCurBuffer)
+                        (s-- 6))
+
+    (easy-menu-add-item b:mtdt:menu:main nil
+                       (b:mtdt:menu:define|sendExtentSelect)
+                      (s-- 7))
+
+    (easy-menu-add-item b:mtdt:menu:main nil
+                       (b:mtdt:menu:define|curMailingSelect)
+                      (s-- 7))
+
+    (easy-menu-add-item b:mtdt:menu:main nil
+                       (b:mtdt:menuItem:define|curRecipsDescribe)
+                       (s-- 7))
+
+    (easy-menu-add-item b:mtdt:menu:main nil
+                        (b:mtdt:menuItem:define|curMailingCompose)
+                        (s-- 8))
+
+
+    (easy-menu-add-item b:mtdt:menu:main nil
+                        (b:mtdt:menuItem:define|curMailingOriginate)
+                        (s-- 8))
+
+    (easy-menu-add-item b:mtdt:menu:main nil
+                        (b:mtdt:menuItem:define|curMailingSend)
+                        (s-- 8))
+
+    (easy-menu-add-item b:mtdt:menu:main nil
+                        (b:mtdt:menuItem:define|curMailingDistribute)
+                        (s-- 8))
 
     (easy-menu-add-item
-     b:mtdt:menu:select
-     nil
-     (b:mtdt:menuItem:setup-withCurBuffer|define)
-     (s-- 7))
-
-    (easy-menu-add-item
-     b:mtdt:menu:select
+     b:mtdt:menu:main
      nil
      (bx:menu:panelAndHelp|define
       "/bisos/panels/blee-core/mail/_nodeBase_"
       $thisFuncName
       (intern (symbol-name (gensym))))
-     (s-- 8))
+     (s-- 9))
 
-    'b:mtdt:menu:select
+    'b:mtdt:menu:main
     ))
 
 (orgCmntBegin "
 ** Basic Usage:
-[[elisp:(popup-menu (symbol-value (b:mtdt:menu:main|define)))][This Menu]]
+[[elisp:(popup-menu (symbol-value (b:mtdt:menu:main|define)))][This menu as an org link]]
 #+BEGIN_SRC emacs-lisp
 (popup-menu (symbol-value (b:mtdt:menu:main|define)))
 #+END_SRC
 " orgCmntEnd)
-
 
 ;;;#+BEGIN: b:elisp:file/provide :modName nil
 (provide 'b:mtdt:menu)

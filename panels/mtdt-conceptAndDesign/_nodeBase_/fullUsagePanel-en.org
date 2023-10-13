@@ -83,12 +83,76 @@
 *** 1) Blee-MTDT-Pkg -- Given a mailing file, creates functions for sending of that mailing
 *** 2) BISOS-MTDT-APP -- Creates the mailing and needed framework for editing the content
 ** B|
-####+BEGIN: blee:bxPanel:foldingSection :outLevel 1 :sep t :title "Concept of Mailing -- A Mail Template" :anchor "" :extraInfo ""
+####+BEGIN: blee:bxPanel:foldingSection :outLevel 1 :sep t :title "Concepts and Terminology" :anchor "" :extraInfo "Concept of Mailing -- A Mail Template"
 * /[[elisp:(beginning-of-buffer)][|^]]  [[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]] [[elisp:(delete-other-windows)][|1]]/
-* [[elisp:(show-all)][(>]]  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_  _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_       [[elisp:(outline-show-subtree+toggle)][| *Concept of Mailing -- A Mail Template:* |]]    [[elisp:(org-shifttab)][<)]] E|
+* [[elisp:(show-all)][(>]]  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_  _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_       [[elisp:(outline-show-subtree+toggle)][| *Concepts and Terminology:* |]]  Concept of Mailing -- A Mail Template  [[elisp:(org-shifttab)][<)]] E|
 ####+END
 ** +
-** How Mailings Work? Mailing Abstractions
+** ======= /MailingsOrTemplate/
+** SourceFiles: b:mtdt:mailings.el
+** Examples:
+** ------
+** MailingOrTemplate File :: A sinlge file that is either a "Mailing File" or a "Template File"
+** Mailing File :: A file containing the entirety of a message =WITHOUT recipients=
+** Template File :: A file containing the entirety of a message =including a to: field=
+** MailingName :: A lisp symbol string that is a field of MailingOrTemplate and identifies it
+** Derived Commands :: Derivation of ComposeOrOriginate commands called MailingName from MailingOrTemplate
+** -----
+** ComposeOrOriginate Commands :: A Compose Command or an Originate Command
+** Compose :: Editable Header and Body -- When composeFrwrk=LaTeX  it is replicated from Template
+** Originate :: Editable Header, Body to be considered as readonly
+** -----
+** [[elisp:(describe-variable 'b:mtdt:mailings:cur)]]  ~Current Mailings~
+* ======= /Mailings Fields/
+** SourceFiles: b:mtdt:mailings.el
+** Examples:
+** ------
+** x-composeFrwrk --- One of text, orgMsg, html, latex-html
+** ========= /Recipients/
+** SourceFiles: [[elisp:(locate-library "b:mtdt:recipients.el")]]
+** Examples: file:../../../examples/recipientsList.el
+** --------
+** Recipients :: One set of To, Cc and Bcc specifications for a Mailing
+** RecipientsList :: List of Recipietns
+** file-recips.el :: A lisp form as a list of forms
+** [[elisp:(describe-variable 'b:mtdt:recipients:cur)]]   ~Current Recipients~
+** ========  /oorr/
+** Originator or Recipient -- Borrowed from X.400
+** ========= /Names/
+** SourceFiles: [[elisp:(find-library "b:mtdt:names")]]
+** Examples:
+** -----
+** Sending :: Pairing of Mailing and Recipients controlled by b:mtdt:send:extent
+** [[elisp:(describe-variable 'b:mtdt:send:extent)]]
+** ========= /BBDB3/
+** SourceFiles: [[elisp:(find-library "b:mtdt:bbdb3")]]
+** Examples:
+** -----
+** Sending :: Pairing of Mailing and Recipients controlled by b:mtdt:send:extent
+** [[elisp:(describe-variable 'b:mtdt:send:extent)]]
+** ========= /Sending/
+** SourceFiles: [[elisp:(locate-library "b:mtdt:send.el")]]
+** Examples:
+** -----
+** Sending :: Pairing of Mailing and Recipients controlled by b:mtdt:send:extent
+** [[elisp:(describe-variable 'b:mtdt:send:extent)]]
+** ========= /Distributions/
+** SourceFiles: [[elisp:(find-library "b:mtdt:distr")]]
+** Examples:
+** -----
+** Distribution :: Pairing of Mailing and RecipientsList controlled by b:mtdt:send:extent
+** [[elisp:(describe-variable 'b:mtdt:send:extent)]]
+** ========= /Menus/
+** SourceFiles: [[elisp:(find-library "b:mtdt:menu")]]
+** Examples:
+** -----
+** ========= /DBlocks/
+** SourceFiles: [[elisp:(find-library "dblock-mtdt")]]
+** Examples:
+** -----
+** -
+** ######################################
+** how Mailings Work? Mailing Abstractions
 
 The primary abstractions are:
 - A Mailing-Base Directory -- in theory this can be  anywhere.

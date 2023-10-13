@@ -1,7 +1,7 @@
-;;; dblock-comeega-latex-pres.el --- DBlocks for Elisp File-Elements  -*- lexical-binding: t; -*-
+;;; dblock-mtdt.el --- DBlocks for Elisp File-Elements  -*- lexical-binding: t; -*-
 
 (orgCmntBegin "
-* Summary: Dblocks for common elisp comeega files --- dblockDefun and workbech.
+* Summary: Dblocks for MTDT.
 " orgCmntEnd)
 
 ;;;#+BEGIN: b:prog:file/proclamations :copyLeft "libreHalaal"
@@ -62,12 +62,11 @@ A library of dblock for b:elisp:file/xxx comeega-file-elements.
 " orgCmntEnd)
 ;;;#+END:
 
-;;;#+BEGIN: blee:bxPanel:foldingSection :outLevel 0 :title "LaTeX Master File Elements" :extraInfo "b:lcnt:matex:felem:"
+;;;#+BEGIN: blee:bxPanel:foldingSection :outLevel 0 :title "Dblocks for Derivation and use of Mailings" :extraInfo "org-dblock-write:b:mtdt:mailing"
 (orgCmntBegin "
-*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*     [[elisp:(outline-show-subtree+toggle)][| _LaTeX Master File Elements_: |]]  b:lcnt:matex:felem:  [[elisp:(org-shifttab)][<)]] E|
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*     [[elisp:(outline-show-subtree+toggle)][| _Dblocks for Derivation and use of Mailings_: |]]  org-dblock-write:b:mtdt:mailing  [[elisp:(org-shifttab)][<)]] E|
 " orgCmntEnd)
 ;;;#+END:
-
 
 ;;;#+BEGIN:  b:elisp:defs/dblockDefun :defName "org-dblock-write:b:mtdt:mailing/compose" :advice ("bx:dblock:control|wrapper")
 (orgCmntBegin "
@@ -83,7 +82,6 @@ A library of dblock for b:elisp:file/xxx comeega-file-elements.
          (<governor (letGet$governor)) (<extGov (letGet$extGov))
          (<outLevel (letGet$outLevel 1)) (<model (letGet$model))
          (<style (letGet$style "openTerseNoNl" "closeContinue"))
-         ;  [[elisp:(find-file "./mailing.ttytex")][Visit ./mailing.ttytex]] | [[elisp:(message-mode)][message-mode]] | [[elisp:(message-mode)][message-mode]] | [[elisp:(mtdt:setup-and-compose/with-curBuffer)][Compose]] | [[elisp:(mtdt:setup-and-originate/with-curBuffer)][Originate]];
          (<mailingFile (or (plist-get <params :mailingFile) "auto"))
          (<foldDesc (or (plist-get <params :foldDesc) nil))
          (<extraInfo (or (plist-get <params :extraInfo) nil))
@@ -105,27 +103,40 @@ A library of dblock for b:elisp:file/xxx comeega-file-elements.
              ($extensionFileName)
              ($mailingName)
              ($mailingBuf (find-file <mailingFile))
-	     ($mailingParams (mtdt:mailing:params|from-buf $mailingBuf))
+	     ($mailingParams (b:mtdt:mailing:params|from-buf $mailingBuf))
              ($type (or (plist-get $mailingParams :type) nil))
              )
-        (setq $mailingName (mtdt:mailing:getName|with-file <mailingFile))
+        (setq $mailingName (b:mtdt:mailing:getName|with-file <mailingFile))
         (when <foldDesc
-          (insert (format "  [[elisp:(org-cycle)][| /%s/ |]] " <foldDesc)))
-        (insert (format "    [[elisp:(mtdt:setup-and-compose/with-file \"%s\")][%s]] " <mailingFile $mailingName))
+          (insert (s-lex-format "  [[elisp:(org-cycle)][| /${<foldDesc}/ |]] ")))
+        (insert (s-lex-format "  [[elisp:(b:mtdt:setup-and-compose/with-file \"${<mailingFile}\")][${$mailingName}]] "  ))
         (when (equalp $type 'originate )
           (insert
            (s-lex-format
-            "|| [[elisp:(mtdt:setup-and-originate/with-file \"${<mailingFile}\")][Originate]] ")))
+            "|| [[elisp:(b:mtdt:setup-and-originate/with-file \"${<mailingFile}\")][Originate]] ")))
         (message (format "%s" $type))
-        (insert (format "|| [[file:%s][Visit]]   " <mailingFile))
-        (when <extraInfo
+        (insert (s-lex-format "|| [[file:${<mailingFile}][Visit]]  "))
+        (insert (s-lex-format "|| [[elisp:(b:mtdt:derive/withFile \"${<mailingFile}\")][Derive]] "))
+        (insert (s-lex-format "|| [[elisp:(message  \"NOTYET De-Drive\")][De-Derive]] "))
+        (insert (s-lex-format "|| [[elisp:(message  \"NOTYET Send with CurRecips\")][Send with CurRecips]] "))
+        (insert (s-lex-format "|| [[elisp:(b:mtdt:derive/withFileAndCurSet \"${<mailingFile}\")][Set as CurMailing]]   "))
+        (when (and <extraInfo (s-present? <extraInfo))
           (insert (s-lex-format
                     "_${<extraInfo}_")))
         )
       )
 
     (bx:invoke:withStdArgs$bx:dblock:governor:process)
+    (blee:ppmm:org-mode-toggle)
+    (blee:ppmm:org-mode-toggle)
+    (read-only-mode -1)
     ))
+
+;;;#+BEGIN: blee:bxPanel:foldingSection :outLevel 0 :title "Dblocks for Inclusion in orgMsg Content" :extraInfo "org-dblock-write:b:mtdt:content"
+(orgCmntBegin "
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*     [[elisp:(outline-show-subtree+toggle)][| _Dblocks for Inclusion in orgMsg Content_: |]]  org-dblock-write:b:mtdt:content  [[elisp:(org-shifttab)][<)]] E|
+" orgCmntEnd)
+;;;#+END:
 
 ;;;#+BEGIN:  b:elisp:defs/dblockDefun :defName "org-dblock-write:b:mtdt:content/actions" :advice ("bx:dblock:control|wrapper")
 (orgCmntBegin "
