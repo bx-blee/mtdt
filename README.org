@@ -6,7 +6,9 @@ related panels.
 
 Primary MTDT Blee-Panel is [[file:./panels/mtdt/_nodeBase_/fullUsagePanel-en.org]]
 
-#+html: <p align="center"  height="230" src="./images/mtdtModel.jpg" /></p>
+#+html: <p align="center"><img src="images/mtdtModel.jpg" /></p>.
+
+#+html: <p align="center" src="./images/mtdtModel.jpg" /></p>
 
  [[img-link:file:./images/mtdtModel.jpg][MTDT Model Picture]]
 
