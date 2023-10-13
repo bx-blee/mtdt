@@ -6,17 +6,19 @@ related panels.
 
 Primary MTDT Blee-Panel is [[file:./panels/mtdt/_nodeBase_/fullUsagePanel-en.org]]
 
+<img align="center"  height="230" src="./images/mt">
+
  [[img-link:file:./images/mtdtModel.jpg][MTDT Model Picture]]
 
-####+BEGIN: blee:bxPanel:footerOrgParams
+# ###+BEGIN: blee:bxPanel:footerOrgParams
 #+STARTUP: overview
 #+STARTUP: lognotestate
 #+STARTUP: inlineimages
 #+SEQ_TODO: TODO WAITING DELEGATED | DONE DEFERRED CANCELLED
 #+TAGS: @desk(d) @home(h) @work(w) @withInternet(i) @road(r) call(c) errand(e)
 #+CATEGORY: N:mtdt-conceptAndDesign
-####+END
-####+BEGIN: blee:bxPanel:footerEmacsParams :primMode "org-mode"
+# ###+END
+# ###+BEGIN: blee:bxPanel:footerEmacsParams :primMode "org-mode"
 # Local Variables:
 # eval: (setq-local ~selectedSubject "noSubject")
 # eval: (setq-local ~primaryMajorMode 'org-mode)
@@ -29,4 +31,4 @@ Primary MTDT Blee-Panel is [[file:./panels/mtdt/_nodeBase_/fullUsagePanel-en.org
 # eval: (bx:load-file:ifOneExists "./panelActions.el")
 # End:
 
-####+END
+# ###+END
