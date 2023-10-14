@@ -156,6 +156,34 @@ Return 'Nu of Records=' if multiple records are found for =<nameStr=.
 #+END_SRC
 " orgCmntEnd)
 
+;;;#+BEGIN:  b:elisp:defs/defun :defName "b:mtdt:mailings/framedComposeWithSelected" :advice ()
+(orgCmntBegin "
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  defun      [[elisp:(outline-show-subtree+toggle)][||]]  <<b:mtdt:mailings/framedComposeWithSelected>>  --   [[elisp:(org-cycle)][| ]]
+" orgCmntEnd)
+(defun b:mtdt:mailings/framedComposeWithSelected (
+;;;#+END:
+                                                  )
+  " #+begin_org
+** DocStr: Create a frame, select it, then invoked =<mailingFunc=.
+#+end_org "
+  (interactive)
+  (let* (
+        ($inHere (b:log|entry (b:func$entry)))
+	)
+  (if-unless b:mtdt:mailings:cur
+    (message (s-lex-format "Bad Usage: ${$inHere}: b:mtdt:mailings:cur is nil")))
+  (if-when b:mtdt:mailings:cur
+    (b:mtdt:mailings|framedComposeWithFn b:mtdt:mailings:cur))
+  ))
+
+(orgCmntBegin "
+** Basic Usage:
+#+BEGIN_SRC emacs-lisp
+(b:mtdt:mailings/framedComposeWithSelected)
+#+END_SRC
+" orgCmntEnd)
+
+
 
 ;;;#+BEGIN: blee:bxPanel:foldingSection :outLevel 0 :title "Common Facilities" :extraInfo "Library Candidates"
 (orgCmntBegin "
@@ -690,7 +718,7 @@ params can be retrieved with plist."
       ))
 
 (defun b:mtdt:derive/withFilesList (<mailingFilesList)
-  ""
+  "Typically used in user's initial setup to derive persistant mailings."
   (interactive)
   (dolist ($eachMailingFile <mailingFilesList)
     (b:mtdt:derive/withFile $eachMailingFile)))

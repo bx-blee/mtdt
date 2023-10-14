@@ -18,7 +18,7 @@
 ####+END
 ####+BEGIN: blee:bxPanel:title :panelType "=bxPanel=" :title "auto"
 * [[elisp:(show-all)][(>]] ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-*   [[img-link:file:/bisos/blee/env/images/fpfByStarElipseTop-50.png][http://www.freeprotocols.org]]_ _   ~Node:: mail/mailings -- mtdt-conceptAndDesign~   [[img-link:file:/bisos/blee/env/images/fpfByStarElipseBottom-50.png][http://www.by-star.net]]
+*   [[img-link:file:/bisos/blee/env/images/fpfByStarElipseTop-50.png][http://www.freeprotocols.org]]_ _   ~Node:: mtdt/panels -- mtdt-conceptAndDesign~   [[img-link:file:/bisos/blee/env/images/fpfByStarElipseBottom-50.png][http://www.by-star.net]]
 * ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  [[elisp:(org-shifttab)][<)]] E|
 ####+END:
 ####+BEGIN: blee:bxPanel:terseTreeNavigator :panelsList "bxPanel"
@@ -83,6 +83,16 @@
 *** 1) Blee-MTDT-Pkg -- Given a mailing file, creates functions for sending of that mailing
 *** 2) BISOS-MTDT-APP -- Creates the mailing and needed framework for editing the content
 ** B|
+####+BEGIN: blee:bxPanel:foldingSection :outLevel 1 :sep t :title "MTDT Model" :anchor "" :extraInfo "Figure"
+* /[[elisp:(beginning-of-buffer)][|^]]  [[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]] [[elisp:(delete-other-windows)][|1]]/
+* [[elisp:(show-all)][(>]]  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_  _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_       [[elisp:(outline-show-subtree+toggle)][| *MTDT Model:* |]]  Figure  [[elisp:(org-shifttab)][<)]] E|
+####+END
+
+#+CAPTION: MTDT Model --  C-c C-x C-v (org-toggle-inline-images)
+#+NAME:   fig:images/mtdtModel.jpg
+#+ATTR_HTML: :width 1100px
+[[/bisos/git/bxRepos/blee/mtdt/images/mtdtModel.jpg]]
+
 ####+BEGIN: blee:bxPanel:foldingSection :outLevel 1 :sep t :title "Concepts and Terminology" :anchor "" :extraInfo "Concept of Mailing -- A Mail Template"
 * /[[elisp:(beginning-of-buffer)][|^]]  [[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]] [[elisp:(delete-other-windows)][|1]]/
 * [[elisp:(show-all)][(>]]  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_  _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_       [[elisp:(outline-show-subtree+toggle)][| *Concepts and Terminology:* |]]  Concept of Mailing -- A Mail Template  [[elisp:(org-shifttab)][<)]] E|
@@ -103,7 +113,7 @@
 ** Originate :: Editable Header, Body to be considered as readonly
 ** -----
 ** [[elisp:(describe-variable 'b:mtdt:mailings:cur)]]  ~Current Mailings~
-* ======= /Mailings Fields/
+** ======= /Mailings Fields/
 ** SourceFiles: b:mtdt:mailings.el
 ** Examples:
 ** ------

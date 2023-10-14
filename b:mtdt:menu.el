@@ -121,7 +121,7 @@ Module description comes here.
 " orgCmntEnd)
 (defun b:mtdt:menuItem:define|compose (
 ;;;#+END:
-                                        )
+                                       )
   " #+begin_org
 ** DocStr: Return a menuItem vector. Requires dynamic update.
 #+end_org "
@@ -155,6 +155,81 @@ Module description comes here.
       :visible t
       ]
      )))
+
+
+;;;#+BEGIN:  b:elisp:defs/defun :defName "b:mtdt:menu:define|bbdb3Select" :advice ()
+(orgCmntBegin "
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  defun      [[elisp:(outline-show-subtree+toggle)][||]]  <<b:mtdt:menu:define|bbdb3Select>>  --   [[elisp:(org-cycle)][| ]]
+" orgCmntEnd)
+(defun b:mtdt:menu:define|bbdb3Select (
+;;;#+END:
+                                       )
+  " #+begin_org
+** DocStr: Return b:mtdt:menu:sendExtentSelect
+#+end_org "
+  (let (
+	($thisFuncName (compile-time-function-name))
+	)
+
+    (defun $menuItem|selRecordAsSelRecipients ()
+      (car
+       `(
+         [,(s-lex-format "Set Selected BBDB Record As Selected Recipients")
+          (b:mtdt:bbdb3/selRecordAsSelRecipients)
+          :help "Set Selected BBDB Record As Selected Recipients"
+          :active t
+          :visible t
+          ]
+         )))
+
+    (defun $menuItem|bbdbPopUpOtherWin ()
+      (car
+       `(
+         [,(s-lex-format "Pop Up *BDBD* buffer other window")
+          (b:bbdb3/popUpOtherWin)
+          :help "Pop Up *BDBD* buffer other window"
+          :active t
+          :visible t
+          ]
+         )))
+
+    (easy-menu-define
+      b:mtdt:menu:bbdb3Select
+      nil
+      "DocStr of this menu --"
+      `(,(format (s-lex-format "With BBDB Select MTDT Recipients"))
+	:help "With BBDB Select MTDT Recipients"
+	,(s-- 3)
+	,(s-- 4)
+	,(s-- 5)
+	,(s-- 6)
+	,(s-- 7)
+	,(s-- 8)
+	,(s-- 9)
+	))
+
+    (easy-menu-add-item b:mtdt:menu:bbdb3Select nil ($menuItem|selRecordAsSelRecipients) (s-- 3))
+    (easy-menu-add-item b:mtdt:menu:bbdb3Select nil ($menuItem|bbdbPopUpOtherWin) (s-- 4))
+    (easy-menu-add-item
+     b:mtdt:menu:bbdb3Select
+     nil
+     (bx:menu:panelAndHelp|define
+      "/bisos/panels/blee-core/mail/_nodeBase_"
+      $thisFuncName
+      (intern (symbol-name (gensym))))
+     (s-- 5))
+
+    'b:mtdt:menu:bbdb3Select
+    ))
+
+(orgCmntBegin "
+** Basic Usage:
+[[elisp:(popup-menu (symbol-value (b:mtdt:menu:define|bbdb3Select)))][This menu as an org link]]
+#+BEGIN_SRC emacs-lisp
+(popup-menu (symbol-value (b:mtdt:menu:define|bbdb3Select)))
+#+END_SRC
+" orgCmntEnd)
+
 
 ;;;#+BEGIN:  b:elisp:defs/defun :defName "b:mtdt:menu:define|sendExtentSelect" :advice ()
 (orgCmntBegin "
@@ -497,7 +572,7 @@ Module description comes here.
     (easy-menu-define
       b:mtdt:menu:main
       nil
-      "MTDT Menu --- for selection of composition framework"
+      "DocStr of this menu --"
       `(,(format (s-lex-format "MTDT Menu -- Compose Framework:: ${b:mtdt:compose:fashion}"))
 	:help "MTDT (Mail Templating Distribution and Tracking"
 	:visible ,<visible
@@ -505,7 +580,7 @@ Module description comes here.
 	,(s-- 2)
 	,(s-- 3)
 	[
-	,(format (s-lex-format "MTDT Menu -- Compose Framework:: ${b:mtdt:compose:fashion}"))
+	,(format (s-lex-format "Describe Compose Framework:: ${b:mtdt:compose:fashion}"))
 	  (describe-variable 'b:mtdt:compose:fashion)
 	  :help "Describe current value of b:mtdt:compose:fashion"
 	  :active t
@@ -550,9 +625,13 @@ Module description comes here.
                         (b:mtdt:menu:define|derivedMailingInvoke)
                         (s-- 2))
 
-    (easy-menu-add-item b:mtdt:menu:main nil
-                        (b:mtdt:menuItem:define|compose)
-                        (s-- 5))
+        (easy-menu-add-item b:mtdt:menu:main nil
+                            (b:mtdt:menuItem:define|setup-withCurBuffer)
+                            (s-- 5))
+
+        (easy-menu-add-item b:mtdt:menu:main nil
+                            (b:mtdt:menu:define|bbdb3Select)
+                            (s-- 6))
 
     (easy-menu-add-item b:mtdt:menu:main nil
                         (b:mtdt:menuItem:define|setup-withCurBuffer)
@@ -560,11 +639,11 @@ Module description comes here.
 
     (easy-menu-add-item b:mtdt:menu:main nil
                        (b:mtdt:menu:define|sendExtentSelect)
-                      (s-- 7))
+                       (s-- 7))
 
     (easy-menu-add-item b:mtdt:menu:main nil
                        (b:mtdt:menu:define|curMailingSelect)
-                      (s-- 7))
+                       (s-- 7))
 
     (easy-menu-add-item b:mtdt:menu:main nil
                        (b:mtdt:menuItem:define|curRecipsDescribe)

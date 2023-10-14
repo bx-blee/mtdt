@@ -120,6 +120,123 @@ Return 'Nu of Records=' if multiple records are found for =<nameStr=.
 
 " orgCmntEnd)
 
+;;;#+BEGIN:  b:elisp:defs/defun :defName "b:bbdb3|subjectRecords" :advice ()
+(orgCmntBegin "
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  defun      [[elisp:(outline-show-subtree+toggle)][||]]  <<b:bbdb3|subjectRecords>>  --   [[elisp:(org-cycle)][| ]]
+" orgCmntEnd)
+(defun b:bbdb3|subjectRecords (
+;;;#+END:
+                               )
+  " #+begin_org
+** DocStr: All the records in *BBDB*.
+#+end_org "
+   (let* (
+          ($inHere (b:log|entry (b:func$entry)))
+          )
+     (with-current-buffer bbdb-buffer-name
+       bbdb-records)))
+
+(orgCmntBegin "
+** Basic Usage:
+#+BEGIN_SRC emacs-lisp
+(b:bbdb3|subjectRecords)
+#+END_SRC
+
+#+RESULTS:
+: No Records
+
+" orgCmntEnd)
+
+;;;#+BEGIN:  b:elisp:defs/defun :defName "b:bbdb3|subjectRecordsCurrent" :advice ()
+(orgCmntBegin "
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  defun      [[elisp:(outline-show-subtree+toggle)][||]]  <<b:bbdb3|subjectRecordsCurrent>>  --   [[elisp:(org-cycle)][| ]]
+" orgCmntEnd)
+(defun b:bbdb3|subjectRecordsCurrent (
+;;;#+END:
+                               )
+  " #+begin_org
+** DocStr: The selected records in *BBDB*
+#+end_org "
+   (let* (
+          ($inHere (b:log|entry (b:func$entry)))
+          )
+     (with-current-buffer bbdb-buffer-name
+       (bbdb-current-record))))
+
+(orgCmntBegin "
+** Basic Usage:
+#+BEGIN_SRC emacs-lisp
+(b:bbdb3|subjectRecordsCurrent)
+#+END_SRC
+
+#+RESULTS:
+: No Records
+
+" orgCmntEnd)
+
+;;;#+BEGIN:  b:elisp:defs/defun :defName "b:bbdb3/popUpOtherWin" :advice ()
+(orgCmntBegin "
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  defun      [[elisp:(outline-show-subtree+toggle)][||]]  <<b:bbdb3/popUpOtherWin>>  --   [[elisp:(org-cycle)][| ]]
+" orgCmntEnd)
+(defun b:bbdb3/popUpOtherWin (
+;;;#+END:
+                               )
+  " #+begin_org
+** DocStr: The selected records in *BBDB*
+#+end_org "
+   (let* (
+          ($inHere (b:log|entry (b:func$entry)))
+          )
+     (switch-to-buffer-other-window bbdb-buffer-name)))
+
+
+(orgCmntBegin "
+** Basic Usage:
+#+BEGIN_SRC emacs-lisp
+(b:bbdb3/popUpOtherWin)
+#+END_SRC
+
+#+RESULTS:
+: No Records
+
+" orgCmntEnd)
+
+
+;;;#+BEGIN:  b:elisp:defs/defun :defName "b:mtdt:bbdb3/selRecordAsSelRecipients" :advice ()
+(orgCmntBegin "
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  defun      [[elisp:(outline-show-subtree+toggle)][||]]  <<b:mtdt:bbdb3/selRecordAsSelRecipients>>  --   [[elisp:(org-cycle)][| ]]
+" orgCmntEnd)
+(defun b:mtdt:bbdb3/selRecordAsSelRecipients (
+;;;#+END:
+                                              )
+  " #+begin_org
+** DocStr: To be invoked with bbdb buffer set.
+#+end_org "
+   (let* (
+          ($inHere (b:log|entry (b:func$entry)))
+          ($selRecord (b:bbdb3|subjectRecordsCurrent))
+          ($emailAddrs)
+          ($bbdbName)
+          )
+     (setq $emailAddrs (nth 0 (bbdb-record-field $selRecord 'mail)))
+     (setq $bbdbName (bbdb-record-field $selRecord 'name))
+     (b:mtdt:recipients|curSetForce
+      :to (list (s-lex-format "${$bbdbName} ${$emailAddrs}"))
+      )))
+
+(orgCmntBegin "
+** Basic Usage:
+#+BEGIN_SRC emacs-lisp
+(b:mtdt:bbdb3/selRecordAsSelRecipients)
+#+END_SRC
+
+#+RESULTS:
+: No Records
+
+" orgCmntEnd)
+
+
+
 ;;;#+BEGIN: b:elisp:file/provide :modName nil
 (provide 'b:mtdt:bbdb3)
 ;;;#+END:

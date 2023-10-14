@@ -1,3 +1,4 @@
+
 #+title: MTDT: Mail Templating, Distribution and Tracking Emacs Package
 
 
@@ -8,9 +9,11 @@ Primary MTDT Blee-Panel is [[file:./panels/mtdt/_nodeBase_/fullUsagePanel-en.org
 
 #+html: <p align="center"><img src="images/mtdtModel.jpg" /></p>.
 
-#+html: <p align="center" src="./images/mtdtModel.jpg" /></p>
+#+CAPTION: MTDT Model C-c C-x C-v (org-toggle-inline-images)
+#+NAME:   fig:images/mtdtModel.jpg]]
+#+ATTR_HTML: :width 1100px
+[[./images/mtdtModel.jpg]]
 
- [[img-link:file:./images/mtdtModel.jpg][MTDT Model Picture]]
 
 # ###+BEGIN: blee:bxPanel:footerOrgParams
 #+STARTUP: overview

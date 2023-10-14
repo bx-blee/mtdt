@@ -65,8 +65,8 @@ Module description comes here.
   :link '(file-link "/bisos/panels/blee-core/mail/_nodeBase_/fullUsagePanel-en.org")
   )
 
-(defconst b:mtdt:send:extent::doSend "doSend" "Does not prompt, just send it.")
-(defconst b:mtdt:send:extent::promptSend "promptSend" "Prompt before sending.")
+(defconst b:mtdt:send:extent::doSend "doSend" "Send/Submit the mailing. Does not prompt, just send it.")
+(defconst b:mtdt:send:extent::promptSend "promptSend" "Compose but do not submit. Prompt before sending.")
 
 (defvar b:mtdt:send:extent
   b:mtdt:send:extent::promptSend
@@ -112,42 +112,258 @@ Return 'Nu of Records=' if multiple records are found for =<nameStr=.
 " orgCmntEnd)
 
 
-
-;;;#+BEGIN:  b:elisp:defs/defun :defName "b:mtdt:send|curMailingToCurRecips" :advice ()
+;;;#+BEGIN:  b:elisp:defs/cl-defun :defName "b:mtdt:send|applyRecipientsToMailingFiles" :advice ()
 (orgCmntBegin "
-*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  defun      [[elisp:(outline-show-subtree+toggle)][||]]  <<b:mtdt:send|curMailingToCurRecips>>  --   [[elisp:(org-cycle)][| ]]
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  cl-defun   [[elisp:(outline-show-subtree+toggle)][||]]  <<b:mtdt:send|applyRecipientsToMailingFiles>>  --   [[elisp:(org-cycle)][| ]]
 " orgCmntEnd)
-(defun b:mtdt:send|curMailingToCurRecips (
+(cl-defun b:mtdt:send|applyRecipientsToMailingFiles (
 ;;;#+END:
-                                          )
-  " #+begin_org
-** DocStr: Get the first email address for =<nameStr= if it is unique.
-Return 'No Records' if =<nameStr=  is not found.
-Return 'Nu of Records=' if multiple records are found for =<nameStr=.
+                                                     &key
+                                                     (mailingFiles (list))
+                                                     (to (list))
+                                                     (cc (list))
+                                                     (bcc (list))
+                                                     (extent b:mtdt:send:extent::promptSend)
+                                                     )
+   " #+begin_org
+** DocStr: Add recepients to each mailing and send it out.
+=mailings= and =to= are mandatory. =cc= and =bcc= are optional.
+Returns /nothing/.
 #+end_org "
    (let* (
           ($inHere (b:log|entry (b:func$entry)))
-          ($result "No Records")
-          ($records)
-          ($emailAddrs)
-          ($firstEmailAddr)
-          ($nuOfRecords)
           )
-     (setq $records (bbdb-search (bbdb-records) :name <nameStr))
-     (setq $nuOfRecords (length $records))
-     (cond
-      ((equal $nuOfRecords 0)
-       (setq $result "No Records")
-       )
-      ((equal $nuOfRecords 1)
-       (loop-for-each eachRecord $records
-         (setq $emailAddrs (bbdb-record-field eachRecord 'mail))
-         (setq $result (nth 0 $emailAddrs)))
-       )
-      (t
-       (setq $result (s-lex-format "Nu of Records=${$nuOfRecords} for ${<nameStr}"))
-       ))
-     $result))
+     (if-unless mailingFiles
+       (b::error $inHere
+                 (s-lex-format
+                  "Missing :mailing named argument")))
+     (else-when mailingFiles
+       (if-unless to
+         (b::error $inHere
+                   (s-lex-format
+                    "Missing :to named argument")))
+       (else-when to
+         (dolist ($eachMailing mailingFiles)
+           (b:mtdt:setup-and-compose/with-file $eachMailing)
+           (dolist ($eachRecipient to)
+             (mail-to)
+             (b:email:address|insert $eachRecipient)
+             )
+           (dolist ($eachRecipient cc)
+             (mail-cc)
+             (b:email:address|insert $eachRecipient)
+             )
+           (dolist ($eachRecipient bcc)
+             (mail-bcc)
+             (b:email:address|insert $eachRecipient)
+             )
+           (when (eq extent b:mtdt:send:extent::doSend)
+             ;; send the email
+             (org-ctrl-c-ctrl-c))
+           )))))
+
+(orgCmntBegin "
+** Basic Usage:
+#+BEGIN_SRC emacs-lisp
+(b:mtdt:send|applyRecipientsToMailingFiles
+    :mailingFiles `(,(symbol-name '/bxo/r3/iso/piu_mbFullUsage/mailings/compose/com/gmail/mohsen.banan.byname/from/org/content.msgOrg))
+    :to `(,(b:email|oorr :addr (symbol-name 'mohsen.banan.byname@gmail.com)))
+  )
+#+END_SRC
+" orgCmntEnd)
+
+
+
+;;;#+BEGIN:  b:elisp:defs/cl-defun :defName "b:mtdt:send|applyRecipientsToMailingFns" :advice ()
+(orgCmntBegin "
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  cl-defun   [[elisp:(outline-show-subtree+toggle)][||]]  <<b:mtdt:send|applyRecipientsToMailingFns>>  --   [[elisp:(org-cycle)][| ]]
+" orgCmntEnd)
+(cl-defun b:mtdt:send|applyRecipientsToMailingFns (
+;;;#+END:
+                                                     &key
+                                                     (mailingFns (list))
+                                                     (to (list))
+                                                     (cc (list))
+                                                     (bcc (list))
+                                                     (extent b:mtdt:send:extent::promptSend)
+                                                     )
+   " #+begin_org
+** DocStr: Add recepients to each mailing and send it out.
+=mailings= and =to= are mandatory. =cc= and =bcc= are optional.
+Returns /nothing/.
+#+end_org "
+   (let* (
+          ($inHere (b:log|entry (b:func$entry)))
+          )
+     (if-unless mailingFiles
+       (b::error $inHere
+                 (s-lex-format
+                  "Missing :mailing named argument")))
+     (else-when mailingFiles
+       (if-unless to
+         (b::error $inHere
+                   (s-lex-format
+                    "Missing :to named argument")))
+       (else-when to
+         (dolist ($eachMailing mailingFns)
+           (b:mtdt:mailings|framedComposeWithFn $eachMailing)
+           (dolist ($eachRecipient to)
+             (mail-to)
+             (b:email:address|insert $eachRecipient)
+             )
+           (dolist ($eachRecipient cc)
+             (mail-cc)
+             (b:email:address|insert $eachRecipient)
+             )
+           (dolist ($eachRecipient bcc)
+             (mail-bcc)
+             (b:email:address|insert $eachRecipient)
+             )
+           (when (eq extent b:mtdt:send:extent::doSend)
+             ;; send the email
+             (org-ctrl-c-ctrl-c))
+           )))))
+
+(orgCmntBegin "
+** Basic Usage:
+#+BEGIN_SRC emacs-lisp
+(b:mtdt:distr|applyRecipientsToMailings
+    :mailing `(,(symbol-name '/bxo/r3/iso/piu_mbFullUsage/mailings/compose/com/gmail/mohsen.banan.byname/from/org/content.msgOrg))
+    :to `(,(b:email|oorr :addr (symbol-name 'mohsen.banan.byname@gmail.com)))
+  )
+#+END_SRC
+" orgCmntEnd)
+
+
+;;;#+BEGIN:  b:elisp:defs/cl-defun :defName "b:mtdt:send|applySelRecipientsToMailingFiles" :advice ()
+(orgCmntBegin "
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  cl-defun   [[elisp:(outline-show-subtree+toggle)][||]]  <<b:mtdt:send|applySelRecipientsToMailingFiles>>  --   [[elisp:(org-cycle)][| ]]
+" orgCmntEnd)
+(cl-defun b:mtdt:send|applySelRecipientsToMailingFiles (
+;;;#+END:
+                                                        &key
+                                                        (mailingFiles (list))
+                                                        (extent b:mtdt:send:extent::promptSend)
+                                                        )
+   " #+begin_org
+** DocStr: Add recepients to each mailing and send it out.
+=mailing= and =to= are mandatory. =cc= and =bcc= are optional.
+Returns /nothing/.
+#+end_org "
+   (let* (
+          ($inHere (b:log|entry (b:func$entry)))
+          ($to (or (plist-get b:mtdt:recipients:cur :to) nil))
+          ($cc (or (plist-get b:mtdt:recipients:cur :cc) nil))
+          ($bcc (or (plist-get b:mtdt:recipients:cur :bcc) nil))
+          )
+     (b:mtdt:recipients|curUnSet)
+     (if-unless mailingFiles
+       (b::error $inHere
+                 (s-lex-format
+                  "Missing :mailingFiles named argument")))
+     (else-when mailingFiles
+       (if-unless $to
+         (b::error $inHere
+                   (s-lex-format
+                    "Missing :to named argument")))
+       (else-when $to
+         (b:mtdt:send|applyRecipientsToMailingFiles
+          :mailingFiles mailingFiles
+          :to $to
+          :cc $cc
+          :bcc $bcc
+          :extent extent
+          )))))
+
+(orgCmntBegin "
+** Basic Usage:
+#+BEGIN_SRC emacs-lisp
+(b:mtdt:send|applySelRecipientsToMailingFiles
+    :mailingFiles `(,(symbol-name '/bxo/r3/iso/piu_mbFullUsage/mailings/compose/com/gmail/mohsen.banan.byname/from/org/content.msgOrg))
+  )
+#+END_SRC
+" orgCmntEnd)
+
+
+
+;;;#+BEGIN:  b:elisp:defs/cl-defun :defName "b:mtdt:send|applySelRecipientsToMailingFns" :advice ()
+(orgCmntBegin "
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  cl-defun   [[elisp:(outline-show-subtree+toggle)][||]]  <<b:mtdt:send|applySelRecipientsToMailingFns>>  --   [[elisp:(org-cycle)][| ]]
+" orgCmntEnd)
+(cl-defun b:mtdt:send|applySelRecipientsToMailingFns (
+;;;#+END:
+                                                        &key
+                                                        (mailingFns (list))
+                                                        (extent b:mtdt:send:extent::promptSend)
+                                                        )
+   " #+begin_org
+** DocStr: Add recepients to each mailing and send it out.
+=mailing= and =to= are mandatory. =cc= and =bcc= are optional.
+Returns /nothing/.
+#+end_org "
+   (let* (
+          ($inHere (b:log|entry (b:func$entry)))
+          ($to (or (plist-get b:mtdt:recipients:cur :to) nil))
+          ($cc (or (plist-get b:mtdt:recipients:cur :cc) nil))
+          ($bcc (or (plist-get b:mtdt:recipients:cur :bcc) nil))
+          )
+     (b:mtdt:recipients|curUnSet)
+     (if-unless mailingFns
+       (b::error $inHere
+                 (s-lex-format
+                  "Missing :mailingFns named argument")))
+     (else-when mailingFiles
+       (if-unless $to
+         (b::error $inHere
+                   (s-lex-format
+                    "Missing :to named argument")))
+       (else-when $to
+         (b:mtdt:send|applyRecipientsToMailingFns
+          :mailingFns mailingFns
+          :to $to
+          :cc $cc
+          :bcc $bcc
+          :extent extent
+          )))))
+
+(orgCmntBegin "
+** Basic Usage:
+#+BEGIN_SRC emacs-lisp
+(b:mtdt:distr|applyCurRecipientsToMailings
+    :mailings `(,(symbol-name '/bxo/r3/iso/piu_mbFullUsage/mailings/compose/com/gmail/mohsen.banan.byname/from/org/content.msgOrg))
+  )
+#+END_SRC
+" orgCmntEnd)
+
+
+
+;;;#+BEGIN:  b:elisp:defs/defun :defName "b:mtdt:send/selMailingToSelRecips" :advice ()
+(orgCmntBegin "
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  defun      [[elisp:(outline-show-subtree+toggle)][||]]  <<b:mtdt:send/selMailingToSelRecips>>  --   [[elisp:(org-cycle)][| ]]
+" orgCmntEnd)
+(defun b:mtdt:send/selMailingToSelRecips (
+;;;#+END:
+                                          )
+  " #+begin_org
+** DocStr:
+#+end_org "
+   (let* (
+          ($inHere (b:log|entry (b:func$entry)))
+          )
+     (if-unless b:mtdt:mailings:cur
+       (b::error $inHere
+                 (s-lex-format
+                  "Bad Usage: b:mtdt:mailings:cur is nil")))
+     (if-when b:mtdt:mailings:cur
+        (if-unless b:mtdt:recipients:cur
+          (b::error $inHere
+                    (s-lex-format
+                     "Bad Usage: b:mtdt:recipients:cur is nil")))
+        (if-when b:mtdt:mailings:cur
+          (b:mtdt:send|applySelRecipientsToMailingFns
+           (list b:mtdt:mailings:cur)
+           b:mtdt:send:extent
+          )))))
 
 (orgCmntBegin "
 ** Basic Usage:
