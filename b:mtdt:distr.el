@@ -136,11 +136,11 @@ Returns /nothing/.
 " orgCmntEnd)
 
 
-;;;#+BEGIN:  b:elisp:defs/cl-defun :defName "b:mtdt:distr|applyCurRecipientsToMailings" :advice ()
+;;;#+BEGIN:  b:elisp:defs/cl-defun :defName "b:mtdt:distr|applySelRecipientsToMailings" :advice ()
 (orgCmntBegin "
-*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  cl-defun   [[elisp:(outline-show-subtree+toggle)][||]]  <<b:mtdt:distr|applyCurRecipientsToMailings>>  --   [[elisp:(org-cycle)][| ]]
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  cl-defun   [[elisp:(outline-show-subtree+toggle)][||]]  <<b:mtdt:distr|applySelRecipientsToMailings>>  --   [[elisp:(org-cycle)][| ]]
 " orgCmntEnd)
-(cl-defun b:mtdt:distr|applyCurRecipientsToMailings (
+(cl-defun b:mtdt:distr|applySelRecipientsToMailings (
 ;;;#+END:
                          &key
                          (mailings (list))
@@ -153,9 +153,9 @@ Returns /nothing/.
 #+end_org "
    (let* (
           ($inHere (b:log|entry (b:func$entry)))
-          ($to (or (plist-get b:mtdt:recipients:cur :to) nil))
-          ($cc (or (plist-get b:mtdt:recipients:cur :cc) nil))
-          ($bcc (or (plist-get b:mtdt:recipients:cur :bcc) nil))
+          ($to (or (plist-get b:mtdt:recipients:selected :to) nil))
+          ($cc (or (plist-get b:mtdt:recipients:selected :cc) nil))
+          ($bcc (or (plist-get b:mtdt:recipients:selected :bcc) nil))
           )
      (b:mtdt:recipients|curUnSet)
      (if-unless mailings
@@ -179,7 +179,7 @@ Returns /nothing/.
 (orgCmntBegin "
 ** Basic Usage:
 #+BEGIN_SRC emacs-lisp
-(b:mtdt:distr|applyCurRecipientsToMailings
+(b:mtdt:distr|applySelRecipientsToMailings
     :mailings `(,(symbol-name '/bxo/r3/iso/piu_mbFullUsage/mailings/compose/com/gmail/mohsen.banan.byname/from/org/content.msgOrg))
   )
 #+END_SRC
@@ -219,7 +219,7 @@ Returns /nothing/.
          (dolist ($eachCurSetForm curSetForms)
            ;;(message (s-lex-format "${$eachCurSetForm}")
            (eval $eachCurSetForm)
-           (b:mtdt:distr|applyCurRecipientsToMailings
+           (b:mtdt:distr|applySelRecipientsToMailings
             :mailings mailings
             :extent extent)
            )))))

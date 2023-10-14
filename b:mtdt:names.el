@@ -83,7 +83,7 @@ Module description comes here.
                          (outFile nil)
                         )
    " #+begin_org
-** DocStr: Set =b:mtdt:recipients:cur= as specified.
+** DocStr: Set =b:mtdt:recipients:selected= as specified.
 =to= is mandatory. =cc= and =bcc= are optional.
 #+end_org "
    (let* (
@@ -93,7 +93,7 @@ Module description comes here.
      (if-unless inFile
        (b::error $inHere
                  (s-lex-format
-                  "Bad usage: b:mtdt:recipients:cur already set -- (b:mtdt:recipients|curUnSet)")))
+                  "Bad usage: b:mtdt:recipients:selected already set -- (b:mtdt:recipients|curUnSet)")))
      (else-when inFile
        (message "read in the file")
        )))
@@ -120,7 +120,7 @@ Module description comes here.
                          (outFile nil)
                         )
    " #+begin_org
-** DocStr: Set =b:mtdt:recipients:cur= as specified.
+** DocStr: Set =b:mtdt:recipients:selected= as specified.
 =to= is mandatory. =cc= and =bcc= are optional.
 #+end_org "
    (let* (
@@ -130,7 +130,7 @@ Module description comes here.
      (if-unless inFile
        (b::error $inHere
                  (s-lex-format
-                  "Bad usage: b:mtdt:recipients:cur already set -- (b:mtdt:recipients|curUnSet)")))
+                  "Bad usage: b:mtdt:recipients:selected already set -- (b:mtdt:recipients|curUnSet)")))
      (else-when inFile
        (message "read in the file")
        )))

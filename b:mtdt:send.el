@@ -252,9 +252,9 @@ Returns /nothing/.
 #+end_org "
    (let* (
           ($inHere (b:log|entry (b:func$entry)))
-          ($to (or (plist-get b:mtdt:recipients:cur :to) nil))
-          ($cc (or (plist-get b:mtdt:recipients:cur :cc) nil))
-          ($bcc (or (plist-get b:mtdt:recipients:cur :bcc) nil))
+          ($to (or (plist-get b:mtdt:recipients:selected :to) nil))
+          ($cc (or (plist-get b:mtdt:recipients:selected :cc) nil))
+          ($bcc (or (plist-get b:mtdt:recipients:selected :bcc) nil))
           )
      (b:mtdt:recipients|curUnSet)
      (if-unless mailingFiles
@@ -303,9 +303,9 @@ Returns /nothing/.
 #+end_org "
    (let* (
           ($inHere (b:log|entry (b:func$entry)))
-          ($to (or (plist-get b:mtdt:recipients:cur :to) nil))
-          ($cc (or (plist-get b:mtdt:recipients:cur :cc) nil))
-          ($bcc (or (plist-get b:mtdt:recipients:cur :bcc) nil))
+          ($to (or (plist-get b:mtdt:recipients:selected :to) nil))
+          ($cc (or (plist-get b:mtdt:recipients:selected :cc) nil))
+          ($bcc (or (plist-get b:mtdt:recipients:selected :bcc) nil))
           )
      (b:mtdt:recipients|curUnSet)
      (if-unless mailingFns
@@ -329,7 +329,7 @@ Returns /nothing/.
 (orgCmntBegin "
 ** Basic Usage:
 #+BEGIN_SRC emacs-lisp
-(b:mtdt:distr|applyCurRecipientsToMailings
+(b:mtdt:distr|applySelRecipientsToMailings
     :mailings `(,(symbol-name '/bxo/r3/iso/piu_mbFullUsage/mailings/compose/com/gmail/mohsen.banan.byname/from/org/content.msgOrg))
   )
 #+END_SRC
@@ -350,18 +350,18 @@ Returns /nothing/.
    (let* (
           ($inHere (b:log|entry (b:func$entry)))
           )
-     (if-unless b:mtdt:mailings:cur
+     (if-unless b:mtdt:mailings:selected
        (b::error $inHere
                  (s-lex-format
-                  "Bad Usage: b:mtdt:mailings:cur is nil")))
-     (if-when b:mtdt:mailings:cur
-        (if-unless b:mtdt:recipients:cur
+                  "Bad Usage: b:mtdt:mailings:selected is nil")))
+     (if-when b:mtdt:mailings:selected
+        (if-unless b:mtdt:recipients:selected
           (b::error $inHere
                     (s-lex-format
-                     "Bad Usage: b:mtdt:recipients:cur is nil")))
-        (if-when b:mtdt:mailings:cur
+                     "Bad Usage: b:mtdt:recipients:selected is nil")))
+        (if-when b:mtdt:mailings:selected
           (b:mtdt:send|applySelRecipientsToMailingFns
-           (list b:mtdt:mailings:cur)
+           (list b:mtdt:mailings:selected)
            b:mtdt:send:extent
           )))))
 

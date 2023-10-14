@@ -98,7 +98,7 @@ Module description comes here.
 (defvar b:mtdt:compose:ephemera:base "/bisos/tmp"
   "Basedir of where ephemera compositions go.")
 
-(defvar b:mtdt:mailings:cur
+(defvar b:mtdt:mailings:selected
   nil
   "Current Mailing.")
 
@@ -120,7 +120,7 @@ Return 'Nu of Records=' if multiple records are found for =<nameStr=.
           ($inHere (b:log|entry (b:func$entry)))
           ($result <mailingFunc)
           )
-     (setq b:mtdt:mailings:cur <mailingFunc)
+     (setq b:mtdt:mailings:selected <mailingFunc)
      $result))
 
 (orgCmntBegin "
@@ -170,10 +170,10 @@ Return 'Nu of Records=' if multiple records are found for =<nameStr=.
   (let* (
         ($inHere (b:log|entry (b:func$entry)))
 	)
-  (if-unless b:mtdt:mailings:cur
-    (message (s-lex-format "Bad Usage: ${$inHere}: b:mtdt:mailings:cur is nil")))
-  (if-when b:mtdt:mailings:cur
-    (b:mtdt:mailings|framedComposeWithFn b:mtdt:mailings:cur))
+  (if-unless b:mtdt:mailings:selected
+    (message (s-lex-format "Bad Usage: ${$inHere}: b:mtdt:mailings:selected is nil")))
+  (if-when b:mtdt:mailings:selected
+    (b:mtdt:mailings|framedComposeWithFn b:mtdt:mailings:selected))
   ))
 
 (orgCmntBegin "

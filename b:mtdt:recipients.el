@@ -65,7 +65,7 @@ Module description comes here.
   :link '(file-link "/bisos/panels/blee-core/mail/_nodeBase_/fullUsagePanel-en.org")
   )
 
-(defvar b:mtdt:recipients:cur
+(defvar b:mtdt:recipients:selected
   (list)
   "Current recipients. Used as a plist.")
 
@@ -88,29 +88,29 @@ Module description comes here.
                          (bcc nil)
                         )
    " #+begin_org
-** DocStr: Set =b:mtdt:recipients:cur= as specified.
+** DocStr: Set =b:mtdt:recipients:selected= as specified.
 =to= is mandatory. =cc= and =bcc= are optional.
 #+end_org "
    (let* (
           ($inHere (b:log|entry (b:func$entry)))
-          ($to (or (plist-get b:mtdt:recipients:cur :to) nil))
-          ($cc (or (plist-get b:mtdt:recipients:cur :cc) nil))
-          ($bcc (or (plist-get b:mtdt:recipients:cur :bcc) nil))
+          ($to (or (plist-get b:mtdt:recipients:selected :to) nil))
+          ($cc (or (plist-get b:mtdt:recipients:selected :cc) nil))
+          ($bcc (or (plist-get b:mtdt:recipients:selected :bcc) nil))
          )
 
      (if-when (or $to $cc $bcc)
        (b::error $inHere
                  (s-lex-format
-                  "Bad usage: b:mtdt:recipients:cur already set -- (b:mtdt:recipients|curUnSet)")))
+                  "Bad usage: b:mtdt:recipients:selected already set -- (b:mtdt:recipients|curUnSet)")))
      (else-unless (or $to $cc $bcc)
        (if-unless to
          (b::error $inHere
                    (s-lex-format
                     "Missing :to named argument")))
        (else-when to
-         (setq b:mtdt:recipients:cur (plist-put b:mtdt:recipients:cur ':to to)))
-       (setq b:mtdt:recipients:cur (plist-put b:mtdt:recipients:cur ':cc cc))
-       (setq b:mtdt:recipients:cur (plist-put b:mtdt:recipients:cur ':bcc bcc)))))
+         (setq b:mtdt:recipients:selected (plist-put b:mtdt:recipients:selected ':to to)))
+       (setq b:mtdt:recipients:selected (plist-put b:mtdt:recipients:selected ':cc cc))
+       (setq b:mtdt:recipients:selected (plist-put b:mtdt:recipients:selected ':bcc bcc)))))
 
 (orgCmntBegin "
 ** Basic Usage:
@@ -130,13 +130,13 @@ Module description comes here.
 ;;;#+END:
                                       )
    " #+begin_org
-** DocStr: UnSet =b:mtdt:recipients:cur= by setting it to the empty list.
+** DocStr: UnSet =b:mtdt:recipients:selected= by setting it to the empty list.
 #+end_org "
    (let* (
           ($inHere (b:log|entry (b:func$entry)))
           ($result nil)
          )
-     (setq b:mtdt:recipients:cur (list))
+     (setq b:mtdt:recipients:selected (list))
      $result))
 
 (orgCmntBegin "
@@ -158,7 +158,7 @@ Module description comes here.
                          (bcc nil)
                         )
    " #+begin_org
-** DocStr: Set =b:mtdt:recipients:cur= as specified.
+** DocStr: Set =b:mtdt:recipients:selected= as specified.
 =to= is mandatory. =cc= and =bcc= are optional.
 #+end_org "
    (let* (

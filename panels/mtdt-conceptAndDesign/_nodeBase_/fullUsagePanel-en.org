@@ -112,7 +112,7 @@
 ** Compose :: Editable Header and Body -- When composeFrwrk=LaTeX  it is replicated from Template
 ** Originate :: Editable Header, Body to be considered as readonly
 ** -----
-** [[elisp:(describe-variable 'b:mtdt:mailings:cur)]]  ~Current Mailings~
+** [[elisp:(describe-variable 'b:mtdt:mailings:selected)]]  ~Current Mailings~
 ** ======= /Mailings Fields/
 ** SourceFiles: b:mtdt:mailings.el
 ** Examples:
@@ -125,7 +125,7 @@
 ** Recipients :: One set of To, Cc and Bcc specifications for a Mailing
 ** RecipientsList :: List of Recipietns
 ** file-recips.el :: A lisp form as a list of forms
-** [[elisp:(describe-variable 'b:mtdt:recipients:cur)]]   ~Current Recipients~
+** [[elisp:(describe-variable 'b:mtdt:recipients:selected)]]   ~Current Recipients~
 ** ========  /oorr/
 ** Originator or Recipient -- Borrowed from X.400
 ** ========= /Names/
