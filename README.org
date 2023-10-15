@@ -1,4 +1,3 @@
-
 #+title: MTDT: Mail Templating, Distribution and Tracking Emacs Package
 
 
@@ -6,16 +5,19 @@ MTDT is part of Blee. Blee (ByStar Libre-Halaal Emacs Environment) is the Usage 
 BISOS (ByStar Internet Services OS). BISOS is the foundation
 of the "Libre-Halaal ByStar Digital Ecosystem." ByStar is rooted in the model of proper governance of
 polyexistentials which rejects the Western Intelectual Propoerty Rights (IPR) regime.
+For a comprehensive description, please refer to the book 'The Nature of Polyexistentials.'
+
 
 MTDT augments the Emacs email environment (Gnus) by providing templates
 for mailings and distributions.
 
-Consider MTDT as a Libre-Halaal Convivial equivalent of Constant Contact for emacs.
+Consider MTDT as a Libre-Halaal Convivial equivalent of Constant Contact for Emacs.
 
 Documentation of MTDT is in the form of a series of related panels. Primary MTDT Blee-Panel is
 [[file:./panels/mtdt/_nodeBase_/fullUsagePanel-en.org]].
 With some limitations, MTDT can be used an a stand alone Emacs package.
-Relevant part of BISOS and Blee that interact with MTDT are:
+
+Key components of BISOS and Blee that interact with MTDT include:
 
 - MARMEE -- Multi-Account Resident Mail Exchange Environment
 - LCNT -- ByStar Libre Content production, publication
