@@ -221,8 +221,9 @@ Return 'Nu of Records=' if multiple records are found for =<nameStr=.
      (setq $emailAddrs (nth 0 (bbdb-record-field $selRecord 'mail)))
      (setq $bbdbName (bbdb-record-field $selRecord 'name))
      (b:mtdt:recipients|curSetForce
-      :to (list (s-lex-format "${$bbdbName} ${$emailAddrs}"))
-      )))
+      :to (list (s-lex-format "${$bbdbName} <${$emailAddrs}>"))
+      )
+     (message (s-lex-format "Selected Recips -- To: ${$bbdbName} <${$emailAddrs}>"))))
 
 (orgCmntBegin "
 ** Basic Usage:

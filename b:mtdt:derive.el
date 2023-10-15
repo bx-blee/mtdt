@@ -1,7 +1,8 @@
-;;; b:mtdt:recipients.el --- FILE DESCRIPTION COMES HERE  -*- lexical-binding: t; -*-
+;;; b:mtdt:derive.el --- FILE DESCRIPTION COMES HERE  -*- lexical-binding: t; -*-
 
 (orgCmntBegin "
-* Summary:
+* Summary: NOTYET, Incomplete and dirty. This module should be redeveloped in conjunction with  b:mtdt:mailings.el.
+Scope of this module is just the derivation of a command which absorbs the mailingFile.
 " orgCmntEnd)
 
 ;;;#+BEGIN: b:prog:file/proclamations :outLevel 1
@@ -16,7 +17,7 @@
 ;;;#+BEGIN: b:prog:file/particulars :authors ("./inserts/authors-mb.org")
 (orgCmntBegin "
 * *[[elisp:(org-cycle)][| Particulars |]]* :: Authors, version
-** This File: /bisos/git/auth/bxRepos/blee/mtdt/b:email.el
+** This File: /bisos/git/bxRepos/blee/mtdt/b:mtdt:derive.el
 ** Authors: Mohsen BANAN, http://mohsen.banan.1.byname.net/contact
 " orgCmntEnd)
 ;;;#+END:
@@ -57,134 +58,120 @@ Module description comes here.
 " orgCmntEnd)
 ;;;#+END:
 
-
-(defgroup b:mtdt:recipients nil
-  "Blee MTDT Recipients Abstractions. Used by b:mtdt:distr."
-  :group 'blee
-  :prefix "b:mtdt:recipients:"
-  :link '(file-link "/bisos/panels/blee-core/mail/_nodeBase_/fullUsagePanel-en.org")
-  )
-
-(defvar b:mtdt:recipients:selected
-  (list)
-  "Current recipients. Used as a plist. to, cc, bcc.")
-
-
 ;;;#+BEGIN: blee:bxPanel:foldingSection :outLevel 0 :title "Common Facilities" :extraInfo "Library Candidates"
 (orgCmntBegin "
 *  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*     [[elisp:(outline-show-subtree+toggle)][| _Common Facilities_: |]]  Library Candidates  [[elisp:(org-shifttab)][<)]] E|
 " orgCmntEnd)
 ;;;#+END:
 
-;;;#+BEGIN:  b:elisp:defs/cl-defun :defName "b:mtdt:recipients|curSet" :advice ()
+;;;#+BEGIN:  b:elisp:defs/defmacro :defName "b:mtdt:derive$mailingNameFromPath"
 (orgCmntBegin "
-*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  cl-defun   [[elisp:(outline-show-subtree+toggle)][||]]  <<b:mtdt:recipients|curSet>>  --   [[elisp:(org-cycle)][| ]]
+* [[elisp:(show-all)][(>]]  =defmacro= <<b:mtdt:derive$mailingNameCommand>> [[elisp:(org-shifttab)][<)]] E|
 " orgCmntEnd)
-(cl-defun b:mtdt:recipients|curSet (
+(defmacro b:mtdt:derive$mailingNameCommand (
 ;;;#+END:
-                         &key
-                         (to nil)
-                         (cc nil)
-                         (bcc nil)
-                        )
+                                            <mailingFilePath
+                                            )
    " #+begin_org
-** DocStr: Set =b:mtdt:recipients:selected= as specified.
-=to= is mandatory. =cc= and =bcc= are optional.
-#+end_org "
-   (let* (
-          ($inHere (b:log|entry (b:func$entry)))
-          ($to (or (plist-get b:mtdt:recipients:selected :to) nil))
-          ($cc (or (plist-get b:mtdt:recipients:selected :cc) nil))
-          ($bcc (or (plist-get b:mtdt:recipients:selected :bcc) nil))
-         )
+** DocStr: NOTYET, A Placeholder. The macro defines a command that provides access to the content of mailingFile.
+=<mailingFilePath= is expected to be a static path.
+interactive p is needed so that there are some params.
+The name of the command is b:mtdt:d/{mailingName}. mailingName is a field in =<mailingFilePath=.
+It returns the =<mailingFilePath=.
 
-     (if-when (or $to $cc $bcc)
-       (b::error $inHere
-                 (s-lex-format
-                  "Bad usage: b:mtdt:recipients:selected already set -- (b:mtdt:recipients|curUnSet)")))
-     (else-unless (or $to $cc $bcc)
-       (if-unless to
-         (b::error $inHere
-                   (s-lex-format
-                    "Missing :to named argument")))
-       (else-when to
-         (setq b:mtdt:recipients:selected (plist-put b:mtdt:recipients:selected ':to to)))
-       (setq b:mtdt:recipients:selected (plist-put b:mtdt:recipients:selected ':cc cc))
-       (setq b:mtdt:recipients:selected (plist-put b:mtdt:recipients:selected ':bcc bcc)))))
+Based on the name of the derived commands, mailings can be accessed as commands.
+Interactive mailing commands b:mtdt:d:{someAction}/{mailingName}  that process the mailingFile accept b:mtdt:d/mailngName as an argument
+and provide various variations on processing of the mailingFile.
+#+end_org "
+  `(fset (intern (concat "b:mtdt:d/" (b:mtdt:mailing:getName|with-file ,<mailingFilePath)))
+	 (lambda (args)
+	   (interactive "p")
+	   (b:mtdt:compose|with-file ,<mailingFilePath args)
+	   )
+	 ))
 
 (orgCmntBegin "
 ** Basic Usage:
 #+BEGIN_SRC emacs-lisp
-(b:mtdt:recipients|curSet
-    :to `(,(b:email|oorr :addr (symbol-name 'mohsen.banan.byname@gmail.com)))
-    :bcc `(,(b:email|oorr :addr (symbol-name 'mohsen.banan.byname@gmail.com)))
-  )
+(b:mtdt:compose$mailing-defun)
 #+END_SRC
 " orgCmntEnd)
 
-;;;#+BEGIN:  b:elisp:defs/cl-defun :defName "b:mtdt:recipients|curUnSet" :advice ()
+;;;#+BEGIN:  b:elisp:defs/defun :defName "b:mtdt:derive/fromFile" :advice ()
 (orgCmntBegin "
-*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  cl-defun   [[elisp:(outline-show-subtree+toggle)][||]]  <<b:mtdt:recipients|curUnSet>>  --   [[elisp:(org-cycle)][| ]]
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  defun      [[elisp:(outline-show-subtree+toggle)][||]]  <<b:mtdt:derive/fromFile>>  --   [[elisp:(org-cycle)][| ]]
 " orgCmntEnd)
-(cl-defun b:mtdt:recipients|curUnSet (
+(defun b:mtdt:derive/fromFile (
 ;;;#+END:
-                                      )
+                               <mailingFilePath
+                               )
    " #+begin_org
-** DocStr: UnSet =b:mtdt:recipients:selected= by setting it to the empty list.
+** DocStr:  NOTYET. Place Holder -- Given a mailing file, derive it if needed.
 #+end_org "
-   (let* (
-          ($inHere (b:log|entry (b:func$entry)))
-          ($result nil)
-         )
-     (setq b:mtdt:recipients:selected (list))
-     $result))
+  (interactive)
+  (let* (
+        ($inHere (b:log|entry (b:func$entry)))
+	($mailingName nil)
+	($mailingBuf nil)
+	($funcSymbol nil)
+	)
+
+    (save-excursion
+      ;;(find-file-read-only <mailingFilePath)
+      ;;(setq $mailingBuf (current-buffer))
+      (setq $mailingBuf (find-file-read-only <mailingFilePath))
+      (setq $mailingName (b:mtdt:mailing:getName/with-buffer $mailingBuf))
+      (setq $funcSymbol (intern (b:mtdt:mailing:compose|get-function-name $mailingName)))
+      (unless (commandp $funcSymbol)
+        (b:mtdt:setup$with-filePath <mailingFilePath))
+      ;;(kill-buffer (current-buffer))
+      (kill-buffer $mailingBuf)
+      )
+
+      (message (s-lex-format "Derived  ${$funcSymbol} from ${<mailingFilePath}"))
+      $funcSymbol
+      ))
+
+;;;#+BEGIN:  b:elisp:defs/defun :defName "b:mtdt:derive/fromFilesList" :advice ()
+(orgCmntBegin "
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  defun      [[elisp:(outline-show-subtree+toggle)][||]]  <<b:mtdt:derive/fromFilesList>>  --   [[elisp:(org-cycle)][| ]]
+" orgCmntEnd)
+(defun b:mtdt:derive/fromFilesList (
+;;;#+END:
+                                    <mailingFilePath
+                                    )
+   " #+begin_org
+** DocStr:  NOTYET. Place Holder -- Typically used in user's initial setup to derive persistant mailings.
+#+end_org "
+    (interactive)
+  (dolist ($eachMailingFile <mailingFilesList)
+    (b:mtdt:derive/withFile $eachMailingFile)))
+
+;;;#+BEGIN:  b:elisp:defs/defun :defName "b:mtdt:derive/fromFileAndSelect" :advice ()
+(orgCmntBegin "
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  defun      [[elisp:(outline-show-subtree+toggle)][||]]  <<b:mtdt:derive/fromFileAndSelect>>  --   [[elisp:(org-cycle)][| ]]
+" orgCmntEnd)
+(defun b:mtdt:derive/fromFileAndSelect (
+;;;#+END:
+                                        <mailingFilePath
+                                        )
+   " #+begin_org
+** DocStr:  NOTYET. Place Holder -- Used by dblocks.
+#+end_org "
+  (interactive)
+  (b:mtdt:mailings|curSet (b:mtdt:derive/fromFile <mailingFilePath)))
+
 
 (orgCmntBegin "
 ** Basic Usage:
 #+BEGIN_SRC emacs-lisp
-(b:mtdt:recipients|curUnSet)
+(bFuncName)
 #+END_SRC
 " orgCmntEnd)
-
-;;;#+BEGIN:  b:elisp:defs/cl-defun :defName "b:mtdt:recipients|curSetForce" :advice ()
-(orgCmntBegin "
-*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  cl-defun   [[elisp:(outline-show-subtree+toggle)][||]]  <<b:mtdt:recipients|curSetForce>>  --   [[elisp:(org-cycle)][| ]]
-" orgCmntEnd)
-(cl-defun b:mtdt:recipients|curSetForce (
-;;;#+END:
-                         &key
-                         (to nil)
-                         (cc nil)
-                         (bcc nil)
-                        )
-   " #+begin_org
-** DocStr: Set =b:mtdt:recipients:selected= as specified.
-=to= is mandatory. =cc= and =bcc= are optional.
-#+end_org "
-   (let* (
-          ($inHere (b:log|entry (b:func$entry)))
-         )
-     (b:mtdt:recipients|curUnSet)
-     (b:mtdt:recipients|curSet
-      :to to
-      :cc cc
-      :bcc bcc
-      )))
-
-(orgCmntBegin "
-** Basic Usage:
-#+BEGIN_SRC emacs-lisp
-(b:mtdt:recipients|curSetForce
-    :to `(,(b:email|oorr :addr (symbol-name 'mohsen.banan.byname@gmail.com)))
-    :bcc `(,(b:email|oorr :addr (symbol-name 'mohsen.banan.byname@gmail.com)))
-  )
-#+END_SRC
-" orgCmntEnd)
-
 
 
 ;;;#+BEGIN: b:elisp:file/provide :modName nil
-(provide 'b:mtdt:recipients)
+(provide 'b:mtdt:derive)
 ;;;#+END:
 
 ;;;#+BEGIN: b:prog:file/endOfFile :extraParams nil

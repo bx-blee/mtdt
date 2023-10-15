@@ -115,26 +115,6 @@ Module description comes here.
 
 " orgCmntEnd)
 
-;;;#+BEGIN:  b:elisp:defs/defun :defName "b:mtdt:menuItem:define|compose" :advice ()
-(orgCmntBegin "
-*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  defun      [[elisp:(outline-show-subtree+toggle)][||]]  <<b:mtdt:menuItem:define|compose>>  --   [[elisp:(org-cycle)][| ]]
-" orgCmntEnd)
-(defun b:mtdt:menuItem:define|compose (
-;;;#+END:
-                                       )
-  " #+begin_org
-** DocStr: Return a menuItem vector. Requires dynamic update.
-#+end_org "
-  (car
-   `(
-     [,(format "Compose with fashion :  %s"
-	       b:mtdt:compose:fashion)
-      (mtdt:compose-mail/selected)
-      :help "With Selected Fashion, compose-mail"
-      :active t
-      :visible t
-      ]
-     )))
 
 ;;;#+BEGIN:  b:elisp:defs/defun :defName "b:mtdt:menuItem:define|setup-withCurBuffer" :advice ()
 (orgCmntBegin "
@@ -146,7 +126,7 @@ Module description comes here.
   " #+begin_org
 ** DocStr: Return a menuItem vector. Requires dynamic update.
 #+end_org "
-  (car
+  (nth 0
    `(
      [,(format "MTDT Setup/Derive With Current Buffer")
       (mtdt:setup/with-curBuffer)
@@ -172,7 +152,7 @@ Module description comes here.
 	)
 
     (defun $menuItem|selRecordAsSelRecipients ()
-      (car
+      (nth 0
        `(
          [,(s-lex-format "Set Selected BBDB Record As Selected Recipients")
           (b:mtdt:bbdb3/selRecordAsSelRecipients)
@@ -183,7 +163,7 @@ Module description comes here.
          )))
 
     (defun $menuItem|bbdbPopUpOtherWin ()
-      (car
+      (nth 0
        `(
          [,(s-lex-format "Pop Up *BDBD* buffer other window")
           (b:bbdb3/popUpOtherWin)
@@ -246,7 +226,7 @@ Module description comes here.
 	)
 
     (defun describeMenuItem ()
-      (car
+      (nth 0
        `(
          [,(s-lex-format "Describe b:mtdt:send:extent -- ${b:mtdt:send:extent}")
           (describe-variable 'b:mtdt:send:extent)
@@ -320,7 +300,7 @@ Module description comes here.
 	)
 
     (defun describeMenuItem ()
-      (car
+      (nth 0
        `(
          [,(s-lex-format "Describe b:mtdt:mailings:selected -- ${b:mtdt:mailings:selected}")
           (describe-variable 'b:mtdt:mailings:selected)
@@ -340,8 +320,8 @@ Module description comes here.
       nil
       ""
       (append
-       `(,(s-lex-format "Select/Describe: Current Mailing:: ${b:mtdt:mailings:selected}"))
-       (list :help "Current Mailing can be set in a variety of ways.")
+       `(,(s-lex-format "Select b:mtdt:mailings:selected= ${b:mtdt:mailings:selected}"))
+       (list :help "Selected Mailing can be set in a variety of ways.")
        (list (s-- 3))
        (list (s-- 4))
        (mapcar (lambda (<each)
@@ -382,7 +362,7 @@ Module description comes here.
 " orgCmntEnd)
 (defun b:mtdt:menu:define|derivedMailingInvoke (
 ;;;#+END:
-                                            )
+                                                )
   " #+begin_org
 ** DocStr: Return b:mtdt:menu:curMailingSelect
 #+end_org "
@@ -391,7 +371,7 @@ Module description comes here.
 	)
 
     (defun describeMenuItem ()
-      (car
+      (nth 0
        `(
          [,(s-lex-format "Describe b:mtdt:mailings:selected -- ${b:mtdt:mailings:selected}")
           (describe-variable 'b:mtdt:mailings:selected)
@@ -415,7 +395,7 @@ Module description comes here.
        (list (s-- 3))
        (list (s-- 4))
        (mapcar (lambda (<each)
-		 (vector (s-lex-format "Invoke Derived Mailing: ${<each}")
+		 (vector (s-lex-format "Invoke Mailing: ${<each}")
 			 `(funcall #'b:mtdt:mailings|framedComposeWithFn ',<each)
 			   :help (s-lex-format "Invoke Derived Mailing: ${<each}")
 			 ))
@@ -459,9 +439,9 @@ Module description comes here.
   " #+begin_org
 ** DocStr: Return a menuItem vector. Requires dynamic update.
 #+end_org "
-  (car
+  (nth 0
    `(
-     [,(s-lex-format "Describe Current Recipients b:mtdt:recipients:selected is ${b:mtdt:recipients:selected}")
+     [,(s-lex-format "Selected Recips b:mtdt:recipients:selected = ${b:mtdt:recipients:selected}")
       (describe-variable 'b:mtdt:recipients:selected)
       :help "There are various different ways of setting b:mtdt:recipients:selected"
       :active t
@@ -476,15 +456,15 @@ Module description comes here.
 " orgCmntEnd)
 (defun b:mtdt:menuItem:define|selMailingCompose (
 ;;;#+END:
-                                        )
+                                                 )
   " #+begin_org
 ** DocStr: Return a menuItem vector. Requires dynamic update.
 #+end_org "
-  (car
+  (nth 0
    `(
-     [,(format "Compose Current Mailing: curMailing")
-      (mtdt:setup/with-curBuffer)
-      :help "Mail Composition Distribution and Tracking (MTDT) Setup With Current Buffer -- (mtdt:setup/with-curBuffer)"
+     [,(s-lex-format "Compose ${b:mtdt:mailings:selected}")
+      (b:mtdt:mailings|framedComposeWithFn b:mtdt:mailings:selected)
+      :help "Compose with selected mailing"
       :active t
       :visible t
       ]
@@ -500,10 +480,10 @@ Module description comes here.
   " #+begin_org
 ** DocStr: Return a menuItem vector. Requires dynamic update.
 #+end_org "
-  (car
+  (nth 0
    `(
-     [,(format "Originate Current Mailing: curMailing")
-      (mtdt:setup/with-curBuffer)
+     [,(s-lex-format "Originate ${b:mtdt:mailings:selected}")
+      (b:mtdt:mailings|framedComposeWithFn b:mtdt:mailings:selected)
       :help "Mail Composition Distribution and Tracking (MTDT) Setup With Current Buffer -- (mtdt:setup/with-curBuffer)"
       :active t
       :visible t
@@ -520,10 +500,10 @@ Module description comes here.
   " #+begin_org
 ** DocStr: Return a menuItem vector. Requires dynamic update.
 #+end_org "
-  (car
+  (nth 0
    `(
-     [,(format "Send Current Mailing: curMailing, curRecips, sendExtent")
-      (mtdt:setup/with-curBuffer)
+     [,(s-lex-format "Send SelectedMailing to SelectedRecips with ${b:mtdt:send:extent}")
+      (b:mtdt:send/selMailingToSelRecips)
       :help "Mail Composition Distribution and Tracking (MTDT) Setup With Current Buffer -- (mtdt:setup/with-curBuffer)"
       :active t
       :visible t
@@ -540,7 +520,7 @@ Module description comes here.
   " #+begin_org
 ** DocStr: Return a menuItem vector. Requires dynamic update.
 #+end_org "
-  (car
+  (nth 0
    `(
      [,(format "Distribute Current Mailing: curMailing, curRecipsList, sendExtent")
       (mtdt:setup/with-curBuffer)

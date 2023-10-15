@@ -1,7 +1,10 @@
 ;;; b:mtdt:mailings.el --- FILE DESCRIPTION COMES HERE  -*- lexical-binding: t; -*-
 
 (orgCmntBegin "
-* Summary:
+* Summary: NOTYET, Incomplete and dirty. This module should be redeveloped in conjunction with b:mtdt:derive.el
+Scope of this file is:
+1) Facilities for manipulation of headers of mailings.
+2) Commands named b:mtdt:d:{someAction}/{mailingName} that build on  b:mtdt:d/{mailingName}
 " orgCmntEnd)
 
 ;;;#+BEGIN: b:prog:file/proclamations :outLevel 1
@@ -692,7 +695,7 @@ params can be retrieved with plist."
 
 
 (defun b:mtdt:derive/withFile (<mailingFilePath)
-  "Given a mailing file, initiate an outgoing message."
+  "Move to b:mtdt:derive. Given a mailing file, initiate an outgoing message."
   (interactive)
   (let* (
         ($inHere (b:log|entry (b:func$entry)))
@@ -718,14 +721,14 @@ params can be retrieved with plist."
       ))
 
 (defun b:mtdt:derive/withFilesList (<mailingFilesList)
-  "Typically used in user's initial setup to derive persistant mailings."
+  "Move to b:mtdt:derive. Typically used in user's initial setup to derive persistant mailings."
   (interactive)
   (dolist ($eachMailingFile <mailingFilesList)
     (b:mtdt:derive/withFile $eachMailingFile)))
 
 
 (defun b:mtdt:derive/withFileAndCurSet (<mailingFilePath)
-  ""
+  "Move to b:mtdt:derive."
   (interactive)
   (b:mtdt:mailings|curSet (b:mtdt:derive/withFile <mailingFilePath)))
 
@@ -778,7 +781,9 @@ ModuleLocal.
     (message (s-lex-format "mailingParams: ${$mailingParams} extSrcBase ${<extSrcBase}"))
 
     (unless <extSrcBase
-      (b:mtdt:compose|basedOnMailingTemplateFile  <mailingFilePath)
+      (display-buffer
+       (switch-to-buffer
+        (b:mtdt:compose|basedOnMailingTemplateFile  <mailingFilePath)))
       )
     (when <extSrcBase
       (setq $ephemeraMailingFilePath
@@ -812,10 +817,12 @@ When composeFwrk is msgOrg, switch to org-msg-edit-mode."
          ($ephemeraMailingFilePath nil)
 	 (<extSrcBase (or (plist-get $mailingParams :extSrcBase) nil))
 	 ($composeFwrk (b:mtdt:mailing:getComposeFwrk|with-buffer <mailingBuf))
+         ($result)
 	 )
     (message (s-lex-format "mailingParams: ${$mailingParams} extSrcBase ${<extSrcBase} $composeFwrk=${$composeFwrk}"))
 
     (compose-mail)
+    (setq $result (current-buffer))
     (erase-buffer)
     (insert-buffer-substring <mailingBuf)
     (message-goto-to)
@@ -829,6 +836,7 @@ When composeFwrk is msgOrg, switch to org-msg-edit-mode."
       )
      (t
       (message (s-lex-format "Unknown $composeFwrk=${$composeFwrk}"))))
+    $result
     ))
 
 
