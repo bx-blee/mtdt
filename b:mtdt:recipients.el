@@ -67,7 +67,7 @@ Module description comes here.
 
 (defvar b:mtdt:recipients:selected
   (list)
-  "Current recipients. Used as a plist. to, cc, bcc.")
+  "Selected recipients. Used as a plist. to, cc, bcc.")
 
 
 ;;;#+BEGIN: blee:bxPanel:foldingSection :outLevel 0 :title "Common Facilities" :extraInfo "Library Candidates"
@@ -76,11 +76,11 @@ Module description comes here.
 " orgCmntEnd)
 ;;;#+END:
 
-;;;#+BEGIN:  b:elisp:defs/cl-defun :defName "b:mtdt:recipients|curSet" :advice ()
+;;;#+BEGIN:  b:elisp:defs/cl-defun :defName "b:mtdt:recipients|selectSafe" :advice ()
 (orgCmntBegin "
-*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  cl-defun   [[elisp:(outline-show-subtree+toggle)][||]]  <<b:mtdt:recipients|curSet>>  --   [[elisp:(org-cycle)][| ]]
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  cl-defun   [[elisp:(outline-show-subtree+toggle)][||]]  <<b:mtdt:recipients|selectSafe>>  --   [[elisp:(org-cycle)][| ]]
 " orgCmntEnd)
-(cl-defun b:mtdt:recipients|curSet (
+(cl-defun b:mtdt:recipients|selectSafe (
 ;;;#+END:
                          &key
                          (to nil)
@@ -121,6 +121,38 @@ Module description comes here.
   )
 #+END_SRC
 " orgCmntEnd)
+
+
+;;;#+BEGIN:  b:elisp:defs/cl-defun :defName "b:mtdt:recipients|curSet" :advice ()
+(orgCmntBegin "
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  cl-defun   [[elisp:(outline-show-subtree+toggle)][||]]  <<b:mtdt:recipients|curSet>>  --   [[elisp:(org-cycle)][| ]]
+" orgCmntEnd)
+(cl-defun b:mtdt:recipients|curSet (
+;;;#+END:
+                         &key
+                         (to nil)
+                         (cc nil)
+                         (bcc nil)
+                        )
+   " #+begin_org
+** DocStr: Set =b:mtdt:recipients:selected= as specified.
+=to= is mandatory. =cc= and =bcc= are optional.
+#+end_org "
+  (b:mtdt:recipients|curUnSet)
+  (b:mtdt:recipients|selectSafe :to to :cc cc :bcc bcc))
+
+
+
+  (orgCmntBegin "
+** Basic Usage:
+#+BEGIN_SRC emacs-lisp
+(b:mtdt:recipients|curSet
+    :to `(,(b:email|oorr :addr (symbol-name 'mohsen.banan.byname@gmail.com)))
+    :bcc `(,(b:email|oorr :addr (symbol-name 'mohsen.banan.byname@gmail.com)))
+  )
+#+END_SRC
+" orgCmntEnd)
+
 
 ;;;#+BEGIN:  b:elisp:defs/cl-defun :defName "b:mtdt:recipients|curUnSet" :advice ()
 (orgCmntBegin "

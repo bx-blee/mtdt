@@ -130,6 +130,57 @@ Module description comes here.
 #+END_SRC
 " orgCmntEnd)
 
+
+;;;#+BEGIN:  b:elisp:defs/cl-defun :defName "b:mtdt:distr|applyRecipsFormsToMailingFns" :advice ()
+(orgCmntBegin "
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  cl-defun   [[elisp:(outline-show-subtree+toggle)][||]]  <<b:mtdt:distr|applyRecipsFormsToMailingFns>>  --   [[elisp:(org-cycle)][| ]]
+" orgCmntEnd)
+(cl-defun b:mtdt:distr|applyRecipsFormsToMailingFns (
+;;;#+END:
+                                                     &key
+                                                     (mailingFns (list))
+                                                     (recipsForms (list))
+                                                     (extent b:mtdt:send:extent::promptSend)
+                                                     )
+   " #+begin_org
+** DocStr:
+#+end_org "
+   (let* (
+          ($inHere (b:log|entry (b:func$entry)))
+          )
+     (if-unless mailingFns
+       (b::error $inHere
+                 (s-lex-format
+                  "Missing :mailingFns named argument")))
+     (else-when mailingFns
+       (if-unless recipsForms
+         (b::error $inHere
+                   (s-lex-format
+                    "Missing :recipsForms named argument")))
+       (else-when recipsForms
+         (dolist ($eachRecipsForm recipsForms)
+           ;;(message (s-lex-format "${$eachCurSetForm}")
+           (eval $eachRecipsForm)
+           (b:mtdt:send|applySelRecipientsToMailingFns
+            :mailingFns mailingFns
+            :extent extent)
+           )))))
+
+(orgCmntBegin "
+** Basic Usage:
+#+BEGIN_SRC emacs-lisp
+(b:mtdt:distr|applyRecipientsCurSetListToMailings
+    :mailingFile `(,(symbol-name '/bxo/r3/iso/piu_mbFullUsage/mailings/compose/com/gmail/mohsen.banan.byname/from/org/content.msgOrg))
+    :recipsForms exampleRecipientsCurSetList
+  )
+(b:mtdt:distr|applyRecipientsCurSetListToMailings
+    :mailings `(,(symbol-name '/bxo/r3/iso/piu_mbFullUsage/mailings/compose/com/gmail/mohsen.banan.byname/from/org/content.msgOrg))
+    :curSetForms b:temp22
+  )
+#+END_SRC
+" orgCmntEnd)
+
+
 ;;;#+BEGIN:  b:elisp:defs/cl-defun :defName "b:mtdt:distr|applyRecipientsRecipsFormsFilesToMailingFiles" :advice ()
 (orgCmntBegin "
 *  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  cl-defun   [[elisp:(outline-show-subtree+toggle)][||]]  <<b:mtdt:distr|applyRecipientsRecipsFormsFilesToMailingFiles>>  --   [[elisp:(org-cycle)][| ]]
@@ -175,6 +226,97 @@ Module description comes here.
   )
 #+END_SRC
 " orgCmntEnd)
+
+;;;#+BEGIN:  b:elisp:defs/cl-defun :defName "b:mtdt:distr|applyRecipientsRecipsFormsFilesToMailingFns" :advice ()
+(orgCmntBegin "
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  cl-defun   [[elisp:(outline-show-subtree+toggle)][||]]  <<b:mtdt:distr|applyRecipientsRecipsFormsFilesToMailingFns>>  --   [[elisp:(org-cycle)][| ]]
+" orgCmntEnd)
+(cl-defun b:mtdt:distr|applyRecipientsRecipsFormsFilesToMailingFns (
+;;;#+END:
+                                                            &key
+                                                            (mailingFns (list))
+                                                            (recipsFormsFiles (list))
+                                                            (extent b:mtdt:send:extent::promptSend)
+                                                            )
+   " #+begin_org
+** DocStr:
+#+end_org "
+   (let* (
+          ($inHere (b:log|entry (b:func$entry)))
+          ($recipsForms nil)
+          )
+     (if-unless mailingFns
+       (b::error $inHere
+                 (s-lex-format
+                  "Missing :mailingFiles named argument")))
+     (else-when mailingFns
+       (if-unless recipsFormsFiles
+         (b::error $inHere
+                   (s-lex-format
+                    "Missing :recipsFormsFiles named argument")))
+       (else-when recipsFormsFiles
+         (dolist ($eachRecipsFormsFiles recipsFormsFiles)
+           (setq $recipsForms (b:eval-file $eachRecipsFormsFiles))
+           (b:mtdt:distr|applyRecipsFormsToMailingFns
+            :mailingFns mailingFns
+            :recipsForms $recipsForms
+            :extent extent)
+           )))))
+
+(orgCmntBegin "
+** Basic Usage:
+#+BEGIN_SRC emacs-lisp
+(b:mtdt:distr|applyRecipsFormsFilesToMailingFiles
+    :mailingFiles `(,(symbol-name '/bxo/r3/iso/piu_mbFullUsage/mailings/compose/com/gmail/mohsen.banan.byname/from/org/content.msgOrg))
+    :recipsFormsFiles `(,(symbol-name './examples/exampleRecipientsList.el))
+  )
+#+END_SRC
+" orgCmntEnd)
+
+
+;;;#+BEGIN:  b:elisp:defs/defun :defName "b:mtdt:distr/selMailingToSelRecipsFormsFile" :advice ()
+(orgCmntBegin "
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  defun      [[elisp:(outline-show-subtree+toggle)][||]]  <<b:mtdt:distr/selMailingToSelRecipsFormsFile>>  --   [[elisp:(org-cycle)][| ]]
+" orgCmntEnd)
+(defun b:mtdt:distr/selMailingToSelRecipsFormsFile (
+;;;#+END:
+                                                    )
+  " #+begin_org
+** DocStr:
+#+end_org "
+   (let* (
+          ($inHere (b:log|entry (b:func$entry)))
+          )
+     (if-unless b:mtdt:mailings:selected
+       (b::error $inHere
+                 (s-lex-format
+                  "Bad Usage: b:mtdt:mailings:selected is nil")))
+     (if-when b:mtdt:mailings:selected
+        (if-unless b:mtdt:distr:recipsFormsFileSelected
+          (b::error $inHere
+                    (s-lex-format
+                     "Bad Usage: b:mtdt:distr:recipsFormsFileSelected is nil")))
+        (if-when b:mtdt:distr:recipsFormsFileSelected
+          (b:mtdt:distr|applyRecipientsRecipsFormsFilesToMailingFns
+           :mailingFns (list b:mtdt:mailings:selected)
+           :recipsFormsFiles (list b:mtdt:distr:recipsFormsFileSelected)
+           :extent b:mtdt:send:extent
+          )))))
+
+(orgCmntBegin "
+** Basic Usage:
+#+BEGIN_SRC emacs-lisp
+(progn
+  (setq b:mtdt:distr:recipsFormsFileSelected (symbol-name './examples/exampleRecipientsList.el))
+  (b:mtdt:distr/selMailingToSelRecipsFormsFile)
+ )
+#+END_SRC
+
+#+RESULTS:
+: No Records
+
+" orgCmntEnd)
+
 
 
 ;;;#+BEGIN: b:elisp:file/provide :modName nil

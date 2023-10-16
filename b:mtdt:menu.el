@@ -450,6 +450,47 @@ Module description comes here.
      )))
 
 
+;;;#+BEGIN:  b:elisp:defs/defun :defName "b:mtdt:menuItem:define|selRecipsFormsDescribe" :advice ()
+(orgCmntBegin "
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  defun      [[elisp:(outline-show-subtree+toggle)][||]]  <<b:mtdt:menuItem:define|selRecipsFormsDescribe>>  --   [[elisp:(org-cycle)][| ]]
+" orgCmntEnd)
+(defun b:mtdt:menuItem:define|selRecipsFormsDescribe (
+;;;#+END:
+                                                   )
+  " #+begin_org
+** DocStr: Return a menuItem vector. Requires dynamic update.
+#+end_org "
+  (nth 0
+   `(
+     [,(s-lex-format "Selected Dist  Recips b:mtdt:distr:recipsFormsSelected = ${b:mtdt:distr:recipsFormsSelected}")
+      (describe-variable 'b:mtdt:distr:recipsFormsSelected)
+      :help "There are various different ways of setting b:mtdt:distr:recipsFormsSelected"
+      :active t
+      :visible t
+      ]
+     )))
+
+
+;;;#+BEGIN:  b:elisp:defs/defun :defName "b:mtdt:menuItem:define|selRecipsFormsFileDescribe" :advice ()
+(orgCmntBegin "
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  defun      [[elisp:(outline-show-subtree+toggle)][||]]  <<b:mtdt:menuItem:define|selRecipsFormsFileDescribe>>  --   [[elisp:(org-cycle)][| ]]
+" orgCmntEnd)
+(defun b:mtdt:menuItem:define|selRecipsFormsFileDescribe (
+;;;#+END:
+                                                   )
+  " #+begin_org
+** DocStr: Return a menuItem vector. Requires dynamic update.
+#+end_org "
+  (nth 0
+   `(
+     [,(s-lex-format "Selected Dist Recips b:mtdt:distr:recipsFormsFileSelected = ${b:mtdt:distr:recipsFormsFileSelected}")
+      (describe-variable 'b:mtdt:distr:recipsFormsFileSelected)
+      :help "There are various different ways of setting b:mtdt:distr:recipsFormsFileSelected"
+      :active t
+      :visible t
+      ]
+     )))
+
 ;;;#+BEGIN:  b:elisp:defs/defun :defName "b:mtdt:menuItem:define|selMailingCompose" :advice ()
 (orgCmntBegin "
 *  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  defun      [[elisp:(outline-show-subtree+toggle)][||]]  <<b:mtdt:menuItem:define|selMailingCompose>>  --   [[elisp:(org-cycle)][| ]]
@@ -522,8 +563,8 @@ Module description comes here.
 #+end_org "
   (nth 0
    `(
-     [,(format "Distribute Current Mailing: curMailing, curRecipsList, sendExtent")
-      (mtdt:setup/with-curBuffer)
+     [,(s-lex-format "Distribute SelectedMailing to SelRecipsFormsFile with ${b:mtdt:send:extent}")
+      (b:mtdt:distr/selMailingToSelRecipsFormsFile)
       :help "Mail Composition Distribution and Tracking (MTDT) Setup With Current Buffer -- (mtdt:setup/with-curBuffer)"
       :active t
       :visible t
@@ -627,6 +668,14 @@ Module description comes here.
 
     (easy-menu-add-item b:mtdt:menu:main nil
                        (b:mtdt:menuItem:define|selRecipsDescribe)
+                       (s-- 7))
+
+    (easy-menu-add-item b:mtdt:menu:main nil
+                       (b:mtdt:menuItem:define|selRecipsFormsDescribe)
+                       (s-- 7))
+
+    (easy-menu-add-item b:mtdt:menu:main nil
+                       (b:mtdt:menuItem:define|selRecipsFormsFileDescribe)
                        (s-- 7))
 
     (easy-menu-add-item b:mtdt:menu:main nil

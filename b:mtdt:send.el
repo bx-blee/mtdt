@@ -131,6 +131,9 @@ Return 'Nu of Records=' if multiple records are found for =<nameStr=.
 	((string-equal "mail-mode" major-mode)
          (mail-send-and-exit)
          )
+	((string-equal "message-mode" major-mode)
+         (message-send-and-exit)
+         )
         (t
          (user-error (s-lex-format "${$inHere} -- Unexpected mode"))
          ))))
@@ -235,7 +238,7 @@ Returns /nothing/.
      (if-unless mailingFns
        (b::error $inHere
                  (s-lex-format
-                  "Missing :mailing named argument")))
+                  "Missing :mailingFns named argument")))
      (else-when mailingFns
        (if-unless to
          (b::error $inHere
