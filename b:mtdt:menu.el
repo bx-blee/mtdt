@@ -211,6 +211,94 @@ Module description comes here.
 " orgCmntEnd)
 
 
+
+;;;#+BEGIN:  b:elisp:defs/defun :defName "b:mtdt:menu:define|names" :advice ()
+(orgCmntBegin "
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  defun      [[elisp:(outline-show-subtree+toggle)][||]]  <<b:mtdt:menu:define|names>>  --   [[elisp:(org-cycle)][| ]]
+" orgCmntEnd)
+(defun b:mtdt:menu:define|names (
+;;;#+END:
+                                 )
+  " #+begin_org
+** DocStr: Return b:mtdt:menu:sendExtentSelect
+#+end_org "
+  (let (
+	($thisFuncName (compile-time-function-name))
+	)
+
+    (defun $menuItem|processBufferForBbdbRecip ()
+      (nth 0
+       `(
+         [,(s-lex-format "processBufferForBbdbRecip")
+          (b:mtdt:names/processBufferForBbdbRecip)
+          :help "processBufferForBbdbRecip"
+          :active t
+          :visible t
+          ]
+         )))
+
+    (defun $menuItem|processBufferForAddrRecip ()
+      (nth 0
+       `(
+         [,(s-lex-format "processBufferForAddrRecip")
+          (b:mtdt:names/processBufferForAddrRecip)
+          :help "processBufferForAddrRecip"
+          :active t
+          :visible t
+          ]
+         )))
+
+    (defun $menuItem|setBufferToRecipsFormsFile ()
+      (nth 0
+       `(
+         [,(s-lex-format "setBufferToRecipsFormsFile")
+          (b:mtdt:distr|curBufAsRecipsFormsFileSelected)
+          :help "setBufferToRecipsFormsFile"
+          :active t
+          :visible t
+          ]
+         )))
+
+    (easy-menu-define
+      b:mtdt:menu:names
+      nil
+      "DocStr of this menu --"
+      `(,(format (s-lex-format "Names And RecipsForms Buffer Commands"))
+	:help "With BBDB Select MTDT Recipients"
+	,(s-- 3)
+	,(s-- 4)
+	,(s-- 5)
+	,(s-- 6)
+	,(s-- 7)
+	,(s-- 8)
+	,(s-- 9)
+	))
+
+    (easy-menu-add-item b:mtdt:menu:names nil ($menuItem|processBufferForAddrRecip) (s-- 3))
+    (easy-menu-add-item b:mtdt:menu:names nil ($menuItem|processBufferForBbdbRecip) (s-- 4))
+    (easy-menu-add-item b:mtdt:menu:names nil ($menuItem|setBufferToRecipsFormsFile) (s-- 5))
+
+    (easy-menu-add-item
+     b:mtdt:menu:names
+     nil
+     (bx:menu:panelAndHelp|define
+      "/bisos/panels/blee-core/mail/_nodeBase_"
+      $thisFuncName
+      (intern (symbol-name (gensym))))
+     (s-- 5))
+
+    'b:mtdt:menu:names
+    ))
+
+(orgCmntBegin "
+** Basic Usage:
+[[elisp:(popup-menu (symbol-value (b:mtdt:menu:define|names)))][This menu as an org link]]
+#+BEGIN_SRC emacs-lisp
+(popup-menu (symbol-value (b:mtdt:menu:define|names)))
+#+END_SRC
+" orgCmntEnd)
+
+
 ;;;#+BEGIN:  b:elisp:defs/defun :defName "b:mtdt:menu:define|sendExtentSelect" :advice ()
 (orgCmntBegin "
 *  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  defun      [[elisp:(outline-show-subtree+toggle)][||]]  <<b:mtdt:menu:define|sendExtentSelect>>  --   [[elisp:(org-cycle)][| ]]
@@ -640,6 +728,7 @@ Module description comes here.
 	 ,(s-- 7)
 	 ,(s-- 8)
 	 ,(s-- 9)
+	 ,(s-- 10)
 	 ))
 
     (easy-menu-add-item b:mtdt:menu:main nil
@@ -695,6 +784,10 @@ Module description comes here.
                         (b:mtdt:menuItem:define|selMailingDistribute)
                         (s-- 8))
 
+    (easy-menu-add-item b:mtdt:menu:main nil
+                       (b:mtdt:menu:define|names)
+                       (s-- 9))
+
     (easy-menu-add-item
      b:mtdt:menu:main
      nil
@@ -702,7 +795,7 @@ Module description comes here.
       "/bisos/panels/blee-core/mail/_nodeBase_"
       $thisFuncName
       (intern (symbol-name (gensym))))
-     (s-- 9))
+     (s-- 10))
 
     'b:mtdt:menu:main
     ))

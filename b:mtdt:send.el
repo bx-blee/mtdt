@@ -246,7 +246,10 @@ Returns /nothing/.
                     "Missing :to named argument")))
        (else-when to
          (dolist ($eachMailing mailingFns)
-           (b:mtdt:mailings|framedComposeWithFn $eachMailing)
+           (when (eq extent b:mtdt:send:extent::doSend)
+             (call-interactively  $eachMailing))
+           (when (eq extent b:mtdt:send:extent::promptSend)
+             (b:mtdt:mailings|framedComposeWithFn $eachMailing))
            (dolist ($eachRecipient to)
              (mail-to)
              (b:email:address|insert $eachRecipient)

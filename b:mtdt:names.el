@@ -318,6 +318,48 @@ Returns
 " orgCmntEnd)
 
 
+;;;#+BEGIN:  b:elisp:defs/cl-defun :defName "b:mtdt:names|processLineForAddrRecip" :advice ()
+(orgCmntBegin "
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  cl-defun   [[elisp:(outline-show-subtree+toggle)][||]]  <<b:mtdt:names|processLineForAddrRecip>>  --   [[elisp:(org-cycle)][| ]]
+" orgCmntEnd)
+(cl-defun b:mtdt:names|processLineForAddrRecip (
+;;;#+END:
+                                             <line
+                                             )
+   " #+begin_org
+** DocStr: With =<line= produce an entry for :to recipient.
+#+end_org "
+   (let* (
+          ($inHere (b:log|entry (b:func$entry)))
+          ($address (b:mtdt:bbdb3|addrForNameGet <line))
+          ($result)
+         )
+     (cond
+      ((string= "No Records" $address)
+       (setq $result (s-lex-format "\n  ;; ${<line} has ${$address}"))
+       )
+      ((string-match "^Nu of Records" $address)
+       (setq $result (s-lex-format "\n  ;; ${$address}"))
+       )
+      (t
+       (setq $result
+           (s-lex-format "
+  (b:mtdt:recipients|curSet
+   :to `(,(b:email|oorr :addr \"${<line} <${$address}>\"))
+   )"
+                         ))))
+     $result))
+
+(orgCmntBegin "
+** Basic Usage:
+#+BEGIN_SRC emacs-lisp
+(b:mtdt:names|processLineForAddrRecip (symbol-name 'contentOfLine))
+#+END_SRC
+
+" orgCmntEnd)
+
+
+
 
 ;;;#+BEGIN: blee:bxPanel:foldingSection :outLevel 0 :title "Output: Write and Record Names" :extraInfo "BBDB2 -- Obsolete Code"
 (orgCmntBegin "

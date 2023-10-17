@@ -81,6 +81,32 @@ Module description comes here.
 " orgCmntEnd)
 ;;;#+END:
 
+
+;;;#+BEGIN:  b:elisp:defs/defun :defName "b:mtdt:distr|curBufAsRecipsFormsFileSelected" :advice ()
+(orgCmntBegin "
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  defun      [[elisp:(outline-show-subtree+toggle)][||]]  <<b:mtdt:distr|curBufAsRecipsFormsFileSelected>>  --   [[elisp:(org-cycle)][| ]]
+" orgCmntEnd)
+(defun b:mtdt:distr|curBufAsRecipsFormsFileSelected (
+;;;#+END:
+
+                                                     )
+   " #+begin_org
+** DocStr:
+#+end_org "
+   (let* (
+          ($inHere (b:log|entry (b:func$entry)))
+          )
+     (setq b:mtdt:distr:recipsFormsFileSelected (buffer-file-name))))
+
+
+(orgCmntBegin "
+** Basic Usage:
+#+BEGIN_SRC emacs-lisp
+(b:mtdt:distr|curBufAsRecipsFormsFileSelected)
+#+END_SRC
+" orgCmntEnd)
+
+
 ;;;#+BEGIN:  b:elisp:defs/cl-defun :defName "b:mtdt:distr|applyRecipsFormsToMailingFiles" :advice ()
 (orgCmntBegin "
 *  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  cl-defun   [[elisp:(outline-show-subtree+toggle)][||]]  <<b:mtdt:distr|applyRecipsFormsToMailingFiles>>  --   [[elisp:(org-cycle)][| ]]

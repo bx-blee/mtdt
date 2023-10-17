@@ -126,9 +126,9 @@
 ** +
 ** This section focusses on mailings selection, editable mailings not distribution
 ** B|
-####+BEGIN: blee:bxPanel:foldingSection :outLevel 1 :sep t :title "Mailings Selection Panel" :anchor "" :extraInfo "Pre-activity. After Mailings Creation"
+####+BEGIN: blee:bxPanel:foldingSection :outLevel 1 :sep t :title "Mailings Derivation and Selection Panel" :anchor "" :extraInfo "Pre-activity. After Mailings Creation"
 * /[[elisp:(beginning-of-buffer)][|^]]  [[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]] [[elisp:(delete-other-windows)][|1]]/
-* [[elisp:(show-all)][(>]]  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_  _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_       [[elisp:(outline-show-subtree+toggle)][| *Mailings Selection Panel:* |]]  Pre-activity. After Mailings Creation  [[elisp:(org-shifttab)][<)]] E|
+* [[elisp:(show-all)][(>]]  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_  _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_       [[elisp:(outline-show-subtree+toggle)][| *Mailings Derivation and Selection Panel:* |]]  Pre-activity. After Mailings Creation  [[elisp:(org-shifttab)][<)]] E|
 ####+END
 ** +
 ** Initiated with F3-c-c which is a set of dblocks and editable.
@@ -211,6 +211,20 @@
 ** +
 ** When satisfied with your edits, send from mailing buffer as an ordinary  mail-buffer.
 ** A log of that mailing will be made.
+** B|
+####+BEGIN: blee:bxPanel:foldingSection :outLevel 0 :sep t :title "Mailing Sending Workflow -- ~Recipients Selection: bbdb, names and forms~ --" :anchor "" :extraInfo ""
+* /[[elisp:(beginning-of-buffer)][|^]]  [[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]] [[elisp:(delete-other-windows)][|1]]/
+* [[elisp:(show-all)][(>]]  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_  _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_     [[elisp:(outline-show-subtree+toggle)][| _Mailing Sending Workflow -- ~Recipients Selection: bbdb, names and forms~ --_: |]]    [[elisp:(org-shifttab)][<)]] E|
+####+END
+** +
+** Sending involves selection of mailing, selection of recipients and
+** B|
+####+BEGIN: blee:bxPanel:foldingSection :outLevel 1 :sep t :title "Mailing Recipients Selection" :anchor "" :extraInfo ""
+* /[[elisp:(beginning-of-buffer)][|^]]  [[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]] [[elisp:(delete-other-windows)][|1]]/
+* [[elisp:(show-all)][(>]]  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_  _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_       [[elisp:(outline-show-subtree+toggle)][| *Mailing Recipients Selection:* |]]    [[elisp:(org-shifttab)][<)]] E|
+####+END
+** +
+**
 ** B|
 ####+BEGIN: blee:bxPanel:foldingSection :outLevel 0 :sep t :title "Mailing Distribution Workflow -- ~dist and names~ --" :anchor "" :extraInfo ""
 * /[[elisp:(beginning-of-buffer)][|^]]  [[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]] [[elisp:(delete-other-windows)][|1]]/
