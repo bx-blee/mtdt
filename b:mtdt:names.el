@@ -89,14 +89,17 @@ Module description comes here.
    (let* (
           ($inHere (b:log|entry (b:func$entry)))
          )
-
      (if-unless inFile
        (b::error $inHere
                  (s-lex-format
-                  "Bad usage: b:mtdt:recipients:selected already set -- (b:mtdt:recipients|curUnSet)")))
+                  "Bad usage: Missing inFile")))
      (else-when inFile
-       (message "read in the file")
-       )))
+       (with-current-buffer
+         (find-file-read-only inFile)
+         (b:mtdt:names/processBufferForAddrRecip
+            :recipsFile outFile)
+         ))))
+
 
 (orgCmntBegin "
 ** Basic Usage:
@@ -126,14 +129,16 @@ Module description comes here.
    (let* (
           ($inHere (b:log|entry (b:func$entry)))
          )
-
      (if-unless inFile
        (b::error $inHere
                  (s-lex-format
-                  "Bad usage: b:mtdt:recipients:selected already set -- (b:mtdt:recipients|curUnSet)")))
+                  "Bad usage: Missing inFile")))
      (else-when inFile
-       (message "read in the file")
-       )))
+       (with-current-buffer
+         (find-file-read-only inFile)
+         (b:mtdt:names/processBufferForBbdbRecip
+            :recipsFile outFile)
+         ))))
 
 (orgCmntBegin "
 ** Basic Usage:
