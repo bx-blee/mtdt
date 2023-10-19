@@ -44,23 +44,27 @@ d####+BEGIN: blee:bxPanel:foldingSection :outLevel 1 :sep t :title "Bugs" :ancho
 ####+END
 ** +
 ** TODO bash invokations do not return to shell. Add with-current-buffer perhaps.
+** TODO After send a space is inserted after the From line
 ** B|
 ####+BEGIN: blee:bxPanel:foldingSection :outLevel 1 :sep t :title "New Features" :anchor "" :extraInfo "Development"
 * /[[elisp:(beginning-of-buffer)][|^]]  [[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]] [[elisp:(delete-other-windows)][|1]]/
 * [[elisp:(show-all)][(>]]  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_  _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_       [[elisp:(outline-show-subtree+toggle)][| *New Features:* |]]  Development  [[elisp:(org-shifttab)][<)]] E|
 ####+END
 ** +
-** TODO Distribution Menu not DistributionItem
-** TODO Add Logs Menu
-** TODO In convertNamesToRecips, also select
-** TODO Truncate length of mailingFile
+** DONE Distribution Menu not DistributionItem
+** DONE Add Logs Menu
+** DONE In convertNamesToRecips, also select
+** DONE Truncate length of mailingFile
+** TODO Add string on top of auto generated recips.el saying it is auto geneated.
+** TODO Add names creation to bbdb3. And from bbdb3 to distribution.
+** TODO Add MTDT is in COMEEGA comment to README file.
 ** B|
 ####+BEGIN: blee:bxPanel:foldingSection :outLevel 1 :sep t :title "Sanitation" :anchor "" :extraInfo "Development"
 * /[[elisp:(beginning-of-buffer)][|^]]  [[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]] [[elisp:(delete-other-windows)][|1]]/
 * [[elisp:(show-all)][(>]]  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_  _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_       [[elisp:(outline-show-subtree+toggle)][| *Sanitation:* |]]  Development  [[elisp:(org-shifttab)][<)]] E|
 ####+END
 ** +
-** TODO Replace curSet with select in function and variable naming
+** DONE Replace curSet with select in function and variable naming
 ** B|
 ####+BEGIN: blee:bxPanel:foldingSection :outLevel 1 :sep t :title "Next Generation" :anchor "" :extraInfo "Development"
 * /[[elisp:(beginning-of-buffer)][|^]]  [[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]] [[elisp:(delete-other-windows)][|1]]/
@@ -68,6 +72,7 @@ d####+BEGIN: blee:bxPanel:foldingSection :outLevel 1 :sep t :title "Bugs" :ancho
 ####+END
 ** +
 ** TODO Restructure b:mtdt:mailing.el into b:mtdt:derive.el
+** TODO Move towards realeasing as a package
 ** B|
 ####+BEGIN: blee:bxPanel:separator :outLevel 1
 * /[[elisp:(beginning-of-buffer)][|^]] [[elisp:(blee:menu-sel:navigation:popupMenu)][==]] [[elisp:(delete-other-windows)][|1]]/

@@ -72,6 +72,29 @@ Module description comes here.
 " orgCmntEnd)
 ;;;#+END:
 
+;;;#+BEGIN:  b:elisp:defs/cl-defun :defName "b:mtdt:names|recipsAddrConvertFileAndSelect" :advice ()
+(orgCmntBegin "
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  cl-defun   [[elisp:(outline-show-subtree+toggle)][||]]  <<b:mtdt:names|recipsAddrConvertFileAndSelect>>  --   [[elisp:(org-cycle)][| ]]
+" orgCmntEnd)
+(cl-defun b:mtdt:names|recipsAddrConvertFileAndSelect (
+;;;#+END:
+                                                       &key
+                                                       (inFile nil)
+                                                       (outFile nil)
+                                                       )
+   " #+begin_org
+** DocStr: invoke b:mtdt:names|recipsAddrConvertFile and select the converted file.
+#+end_org "
+   (let* (
+          ($inHere (b:log|entry (b:func$entry)))
+         )
+     (b:mtdt:distr|recipsFormsFileSelect
+      (b:mtdt:names|recipsAddrConvertFile
+       :inFile inFile
+       :outFile outFile
+       ))))
+
+
 ;;;#+BEGIN:  b:elisp:defs/cl-defun :defName "b:mtdt:names|recipsAddrConvertFile" :advice ()
 (orgCmntBegin "
 *  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  cl-defun   [[elisp:(outline-show-subtree+toggle)][||]]  <<b:mtdt:names|recipsAddrConvertFile>>  --   [[elisp:(org-cycle)][| ]]
@@ -83,11 +106,11 @@ Module description comes here.
                          (outFile nil)
                         )
    " #+begin_org
-** DocStr: Set =b:mtdt:recipients:selected= as specified.
-=to= is mandatory. =cc= and =bcc= are optional.
+** DocStr:
 #+end_org "
    (let* (
           ($inHere (b:log|entry (b:func$entry)))
+          ($result)
          )
      (if-unless inFile
        (b::error $inHere
@@ -96,21 +119,40 @@ Module description comes here.
      (else-when inFile
        (with-current-buffer
          (find-file-read-only inFile)
-         (b:mtdt:names/processBufferForAddrRecip
-            :recipsFile outFile)
-         ))))
+         (setq $result (b:mtdt:names/processBufferForAddrRecip
+            :recipsFile outFile))
+         ))
+     $result))
 
 
 (orgCmntBegin "
 ** Basic Usage:
 #+BEGIN_SRC emacs-lisp
-(b:mtdt:recipients|curSet
-    :to `(,(b:email|oorr :addr (symbol-name 'mohsen.banan.byname@gmail.com)))
-    :bcc `(,(b:email|oorr :addr (symbol-name 'mohsen.banan.byname@gmail.com)))
-  )
+(message (symbol-name 'NOTYET-AddAnExampleForThis))
 #+END_SRC
 " orgCmntEnd)
 
+;;;#+BEGIN:  b:elisp:defs/cl-defun :defName "b:mtdt:names|recipsBbdbConvertFileAndSelect" :advice ()
+(orgCmntBegin "
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  cl-defun   [[elisp:(outline-show-subtree+toggle)][||]]  <<b:mtdt:names|recipsBbdbConvertFileAndSelect>>  --   [[elisp:(org-cycle)][| ]]
+" orgCmntEnd)
+(cl-defun b:mtdt:names|recipsBbdbConvertFileAndSelect (
+;;;#+END:
+                                                       &key
+                                                       (inFile nil)
+                                                       (outFile nil)
+                                                       )
+   " #+begin_org
+** DocStr: invoke b:mtdt:names|recipsBbdbConvertFile and select the converted file.
+#+end_org "
+   (let* (
+          ($inHere (b:log|entry (b:func$entry)))
+         )
+     (b:mtdt:distr|recipsFormsFileSelect
+      (b:mtdt:names|recipsBbdbConvertFile
+       :inFile inFile
+       :outFile outFile
+       ))))
 
 ;;;#+BEGIN:  b:elisp:defs/cl-defun :defName "b:mtdt:names|recipsBbdbConvertFile" :advice ()
 (orgCmntBegin "
@@ -128,6 +170,7 @@ Module description comes here.
 #+end_org "
    (let* (
           ($inHere (b:log|entry (b:func$entry)))
+          ($result)
          )
      (if-unless inFile
        (b::error $inHere
@@ -143,10 +186,7 @@ Module description comes here.
 (orgCmntBegin "
 ** Basic Usage:
 #+BEGIN_SRC emacs-lisp
-(b:mtdt:recipients|curSet
-    :to `(,(b:email|oorr :addr (symbol-name 'mohsen.banan.byname@gmail.com)))
-    :bcc `(,(b:email|oorr :addr (symbol-name 'mohsen.banan.byname@gmail.com)))
-  )
+(message (symbol-name 'NOTYET-AddAnExampleForThis))
 #+END_SRC
 " orgCmntEnd)
 
@@ -191,7 +231,9 @@ Module description comes here.
         (b:mtdt:names|inProcessLineWith  'b:mtdt:names|processLineForBbdbRecip))
        (forward-line 1))
      (appendToDest "\n )")
-     (message (s-lex-format "${$outFile} -- ${$inHere}"))))
+     (find-file-read-only $outFile)
+     (message (s-lex-format "${$outFile} -- ${$inHere}"))
+     $outFile))
 
 
 ;;;#+BEGIN:  b:elisp:defs/cl-defun :defName "b:mtdt:names/processBufferForAddrRecip" :advice ()
@@ -235,7 +277,9 @@ Module description comes here.
         (b:mtdt:names|inProcessLineWith  'b:mtdt:names|processLineForAddrRecip))
        (forward-line 1))
      (appendToDest "\n )")
-     (message (s-lex-format "${$outFile} -- ${$inHere}"))))
+     (find-file-read-only $outFile)
+     (message (s-lex-format "${$outFile} -- ${$inHere}"))
+     $outFile))
 
 
 ;;;#+BEGIN:  b:elisp:defs/cl-defun :defName "b:mtdt:names|inProcessLineWith" :advice ()
@@ -309,7 +353,7 @@ Returns
          )
      (setq $result
            (s-lex-format "
-  (b:mtdt:recipients|curSet
+  (b:mtdt:recipients|select
    :to `(,(b:email|oorr :bbdb \"${<line}\"))
    )"
      ))))
@@ -349,7 +393,7 @@ Returns
       (t
        (setq $result
            (s-lex-format "
-  (b:mtdt:recipients|curSet
+  (b:mtdt:recipients|select
    :to `(,(b:email|oorr :addr \"${<line} <${$address}>\"))
    )"
                          ))))

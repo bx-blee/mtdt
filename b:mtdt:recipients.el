@@ -115,7 +115,7 @@ Module description comes here.
 (orgCmntBegin "
 ** Basic Usage:
 #+BEGIN_SRC emacs-lisp
-(b:mtdt:recipients|curSet
+(b:mtdt:recipients|select
     :to `(,(b:email|oorr :addr (symbol-name 'mohsen.banan.byname@gmail.com)))
     :bcc `(,(b:email|oorr :addr (symbol-name 'mohsen.banan.byname@gmail.com)))
   )
@@ -123,11 +123,11 @@ Module description comes here.
 " orgCmntEnd)
 
 
-;;;#+BEGIN:  b:elisp:defs/cl-defun :defName "b:mtdt:recipients|curSet" :advice ()
+;;;#+BEGIN:  b:elisp:defs/cl-defun :defName "b:mtdt:recipients|select" :advice ()
 (orgCmntBegin "
-*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  cl-defun   [[elisp:(outline-show-subtree+toggle)][||]]  <<b:mtdt:recipients|curSet>>  --   [[elisp:(org-cycle)][| ]]
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  cl-defun   [[elisp:(outline-show-subtree+toggle)][||]]  <<b:mtdt:recipients|select>>  --   [[elisp:(org-cycle)][| ]]
 " orgCmntEnd)
-(cl-defun b:mtdt:recipients|curSet (
+(cl-defun b:mtdt:recipients|select (
 ;;;#+END:
                          &key
                          (to nil)
@@ -146,7 +146,7 @@ Module description comes here.
   (orgCmntBegin "
 ** Basic Usage:
 #+BEGIN_SRC emacs-lisp
-(b:mtdt:recipients|curSet
+(b:mtdt:recipients|select
     :to `(,(b:email|oorr :addr (symbol-name 'mohsen.banan.byname@gmail.com)))
     :bcc `(,(b:email|oorr :addr (symbol-name 'mohsen.banan.byname@gmail.com)))
   )
@@ -178,11 +178,11 @@ Module description comes here.
 #+END_SRC
 " orgCmntEnd)
 
-;;;#+BEGIN:  b:elisp:defs/cl-defun :defName "b:mtdt:recipients|curSetForce" :advice ()
+;;;#+BEGIN:  b:elisp:defs/cl-defun :defName "b:mtdt:recipients|selectForce" :advice ()
 (orgCmntBegin "
-*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  cl-defun   [[elisp:(outline-show-subtree+toggle)][||]]  <<b:mtdt:recipients|curSetForce>>  --   [[elisp:(org-cycle)][| ]]
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  cl-defun   [[elisp:(outline-show-subtree+toggle)][||]]  <<b:mtdt:recipients|selectForce>>  --   [[elisp:(org-cycle)][| ]]
 " orgCmntEnd)
-(cl-defun b:mtdt:recipients|curSetForce (
+(cl-defun b:mtdt:recipients|selectForce (
 ;;;#+END:
                          &key
                          (to nil)
@@ -197,7 +197,7 @@ Module description comes here.
           ($inHere (b:log|entry (b:func$entry)))
          )
      (b:mtdt:recipients|curUnSet)
-     (b:mtdt:recipients|curSet
+     (b:mtdt:recipients|select
       :to to
       :cc cc
       :bcc bcc
@@ -206,7 +206,7 @@ Module description comes here.
 (orgCmntBegin "
 ** Basic Usage:
 #+BEGIN_SRC emacs-lisp
-(b:mtdt:recipients|curSetForce
+(b:mtdt:recipients|selectForce
     :to `(,(b:email|oorr :addr (symbol-name 'mohsen.banan.byname@gmail.com)))
     :bcc `(,(b:email|oorr :addr (symbol-name 'mohsen.banan.byname@gmail.com)))
   )

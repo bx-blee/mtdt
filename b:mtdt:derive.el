@@ -159,7 +159,7 @@ and provide various variations on processing of the mailingFile.
 ** DocStr:  NOTYET. Place Holder -- Used by dblocks.
 #+end_org "
   (interactive)
-  (b:mtdt:mailings|curSet (b:mtdt:derive/fromFile <mailingFilePath)))
+  (b:mtdt:mailings|select (b:mtdt:derive/fromFile <mailingFilePath)))
 
 
 (orgCmntBegin "

@@ -106,11 +106,11 @@ Module description comes here.
   "Current Mailing.")
 
 
-;;;#+BEGIN:  b:elisp:defs/defun :defName "b:mtdt:mailings|curSet" :advice ()
+;;;#+BEGIN:  b:elisp:defs/defun :defName "b:mtdt:mailings|select" :advice ()
 (orgCmntBegin "
-*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  defun      [[elisp:(outline-show-subtree+toggle)][||]]  <<b:mtdt:mailings|curSet>>  --   [[elisp:(org-cycle)][| ]]
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  defun      [[elisp:(outline-show-subtree+toggle)][||]]  <<b:mtdt:mailings|select>>  --   [[elisp:(org-cycle)][| ]]
 " orgCmntEnd)
-(defun b:mtdt:mailings|curSet (
+(defun b:mtdt:mailings|select (
 ;;;#+END:
                                <mailingFunc
                                )
@@ -129,7 +129,7 @@ Return 'Nu of Records=' if multiple records are found for =<nameStr=.
 (orgCmntBegin "
 ** Basic Usage:
 #+BEGIN_SRC emacs-lisp
-(b:mtdt:mailings|curSet )
+(b:mtdt:mailings|select )
 #+END_SRC
 
 #+RESULTS:
@@ -727,10 +727,11 @@ params can be retrieved with plist."
     (b:mtdt:derive/withFile $eachMailingFile)))
 
 
-(defun b:mtdt:derive/withFileAndCurSet (<mailingFilePath)
+(defun b:mtdt:derive/withFileAndSelect (<mailingFilePath)
   "Move to b:mtdt:derive."
   (interactive)
-  (b:mtdt:mailings|curSet (b:mtdt:derive/withFile <mailingFilePath)))
+  (with-current-buffer (current-buffer)
+    (b:mtdt:mailings|select (b:mtdt:derive/withFile <mailingFilePath))))
 
 
 (defun b:mtdt:setup-and-compose/with-file (<mailingFilePath)

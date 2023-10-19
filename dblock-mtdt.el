@@ -119,7 +119,7 @@ A library of dblock for b:elisp:file/xxx comeega-file-elements.
         (insert (s-lex-format "|| [[elisp:(b:mtdt:derive/withFile \"${<mailingFile}\")][Derive]] "))
         (insert (s-lex-format "|| [[elisp:(message  \"NOTYET De-Drive\")][De-Derive]] "))
         (insert (s-lex-format "|| [[elisp:(message  \"NOTYET Send with CurRecips\")][Send with CurRecips]] "))
-        (insert (s-lex-format "|| [[elisp:(b:mtdt:derive/withFileAndCurSet \"${<mailingFile}\")][Set as CurMailing]]   "))
+        (insert (s-lex-format "|| [[elisp:(b:mtdt:derive/withFileAndSelect \"${<mailingFile}\")][Set as CurMailing]]   "))
         (when (and <extraInfo (s-present? <extraInfo))
           (insert (s-lex-format
                     "_${<extraInfo}_")))

@@ -120,6 +120,43 @@ Return 'Nu of Records=' if multiple records are found for =<nameStr=.
 
 " orgCmntEnd)
 
+
+;;;#+BEGIN:  b:elisp:defs/defun :defName "b:mtdt:bbdb3/namesCapture" :advice ()
+(orgCmntBegin "
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  defun      [[elisp:(outline-show-subtree+toggle)][||]]  <<b:mtdt:bbdb3/namesCapture>>  --   [[elisp:(org-cycle)][| ]]
+" orgCmntEnd)
+(defun b:mtdt:bbdb3/namesCapture (
+;;;#+END:
+                                  )
+  " #+begin_org
+** DocStr:
+#+end_org "
+   (let* (
+          ($inHere (b:log|entry (b:func$entry)))
+          ($records)
+          ($nameField)
+          (tempBufName "*bbdbNamesCapture*"))
+     (setq $records (b:bbdb3|subjectRecords))
+     (get-buffer-create tempBufName)
+     (switch-to-buffer-other-window tempBufName)
+     (loop-for-each eachRecord $records
+       (setq $nameField (bbdb-record-field (nth 0 eachRecord) 'name))
+       (insert (s-lex-format "${$nameField}\n"))
+       )
+     ))
+
+(orgCmntBegin "
+** Basic Usage:
+#+BEGIN_SRC emacs-lisp
+(b:mtdt:bbdb3/namesCapture)
+#+END_SRC
+
+#+RESULTS:
+: No Records
+
+" orgCmntEnd)
+
+
 ;;;#+BEGIN:  b:elisp:defs/defun :defName "b:bbdb3|subjectRecords" :advice ()
 (orgCmntBegin "
 *  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  defun      [[elisp:(outline-show-subtree+toggle)][||]]  <<b:bbdb3|subjectRecords>>  --   [[elisp:(org-cycle)][| ]]
@@ -128,7 +165,7 @@ Return 'Nu of Records=' if multiple records are found for =<nameStr=.
 ;;;#+END:
                                )
   " #+begin_org
-** DocStr: All the records in *BBDB*.
+** DocStr: All the records in *BBDB* buffer.
 #+end_org "
    (let* (
           ($inHere (b:log|entry (b:func$entry)))
@@ -155,7 +192,7 @@ Return 'Nu of Records=' if multiple records are found for =<nameStr=.
 ;;;#+END:
                                )
   " #+begin_org
-** DocStr: The selected records in *BBDB*
+** DocStr: The selected record in *BBDB*
 #+end_org "
    (let* (
           ($inHere (b:log|entry (b:func$entry)))
@@ -220,7 +257,7 @@ Return 'Nu of Records=' if multiple records are found for =<nameStr=.
           )
      (setq $emailAddrs (nth 0 (bbdb-record-field $selRecord 'mail)))
      (setq $bbdbName (bbdb-record-field $selRecord 'name))
-     (b:mtdt:recipients|curSetForce
+     (b:mtdt:recipients|selectForce
       :to (list (s-lex-format "${$bbdbName} <${$emailAddrs}>"))
       )
      (message (s-lex-format "Selected Recips -- To: ${$bbdbName} <${$emailAddrs}>"))))
