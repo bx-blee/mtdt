@@ -58,6 +58,9 @@ d####+BEGIN: blee:bxPanel:foldingSection :outLevel 1 :sep t :title "Bugs" :ancho
 ** DONE Add string on top of auto generated recips.el saying it is auto geneated.
 ** DONE Add names creation to bbdb3. And from bbdb3 to distribution.
 ** DONE Add MTDT is in COMEEGA comment to README file.
+** TODO Capture all of **BBDB** as Selected Recips --- A to: list instead of just to:
+** TODO eliminate popupMenu
+** TODO Add mailings:selectedList  --- Multiple mailing Names (send multiple mailing to Recips)
 ** B|
 ####+BEGIN: blee:bxPanel:foldingSection :outLevel 1 :sep t :title "Sanitation" :anchor "" :extraInfo "Development"
 * /[[elisp:(beginning-of-buffer)][|^]]  [[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]] [[elisp:(delete-other-windows)][|1]]/
