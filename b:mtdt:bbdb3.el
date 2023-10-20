@@ -65,6 +65,14 @@ Module description comes here.
   :link '(file-link "/bisos/panels/blee-core/mail/_nodeBase_/fullUsagePanel-en.org")
   )
 
+(defvar b:mtdt:bbdb3:namesCaptureBuf
+  "*bbdb3NamesCapture*"
+  "Name of buffer in which bbdb names are kept.")
+
+(defvar b:mtdt:bbdb3:namesCaptureRecipsFile
+  "/tmp/bbdb3NamesCaptureRecips.el"
+  "Name of file in which bbdb names and addresses are kept as Recips.")
+
 ;;;#+BEGIN: blee:bxPanel:foldingSection :outLevel 0 :title "Common Facilities" :extraInfo "Library Candidates"
 (orgCmntBegin "
 *  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*     [[elisp:(outline-show-subtree+toggle)][| _Common Facilities_: |]]  Library Candidates  [[elisp:(org-shifttab)][<)]] E|
@@ -121,13 +129,15 @@ Return 'Nu of Records=' if multiple records are found for =<nameStr=.
 " orgCmntEnd)
 
 
-;;;#+BEGIN:  b:elisp:defs/defun :defName "b:mtdt:bbdb3/namesCapture" :advice ()
+;;;#+BEGIN:  b:elisp:defs/cl-defun :defName "b:mtdt:bbdb3/namesCapture" :advice ()
 (orgCmntBegin "
-*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  defun      [[elisp:(outline-show-subtree+toggle)][||]]  <<b:mtdt:bbdb3/namesCapture>>  --   [[elisp:(org-cycle)][| ]]
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  cl-defun   [[elisp:(outline-show-subtree+toggle)][||]]  <<b:mtdt:bbdb3/namesCapture>>  --   [[elisp:(org-cycle)][| ]]
 " orgCmntEnd)
-(defun b:mtdt:bbdb3/namesCapture (
+(cl-defun b:mtdt:bbdb3/namesCapture (
 ;;;#+END:
-                                  )
+                                     &key
+                                     (clear nil)
+                                     )
   " #+begin_org
 ** DocStr:
 #+end_org "
@@ -135,10 +145,12 @@ Return 'Nu of Records=' if multiple records are found for =<nameStr=.
           ($inHere (b:log|entry (b:func$entry)))
           ($records)
           ($nameField)
-          (tempBufName "*bbdbNamesCapture*"))
+          )
      (setq $records (b:bbdb3|subjectRecords))
-     (get-buffer-create tempBufName)
-     (switch-to-buffer-other-window tempBufName)
+     (get-buffer-create b:mtdt:bbdb3:namesCaptureBuf)
+     (switch-to-buffer-other-window b:mtdt:bbdb3:namesCaptureBuf)
+     (when clear
+       (erase-buffer))
      (loop-for-each eachRecord $records
        (setq $nameField (bbdb-record-field (nth 0 eachRecord) 'name))
        (insert (s-lex-format "${$nameField}\n"))
@@ -156,6 +168,36 @@ Return 'Nu of Records=' if multiple records are found for =<nameStr=.
 
 " orgCmntEnd)
 
+
+;;;#+BEGIN:  b:elisp:defs/defun :defName "b:mtdt:bbdb3/recipsFileSelect" :advice ()
+(orgCmntBegin "
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  defun      [[elisp:(outline-show-subtree+toggle)][||]]  <<b:mtdt:bbdb3/recipsFileSelect>>  --   [[elisp:(org-cycle)][| ]]
+" orgCmntEnd)
+(defun b:mtdt:bbdb3/recipsFileSelect (
+;;;#+END:
+                                      )
+  " #+begin_org
+** DocStr: Clear b:mtdt:bbdb3:namesCaptureBuf, b:mtdt:bbdb3/namesCapture, convert to Recips, Save and Select.
+#+end_org "
+   (let* (
+          ($inHere (b:log|entry (b:func$entry)))
+          )
+     (b:mtdt:bbdb3/namesCapture :clear t)
+     (b:mtdt:distr|recipsFormsFileSelect
+      (b:mtdt:names/processBufferForAddrRecip :recipsFile  b:mtdt:bbdb3:namesCaptureRecipsFile)
+      )
+     ))
+
+(orgCmntBegin "
+** Basic Usage:
+#+BEGIN_SRC emacs-lisp
+(b:mtdt:bbdb3/namesCapture)
+#+END_SRC
+
+#+RESULTS:
+: No Records
+
+" orgCmntEnd)
 
 ;;;#+BEGIN:  b:elisp:defs/defun :defName "b:bbdb3|subjectRecords" :advice ()
 (orgCmntBegin "

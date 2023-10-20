@@ -254,12 +254,15 @@ Module description comes here.
           ($outFile)
          )
 
+     (message (s-lex-format "${recipsFile}"))
+
      (defun recipsFileName ()
        (let* (
               ($result recipsFile)
-              ($noExt (f-no-ext buffer-file-name))
+              ($noExt)
               )
          (unless $result
+           (setq $noExt f-no-ext buffer-file-name)
            (setq $result (s-lex-format "${$noExt}-addrRecips.el")))
          $result))
 
@@ -268,6 +271,12 @@ Module description comes here.
        )
 
      (setq $outFile (recipsFileName))
+     (when (f-exists? $outFile)
+       (save-current-buffer
+         (find-file $outFile)
+         (delete-file $outFile)
+         (kill-buffer)
+         ))
      (f-write-text "" 'utf-8 $outFile)
      (appendToDest "`(")
      (goto-char (point-min))

@@ -140,7 +140,7 @@ Module description comes here.
 " orgCmntEnd)
 (defun b:mtdt:menu:define|bbdb3 (
 ;;;#+END:
-                                       )
+                                 )
   " #+begin_org
 ** DocStr: Return b:mtdt:menu:sendExtentSelect
 #+end_org "
@@ -167,11 +167,34 @@ Module description comes here.
     (defun $menuItem|namesCapture ()
       (nth 0
        `(
-         [,(s-lex-format "Capture all the names of *BBDB* in a temp buffer")
+         [,(s-lex-format "Capture Names of *BBDB* in a temp buffer")
           (b:mtdt:bbdb3/namesCapture)
-          :help "Capture all the names of *BBDB* in a temp buffer"
+          :help "Capture names of *BBDB* in a temp buffer"
           ])))
 
+    (defun $menuItem|visitNamesCaptureBuf ()
+      (nth 0
+       `(
+         [,(s-lex-format "Visit Names Capture Buffer")
+          (switch-to-buffer-other-window b:mtdt:bbdb3:namesCaptureBuf)
+          :help "Visit Names Capture Buffer"
+          ])))
+
+    (defun $menuItem|recipsCapture ()
+      (nth 0
+       `(
+         [,(s-lex-format "Capture Names of *BBDB* as Recips and select file")
+          (b:mtdt:bbdb3/recipsFileSelect)
+          :help "Capture Names of *BBDB* as Recips and select file"
+          ])))
+
+    (defun $menuItem|visitRecipsCaptureFile ()
+      (nth 0
+       `(
+         [,(s-lex-format "Visit Recips Capture File")
+          (find-file b:mtdt:bbdb3:namesCaptureRecipsFile)
+          :help "Visit Recips Capture File"
+          ])))
 
     (easy-menu-define
       b:mtdt:menu:bbdb3
@@ -191,6 +214,9 @@ Module description comes here.
     (easy-menu-add-item b:mtdt:menu:bbdb3 nil ($menuItem|selRecordAsSelRecipients) (s-- 3))
     (easy-menu-add-item b:mtdt:menu:bbdb3 nil ($menuItem|bbdbPopUpOtherWin) (s-- 4))
     (easy-menu-add-item b:mtdt:menu:bbdb3 nil ($menuItem|namesCapture) (s-- 5))
+    (easy-menu-add-item b:mtdt:menu:bbdb3 nil ($menuItem|visitNamesCaptureBuf) (s-- 5))
+    (easy-menu-add-item b:mtdt:menu:bbdb3 nil ($menuItem|recipsCapture) (s-- 6))
+    (easy-menu-add-item b:mtdt:menu:bbdb3 nil ($menuItem|visitRecipsCaptureFile) (s-- 6))
 
     (easy-menu-add-item
      b:mtdt:menu:bbdb3
@@ -199,7 +225,7 @@ Module description comes here.
       "/bisos/panels/blee-core/mail/_nodeBase_"
       $thisFuncName
       (intern (symbol-name (gensym))))
-     (s-- 5))
+     (s-- 9))
 
     'b:mtdt:menu:bbdb3
     ))
