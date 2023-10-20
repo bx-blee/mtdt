@@ -55,9 +55,9 @@ d####+BEGIN: blee:bxPanel:foldingSection :outLevel 1 :sep t :title "Bugs" :ancho
 ** DONE Add Logs Menu
 ** DONE In convertNamesToRecips, also select
 ** DONE Truncate length of mailingFile
-** TODO Add string on top of auto generated recips.el saying it is auto geneated.
-** TODO Add names creation to bbdb3. And from bbdb3 to distribution.
-** TODO Add MTDT is in COMEEGA comment to README file.
+** DONE Add string on top of auto generated recips.el saying it is auto geneated.
+** DONE Add names creation to bbdb3. And from bbdb3 to distribution.
+** DONE Add MTDT is in COMEEGA comment to README file.
 ** B|
 ####+BEGIN: blee:bxPanel:foldingSection :outLevel 1 :sep t :title "Sanitation" :anchor "" :extraInfo "Development"
 * /[[elisp:(beginning-of-buffer)][|^]]  [[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]] [[elisp:(delete-other-windows)][|1]]/

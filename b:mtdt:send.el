@@ -290,7 +290,7 @@ Returns /nothing/.
    " #+begin_org
 ** DocStr: DeSelect and b:mtdt:send|applySelRecipientsToMailingFiles
 #+end_org "
-   (b:mtdt:recipients|curUnSet)
+   (b:mtdt:recipients|deSelect)
    (b:mtdt:send|applySelRecipientsToMailingFiles
     :mailingFiles mailingFiles
     :extent extent))
@@ -370,7 +370,7 @@ Returns /nothing/.
 =mailing= and =to= are mandatory. =cc= and =bcc= are optional.
 Returns /nothing/.
 #+end_org "
-   (b:mtdt:recipients|curUnSet)
+   (b:mtdt:recipients|deSelect)
    (b:mtdt:send|applySelRecipientsToMailingFns
     :mailingFiles mailingFiles
     :extent extent))

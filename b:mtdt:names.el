@@ -271,6 +271,19 @@ Module description comes here.
        )
 
      (setq $outFile (recipsFileName))
+
+     (defun writeHeader ()
+       (let* (($now (current-time-string)))
+         (appendToDest (s-lex-format "\
+;;;   -*- lexical-binding: t; -*-
+;;;
+;;; This file was auto generated as ${$outFile}
+;;; by ${$inHere}
+;;; on ${$now}.
+;;;
+")
+       )))
+
      (when (f-exists? $outFile)
        (save-current-buffer
          (find-file $outFile)
@@ -278,6 +291,7 @@ Module description comes here.
          (kill-buffer)
          ))
      (f-write-text "" 'utf-8 $outFile)
+     (writeHeader)
      (appendToDest "`(")
      (goto-char (point-min))
      (while (not (eobp))

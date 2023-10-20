@@ -101,7 +101,7 @@ Module description comes here.
      (if-when (or $to $cc $bcc)
        (b::error $inHere
                  (s-lex-format
-                  "Bad usage: b:mtdt:recipients:selected already set -- (b:mtdt:recipients|curUnSet)")))
+                  "Bad usage: b:mtdt:recipients:selected already set -- (b:mtdt:recipients|deSelect)")))
      (else-unless (or $to $cc $bcc)
        (if-unless to
          (b::error $inHere
@@ -138,7 +138,7 @@ Module description comes here.
 ** DocStr: Set =b:mtdt:recipients:selected= as specified.
 =to= is mandatory. =cc= and =bcc= are optional.
 #+end_org "
-  (b:mtdt:recipients|curUnSet)
+  (b:mtdt:recipients|deSelect)
   (b:mtdt:recipients|selectSafe :to to :cc cc :bcc bcc))
 
 
@@ -154,11 +154,11 @@ Module description comes here.
 " orgCmntEnd)
 
 
-;;;#+BEGIN:  b:elisp:defs/cl-defun :defName "b:mtdt:recipients|curUnSet" :advice ()
+;;;#+BEGIN:  b:elisp:defs/cl-defun :defName "b:mtdt:recipients|deSelect" :advice ()
 (orgCmntBegin "
-*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  cl-defun   [[elisp:(outline-show-subtree+toggle)][||]]  <<b:mtdt:recipients|curUnSet>>  --   [[elisp:(org-cycle)][| ]]
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  cl-defun   [[elisp:(outline-show-subtree+toggle)][||]]  <<b:mtdt:recipients|deSelect>>  --   [[elisp:(org-cycle)][| ]]
 " orgCmntEnd)
-(cl-defun b:mtdt:recipients|curUnSet (
+(cl-defun b:mtdt:recipients|deSelect (
 ;;;#+END:
                                       )
    " #+begin_org
@@ -174,7 +174,7 @@ Module description comes here.
 (orgCmntBegin "
 ** Basic Usage:
 #+BEGIN_SRC emacs-lisp
-(b:mtdt:recipients|curUnSet)
+(b:mtdt:recipients|deSelect)
 #+END_SRC
 " orgCmntEnd)
 
@@ -196,7 +196,7 @@ Module description comes here.
    (let* (
           ($inHere (b:log|entry (b:func$entry)))
          )
-     (b:mtdt:recipients|curUnSet)
+     (b:mtdt:recipients|deSelect)
      (b:mtdt:recipients|select
       :to to
       :cc cc
