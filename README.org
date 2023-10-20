@@ -7,8 +7,14 @@ of the "Libre-Halaal ByStar Digital Ecosystem." ByStar is rooted in the model of
 polyexistentials which rejects the Western Intelectual Propoerty Rights (IPR) regime.
 For a comprehensive description, please refer to the book 'The Nature of Polyexistentials.'
 
+MTDT is developed in elisp with COMEEGA (Collaborative Org-Mode Enhanced Emacs Generalized Authorship).
+Please follow Blee-COMEEGA  conventions when editing MTDT elisp files.
+
 MTDT augments the Emacs email environment (Gnus) by providing templates for mailings and distributions. You can
 think of MTDT as a Libre-Halaal Convivial equivalent of Constant Contact for Emacs.
+MTDT allows you to create *Mailing Tempaltes* with content in 1) Plain Text, 2) Org-Msg, 3) LaTeX and 4) Plain Html.
+The Mailing Templates can then be used to *Sent* or =Distribute=  to ~Recipients~.
+*Recipients* can be derived from *Names* in address books such as *BBDB3*.
 
 Documentation of MTDT is in the form of a series of related panels. Primary MTDT Blee-Panel is
 [[file:./panels/mtdt/_nodeBase_/fullUsagePanel-en.org]].
