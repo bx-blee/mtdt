@@ -61,6 +61,7 @@ d####+BEGIN: blee:bxPanel:foldingSection :outLevel 1 :sep t :title "Bugs" :ancho
 ** TODO Capture all of **BBDB** as Selected Recips --- A to: list instead of just to:
 ** TODO eliminate popupMenu
 ** TODO Add mailings:selectedList  --- Multiple mailing Names (send multiple mailing to Recips)
+** TODO When selecting a mailing file, also message out the name of file in addition to mailing name
 ** B|
 ####+BEGIN: blee:bxPanel:foldingSection :outLevel 1 :sep t :title "Sanitation" :anchor "" :extraInfo "Development"
 * /[[elisp:(beginning-of-buffer)][|^]]  [[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]] [[elisp:(delete-other-windows)][|1]]/

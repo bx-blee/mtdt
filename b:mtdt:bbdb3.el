@@ -289,7 +289,7 @@ Return 'Nu of Records=' if multiple records are found for =<nameStr=.
 ;;;#+END:
                                               )
   " #+begin_org
-** DocStr: To be invoked with bbdb buffer set.
+** DocStr: Set current record as b:mtdt:recipients|selectForce.
 #+end_org "
    (let* (
           ($inHere (b:log|entry (b:func$entry)))
@@ -308,6 +308,46 @@ Return 'Nu of Records=' if multiple records are found for =<nameStr=.
 ** Basic Usage:
 #+BEGIN_SRC emacs-lisp
 (b:mtdt:bbdb3/selRecordAsSelRecipients)
+#+END_SRC
+
+#+RESULTS:
+: No Records
+
+" orgCmntEnd)
+
+;;;#+BEGIN:  b:elisp:defs/defun :defName "b:mtdt:bbdb3/allRecordsAsSelRecipients" :advice ()
+(orgCmntBegin "
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  defun      [[elisp:(outline-show-subtree+toggle)][||]]  <<b:mtdt:bbdb3/allRecordsAsSelRecipients>>  --   [[elisp:(org-cycle)][| ]]
+" orgCmntEnd)
+(defun b:mtdt:bbdb3/allRecordsAsSelRecipients (
+;;;#+END:
+                                              )
+  " #+begin_org
+** DocStr: Set current record as b:mtdt:recipients|selectForce.
+#+end_org "
+   (let* (
+          ($inHere (b:log|entry (b:func$entry)))
+          ($records (b:bbdb3|subjectRecords))
+          ($emailAddrs)
+          ($emailAddr)
+          ($bbdbName)
+          ($tosList (list))
+          )
+     (loop-for-each $eachRecord $records
+       (setq $emailAddrs (bbdb-record-field (nth 0 $eachRecord) 'mail))
+       (when $emailAddrs
+         (setq $emailAddr (nth 0 $emailAddrs))
+         (setq $bbdbName (bbdb-record-field (nth 0 $eachRecord) 'name))
+         (setq $tosList (append
+                         $tosList
+                         (list (s-lex-format "${$bbdbName} <${$emailAddr}>"))))))
+     (b:mtdt:recipients|selectForce :to $tosList)
+     ))
+
+(orgCmntBegin "
+** Basic Usage:
+#+BEGIN_SRC emacs-lisp
+(b:mtdt:bbdb3/allRecordsAsSelRecipients)
 #+END_SRC
 
 #+RESULTS:

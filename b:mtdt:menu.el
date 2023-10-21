@@ -156,6 +156,14 @@ Module description comes here.
           :help "Set Selected BBDB Record As Selected Recipients"
           ])))
 
+    (defun $menuItem|allRecordsAsSelRecipients ()
+      (nth 0
+       `(
+         [,(s-lex-format "Set All BBDB Records As Selected To: Recipients")
+          (b:mtdt:bbdb3/allRecordsAsSelRecipients)
+          :help "Set All BBDB Records As Selected To: Recipients"
+          ])))
+
     (defun $menuItem|bbdbPopUpOtherWin ()
       (nth 0
        `(
@@ -212,6 +220,7 @@ Module description comes here.
 	))
 
     (easy-menu-add-item b:mtdt:menu:bbdb3 nil ($menuItem|selRecordAsSelRecipients) (s-- 3))
+    (easy-menu-add-item b:mtdt:menu:bbdb3 nil ($menuItem|allRecordsAsSelRecipients) (s-- 3))
     (easy-menu-add-item b:mtdt:menu:bbdb3 nil ($menuItem|bbdbPopUpOtherWin) (s-- 4))
     (easy-menu-add-item b:mtdt:menu:bbdb3 nil ($menuItem|namesCapture) (s-- 5))
     (easy-menu-add-item b:mtdt:menu:bbdb3 nil ($menuItem|visitNamesCaptureBuf) (s-- 5))
@@ -672,12 +681,15 @@ Module description comes here.
   " #+begin_org
 ** DocStr: Return a menuItem vector. Requires dynamic update.
 #+end_org "
-  (nth 0
-   `(
-     [,(s-lex-format "Selected Recips b:mtdt:recipients:selected = ${b:mtdt:recipients:selected}")
-      (describe-variable 'b:mtdt:recipients:selected)
-      :help "There are various different ways of setting b:mtdt:recipients:selected"
-      ])))
+  (let* (
+         ($selectedStr (s-right 50 (s-lex-format "${b:mtdt:recipients:selected}")))
+         )
+    (nth 0
+         `(
+           [,(s-lex-format "Selected Recips b:mtdt:recipients:selected = ${$selectedStr}")
+            (describe-variable 'b:mtdt:recipients:selected)
+            :help "There are various different ways of setting b:mtdt:recipients:selected"
+            ]))))
 
 
 ;;;#+BEGIN:  b:elisp:defs/defun :defName "b:mtdt:menuItem:define|selRecipsFormsDescribe" :advice ()
