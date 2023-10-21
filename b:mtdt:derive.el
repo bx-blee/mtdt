@@ -138,34 +138,60 @@ and provide various variations on processing of the mailingFile.
 " orgCmntEnd)
 (defun b:mtdt:derive/fromFilesList (
 ;;;#+END:
-                                    <mailingFilePath
+                                    <mailingFilesList
                                     )
    " #+begin_org
-** DocStr:  NOTYET. Place Holder -- Typically used in user's initial setup to derive persistant mailings.
+** DocStr:  Returns mailingNamesList. Typically used in user's initial setup to derive persistant mailings.
 #+end_org "
-    (interactive)
-  (dolist ($eachMailingFile <mailingFilesList)
-    (b:mtdt:derive/withFile $eachMailingFile)))
+   (interactive)
+   (let* (
+          ($mailingName)
+          ($mailingNamesList (list))
+         )
+     (dolist ($eachMailingFile <mailingFilesList)
+       (setq $mailingNamesList
+             (append
+              $mailingNamesList
+              (list (b:mtdt:derive/fromFile $eachMailingFile)))))
+     $mailingNamesList))
 
-;;;#+BEGIN:  b:elisp:defs/defun :defName "b:mtdt:derive/fromFileAndSelect" :advice ()
+
+;;;#+BEGIN:  b:elisp:defs/defun :defName "b:mtdt:derive/fromFilesStr" :advice ()
+(orgCmntBegin "
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  defun      [[elisp:(outline-show-subtree+toggle)][||]]  <<b:mtdt:derive/fromFilesStr>>  --   [[elisp:(org-cycle)][| ]]
+" orgCmntEnd)
+(defun b:mtdt:derive/fromFilesStr (
+;;;#+END:
+                                   <mailingFilesStr
+                                   )
+   " #+begin_org
+** DocStr:  Returns mailingNamesList
+#+end_org "
+  (interactive)
+  (let* (
+         ($filesPathList (s-split " " <mailingFilesStr))
+         )
+    (b:mtdt:derive/fromFilesList $filesPathList)))
+
+
+;;;#+BEGIN:  b:elisp:defs/defun :defName "b:mtdt:derive/fromFilesStrAndSelect" :advice ()
 (orgCmntBegin "
 *  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  defun      [[elisp:(outline-show-subtree+toggle)][||]]  <<b:mtdt:derive/fromFileAndSelect>>  --   [[elisp:(org-cycle)][| ]]
 " orgCmntEnd)
-(defun b:mtdt:derive/fromFileAndSelect (
+(defun b:mtdt:derive/fromFilesAndSelect (
 ;;;#+END:
-                                        <mailingFilePath
+                                        <mailingFilesStr
                                         )
    " #+begin_org
 ** DocStr:  NOTYET. Place Holder -- Used by dblocks.
 #+end_org "
   (interactive)
-  (b:mtdt:mailings|select (b:mtdt:derive/fromFile <mailingFilePath)))
+  (b:mtdt:mailings|select (b:mtdt:derive/fromFilesStr <mailingFilesStr)))
 
 
 (orgCmntBegin "
 ** Basic Usage:
 #+BEGIN_SRC emacs-lisp
-(bFuncName)
 #+END_SRC
 " orgCmntEnd)
 

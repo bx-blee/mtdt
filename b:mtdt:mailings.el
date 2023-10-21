@@ -103,7 +103,7 @@ Module description comes here.
 
 (defvar b:mtdt:mailings:selected
   nil
-  "Current Mailing.")
+  "Selected Mailing.")
 
 
 ;;;#+BEGIN:  b:elisp:defs/defun :defName "b:mtdt:mailings|select" :advice ()
@@ -150,8 +150,7 @@ Return 'Nu of Records=' if multiple records are found for =<nameStr=.
 ** DocStr: Create a frame, select it, then invoked =<mailingFunc=.
 #+end_org "
   (select-frame (make-frame-command))
-  (call-interactively <mailingFunc)
-  )
+  (call-interactively <mailingFunc))
 
 (orgCmntBegin "
 ** Basic Usage:
@@ -692,46 +691,6 @@ params can be retrieved with plist."
 (defun b:mtdt:mailing:originate|get-function-name (<mailingName)
   "Given <mailingName, return name of originate function"
   (concat "b:mtdt:originate/" <mailingName))
-
-
-(defun b:mtdt:derive/withFile (<mailingFilePath)
-  "Move to b:mtdt:derive. Given a mailing file, initiate an outgoing message."
-  (interactive)
-  (let* (
-        ($inHere (b:log|entry (b:func$entry)))
-	($mailingName nil)
-	($mailingBuf nil)
-	($funcSymbol nil)
-	)
-
-    (save-excursion
-      ;;(find-file-read-only <mailingFilePath)
-      ;;(setq $mailingBuf (current-buffer))
-      (setq $mailingBuf (find-file-read-only <mailingFilePath))
-      (setq $mailingName (b:mtdt:mailing:getName/with-buffer $mailingBuf))
-      (setq $funcSymbol (intern (b:mtdt:mailing:compose|get-function-name $mailingName)))
-      (unless (commandp $funcSymbol)
-        (b:mtdt:setup$with-filePath <mailingFilePath))
-      ;;(kill-buffer (current-buffer))
-      (kill-buffer $mailingBuf)
-      )
-
-      (message (s-lex-format "Derived  ${$funcSymbol} from ${<mailingFilePath}"))
-      $funcSymbol
-      ))
-
-(defun b:mtdt:derive/withFilesList (<mailingFilesList)
-  "Move to b:mtdt:derive. Typically used in user's initial setup to derive persistant mailings."
-  (interactive)
-  (dolist ($eachMailingFile <mailingFilesList)
-    (b:mtdt:derive/withFile $eachMailingFile)))
-
-
-(defun b:mtdt:derive/withFileAndSelect (<mailingFilePath)
-  "Move to b:mtdt:derive."
-  (interactive)
-  (with-current-buffer (current-buffer)
-    (b:mtdt:mailings|select (b:mtdt:derive/withFile <mailingFilePath))))
 
 
 (defun b:mtdt:setup-and-compose/with-file (<mailingFilePath)

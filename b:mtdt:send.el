@@ -372,7 +372,7 @@ Returns /nothing/.
 #+end_org "
    (b:mtdt:recipients|deSelect)
    (b:mtdt:send|applySelRecipientsToMailingFns
-    :mailingFiles mailingFiles
+    :mailingFns mailingFns
     :extent extent))
 
 (orgCmntBegin "
@@ -460,7 +460,7 @@ Returns /nothing/.
                      "Bad Usage: b:mtdt:recipients:selected is nil")))
         (if-when b:mtdt:mailings:selected
           (b:mtdt:send|applySelRecipientsToMailingFns
-           :mailingFns (list b:mtdt:mailings:selected)
+           :mailingFns b:mtdt:mailings:selected
            :extent b:mtdt:send:extent
           )))))
 
