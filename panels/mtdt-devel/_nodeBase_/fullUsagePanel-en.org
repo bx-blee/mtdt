@@ -77,6 +77,9 @@ d####+BEGIN: blee:bxPanel:foldingSection :outLevel 1 :sep t :title "Bugs" :ancho
 ** +
 ** TODO Restructure b:mtdt:mailing.el into b:mtdt:derive.el
 ** TODO Move towards realeasing as a package
+** TODO Macro, b:mtdt:d/mailingName returns name of mailingFile in b:mtdt:derive.el
+** TODO Macro, b:mtdt:ds/mailinsgName returns a list of mailingFiles in b:mtdt:derive.el
+** TODO In menus apropos on b:mtdt:d/ and b:mtdt:ds/ for select and compose.
 ** B|
 ####+BEGIN: blee:bxPanel:separator :outLevel 1
 * /[[elisp:(beginning-of-buffer)][|^]] [[elisp:(blee:menu-sel:navigation:popupMenu)][==]] [[elisp:(delete-other-windows)][|1]]/

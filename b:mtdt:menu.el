@@ -556,7 +556,6 @@ Module description comes here.
       "Dynamic Selections"
       (apropos-internal "b:mtdt:compose/" 'commandp))
 
-
     (easy-menu-define
       b:mtdt:menu:curMailingSelect
       nil
@@ -568,7 +567,7 @@ Module description comes here.
        (list (s-- 4))
        (mapcar (lambda (<each)
 		 (vector (s-lex-format "Set b:mtdt:mailings:selected to ${<each}")
-			 `(b:mtdt:mailings|select ',<each)
+			 `(b:mtdt:mailings|select '(,<each))
 			   :help (s-lex-format "Set b:mtdt:mailings:selected to ${<each}")
 			 ))
 	       (selections))
