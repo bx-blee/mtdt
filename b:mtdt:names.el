@@ -51,6 +51,8 @@ Module description comes here.
 " orgCmntEnd)
 ;;;#+END:
 
+(require 'f)
+
 ;;;#+BEGIN: blee:bxPanel:foldingSection :outLevel 1 :title "Variables And Constants" :extraInfo "defvar, defcustom"
 (orgCmntBegin "
 *  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*       [[elisp:(outline-show-subtree+toggle)][| *Variables And Constants:* |]]  defvar, defcustom  [[elisp:(org-shifttab)][<)]] E|
@@ -262,7 +264,7 @@ Module description comes here.
               ($noExt)
               )
          (unless $result
-           (setq $noExt f-no-ext buffer-file-name)
+           (setq $noExt (f-no-ext buffer-file-name))
            (setq $result (s-lex-format "${$noExt}-addrRecips.el")))
          $result))
 
