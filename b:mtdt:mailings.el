@@ -149,8 +149,14 @@ Return 'Nu of Records=' if multiple records are found for =<nameStr=.
   " #+begin_org
 ** DocStr: Create a frame, select it, then invoked =<mailingFunc=.
 #+end_org "
+    (let* (
+        ($inHere (b:log|entry (b:func$entry)))
+        ($type (type-of <mailingFunc))
+	)
+
   (select-frame (make-frame-command))
-  (call-interactively <mailingFunc))
+  ;; (message (s-lex-format "ZZZ before mailingFunc type ${$type}"))
+  (call-interactively <mailingFunc)))
 
 (orgCmntBegin "
 ** Basic Usage:

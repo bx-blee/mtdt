@@ -95,7 +95,7 @@ Module description comes here.
    (let* (
           ($inHere (b:log|entry (b:func$entry)))
           )
-     (setq b:mtdt:distr:recipsFormsFileSelected <fileName)))
+     (setq b:mtdt:distr:recipsFormsFileSelected (f-full <fileName))))
 
 
 (orgCmntBegin "
@@ -211,7 +211,7 @@ Module description comes here.
          (dolist ($eachRecipsForm recipsForms)
            (eval $eachRecipsForm)
            (b:mtdt:send|applySelRecipientsToMailingFns
-            :mailingFns mailingFns
+            :mailingFns (car mailingFns)
             :extent extent)
            )))))
 
