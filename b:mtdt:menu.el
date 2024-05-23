@@ -457,6 +457,26 @@ Module description comes here.
 " orgCmntEnd)
 
 
+(defun b:mtdt:send:extent/setup (<fashion)
+  "Based on <fashion, set things up for sending control."
+  (cond
+   ((eq <fashion  b:mtdt:send:control::basic)
+    (setq b:mtdt:compose:fashion <fashion)
+    (when org-msg-mode
+      (org-msg-mode -1)))
+   ((eq <fashion  b:mtdt:compose:fashion::orgMsg)
+    (setq b:mtdt:compose:fashion <fashion)
+    (when (not org-msg-mode)
+      (org-msg-mode)))
+   ((eq <fashion  b:mtdt:compose:fashion::latex)
+    (setq b:mtdt:compose:fashion <fashion)
+    (when org-msg-mode
+      (org-msg-mode -1)))
+   (t
+    (error "Bad input"))
+   ))
+
+
 
 
 ;;;#+BEGIN:  b:elisp:defs/defun :defName "b:mtdt:menu:define|sendExtentSelect" :advice ()
@@ -825,7 +845,6 @@ Module description comes here.
 	:visible ,<visible
 	:active ,<active
 	,(s-- 2)
-	,(s-- 3)
 	[
 	,(format (s-lex-format "Describe Compose Framework:: ${b:mtdt:compose:fashion}"))
 	  (describe-variable 'b:mtdt:compose:fashion)
@@ -833,7 +852,7 @@ Module description comes here.
 	  :active t
 	  :visible t
 	  ]
-	,(s-- 4)
+	,(s-- 3)
 	 [
 	  "Basic"
 	  (b:mtdt:compose:fashion/setup b:mtdt:compose:fashion::basic)
@@ -860,6 +879,33 @@ Module description comes here.
 	  :visible t
 	  :style radio
 	  :selected ,(eq b:mtdt:compose:fashion b:mtdt:compose:fashion::latex)
+	  ]
+	 ,(s-- 3)
+         [
+	,(format (s-lex-format "Describe Compose Framework:: ${b:mtdt:compose:fashion}"))
+	  (describe-variable 'b:mtdt:compose:fashion)
+	  :help "Describe current value of b:mtdt:compose:fashion"
+	  :active t
+	  :visible t
+	  ]
+	,(s-- 4)
+	 [
+	  "unsentBuffer (promptSend)"
+	  (b:mtdt:send:extent/set b:mtdt:send:extent::promptSend)
+	  :help "Select promptSend."
+	  :active t
+	  :visible t
+	  :style radio
+	  :selected ,(eq  b:mtdt:send:extent b:mtdt:compose:fashion::basic)
+	  ]
+	 [
+	  "send (doSend)"
+	  (b:mtdt:send:extent/set b:mtdt:compose:fashion::orgMsg)
+	  :help "Select orgMsg composition fashion."
+	  :active t
+	  :visible t
+	  :style radio
+	  :selected ,(eq b:mtdt:compose:fashion b:mtdt:compose:fashion::orgMsg)
 	  ]
 	 ,(s-- 5)
 	 ,(s-- 6)
