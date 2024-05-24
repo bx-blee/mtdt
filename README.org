@@ -24,11 +24,12 @@ Key components of BISOS and Blee that interact with MTDT include:
 
 - MARMEE -- Multi-Account Resident Mail Exchange Environment
 - LCNT -- ByStar Libre Content production, publication
-- Mailngs, Names, Dist facilities of BISOS
+- Mailings, Names, Dist facilities of BISOS
 
 A graphical overview of the MTDT model is provided below.
 
 # #+html: <p align="center"><img src="images/mtdtModel.jpg" /></p>.
+#+html: <p align="center"><img src="images/mtdtModel.jpg" /></p>
 
 #+CAPTION: MTDT Model C-c C-x C-v (org-toggle-inline-images)
 #+NAME:   fig:images/mtdtModel.jpg]]
@@ -46,6 +47,7 @@ A graphical overview of the MTDT model is provided below.
 # ###+END
 # ###+BEGIN: blee:bxPanel:footerEmacsParams :primMode "org-mode"
 # Local Variables:
+# eval: (setq-local toc-org-max-depth 4)
 # eval: (setq-local ~selectedSubject "noSubject")
 # eval: (setq-local ~primaryMajorMode 'org-mode)
 # eval: (setq-local ~blee:panelUpdater nil)

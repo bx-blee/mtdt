@@ -891,21 +891,21 @@ Module description comes here.
 	,(s-- 4)
 	 [
 	  "unsentBuffer (promptSend)"
-	  (b:mtdt:send:extent/set b:mtdt:send:extent::promptSend)
+	  (b:mtdt:send:extent|set b:mtdt:send:extent::promptSend)
 	  :help "Select promptSend."
 	  :active t
 	  :visible t
 	  :style radio
-	  :selected ,(eq  b:mtdt:send:extent b:mtdt:compose:fashion::basic)
+	  :selected ,(eq  b:mtdt:send:extent b:mtdt:send:extent::promptSend)
 	  ]
 	 [
 	  "send (doSend)"
-	  (b:mtdt:send:extent/set b:mtdt:compose:fashion::orgMsg)
-	  :help "Select orgMsg composition fashion."
+	  (b:mtdt:send:extent|set b:mtdt:send:extent::doSend)
+	  :help "Select doSend."
 	  :active t
 	  :visible t
 	  :style radio
-	  :selected ,(eq b:mtdt:compose:fashion b:mtdt:compose:fashion::orgMsg)
+	  :selected ,(eq b:mtdt:send:extent b:mtdt:send:extent::doSend)
 	  ]
 	 ,(s-- 5)
 	 ,(s-- 6)

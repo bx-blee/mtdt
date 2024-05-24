@@ -169,11 +169,11 @@ Module description comes here.
 (orgCmntBegin "
 ** Basic Usage:
 #+BEGIN_SRC emacs-lisp
-(b:mtdt:distr|applyRecipientsSelectedListToMailings
+(b:mtdt:distr|applyRecipsSelectedListToMailings
     :mailingFile `(,(symbol-name '/bxo/r3/iso/piu_mbFullUsage/mailings/compose/com/gmail/mohsen.banan.byname/from/org/content.msgOrg))
     :recipsForms exampleRecipientsSelectedList
   )
-(b:mtdt:distr|applyRecipientsSelectedListToMailings
+(b:mtdt:distr|applyRecipsSelectedListToMailings
     :mailings `(,(symbol-name '/bxo/r3/iso/piu_mbFullUsage/mailings/compose/com/gmail/mohsen.banan.byname/from/org/content.msgOrg))
     :selectedForms b:temp22
   )
