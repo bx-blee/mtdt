@@ -16,7 +16,7 @@ SEED="
 *  /[dblock]/ /Seed/ :: [[file:/bisos/core/bsip/bin/seedFtoCommon.sh]] |
 "
 FILE="
-*  /This File/ :: /bisos/panels/blee-core/blee-pkgs/mtdt/ftoProc.sh
+*  /This File/ :: /bisos/panels/blee-core/mail/mailings/mtdt/ftoProc.sh
 "
 if [ "${loadFiles}" == "" ] ; then
     /bisos/core/bsip/bin/seedFtoCommon.sh -l $0 "$@"
@@ -41,6 +41,7 @@ _CommentEnd_
 ####+BEGIN: bx:dblock:ploneProc:bash:leavesList :types ""
 # {{{ DBLOCK-leavesList
 leavesList="
+README
 "
 # }}} DBLOCK-leavesList
 ####+END:
@@ -58,6 +59,7 @@ _CommentEnd_
 # {{{ DBLOCK-nodesList
 nodesList="
 _nodeBase_
+pre-2022
 "
 # }}} DBLOCK-nodesList
 ####+END:

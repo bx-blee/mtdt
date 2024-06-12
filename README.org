@@ -1,5 +1,8 @@
 #+title: MTDT: Mail Templating, Distribution and Tracking Emacs Package
 
+Panel Controls:: [[elisp:(show-all)][Show-All]]  [[elisp:(org-shifttab)][Overview]]  [[elisp:(progn (org-shifttab) (org-content))][Content]] | [[elisp:(delete-other-windows)][(1)]] | [[elisp:(progn (save-buffer) (kill-buffer))][S&Q]] [[elisp:(save-buffer)][Save]] [[elisp:(kill-buffer)][Quit]] [[elisp:(bury-buffer)][Bury]]
+Links: [[file:./panels/mtdt/_nodeBase_/fullUsagePanel-en.org]]
+
 
 MTDT is part of Blee. Blee (ByStar Libre-Halaal Emacs Environment) serves as the usage environment of
 BISOS (ByStar Internet Services OS). BISOS forms the foundation
