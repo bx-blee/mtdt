@@ -1,17 +1,17 @@
 #+title: MTDT: Mail Templating, Distribution and Tracking Emacs Package
 
 Panel Controls:: [[elisp:(show-all)][Show-All]]  [[elisp:(org-shifttab)][Overview]]  [[elisp:(progn (org-shifttab) (org-content))][Content]] | [[elisp:(delete-other-windows)][(1)]] | [[elisp:(progn (save-buffer) (kill-buffer))][S&Q]] [[elisp:(save-buffer)][Save]] [[elisp:(kill-buffer)][Quit]] [[elisp:(bury-buffer)][Bury]]
-Links: [[file:./panels/mtdt/_nodeBase_/fullUsagePanel-en.org]]
+Links: [[file:./panels/mtdt/_nodeBase_/fullUsagePanel-en.org]] (Package Blee Panel)
 
 
-MTDT is part of Blee. Blee (ByStar Libre-Halaal Emacs Environment) serves as the usage environment of
-BISOS (ByStar Internet Services OS). BISOS forms the foundation
-of the "Libre-Halaal ByStar Digital Ecosystem." ByStar is rooted in the model of proper governance of
-polyexistentials which rejects the Western Intelectual Propoerty Rights (IPR) regime.
-For a comprehensive description, please refer to the book 'The Nature of Polyexistentials.'
+MTDT (Mail Templating, Distribution and Tracking) is part of Blee. Blee (ByStar Libre-Halaal Emacs Environment)
+serves as the usage environment of BISOS (ByStar Internet Services OS). BISOS forms the foundation of the
+"Libre-Halaal ByStar Digital Ecosystem." ByStar is rooted in the model of proper governance of polyexistentials
+which rejects the Western Intelectual Propoerty Rights (IPR) regime. For a comprehensive description, please refer
+to the book:  'The Nature of Polyexistentials' -- https://github.com/bxplpc/120033.
 
-MTDT is developed in elisp with COMEEGA (Collaborative Org-Mode Enhanced Emacs Generalized Authorship).
-Please follow Blee-COMEEGA  conventions when editing MTDT elisp files.
+MTDT is developed in elisp with COMEEGA (Collaborative Org-Mode Enhanced Emacs Generalized Authorship). Think of
+COMEEGA as inverse of literate programming. Please follow Blee-COMEEGA conventions when editing MTDT elisp files.
 
 MTDT augments the Emacs email environment (Gnus) by providing templates for mailings and distributions. You can
 think of MTDT as a Libre-Halaal Convivial equivalent of Constant Contact for Emacs.

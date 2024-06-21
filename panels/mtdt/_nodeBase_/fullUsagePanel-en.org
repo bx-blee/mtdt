@@ -35,53 +35,52 @@
 * [[elisp:(show-all)][(>]]  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_  _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_       [[elisp:(outline-show-subtree+toggle)][| *Overview and Roadmap:* |]] <<Panel>>   [[elisp:(org-shifttab)][<)]] E|
 ####+END
 ** +
-** Scope of this panel is the MTDT Emacs Package.
+** Scope of this panel is the MTDT Emacs Packages.
 ** MTDT is part of Blee and BISOS. See the blee-core/mail/mailing panel for related information.
-** Start with  mental model of MTDT in blee-core/mail/mailing/mtdt-conceptAndDesign.
+** Start with  an overview at  [[elisp:(blee:bnsm:panel-goto "/bisos/panels/blee-core/mail/mailings/mtdt/README")][README]].
 ** B|
 ####+BEGIN: blee:bxPanel:foldingSection :outLevel 1 :sep t :title "MTDT-2 Evolution" :anchor "" :extraInfo ""
 * /[[elisp:(beginning-of-buffer)][|^]]  [[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]] [[elisp:(delete-other-windows)][|1]]/
 * [[elisp:(show-all)][(>]]  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_  _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_       [[elisp:(outline-show-subtree+toggle)][| *MTDT-2 Evolution:* |]]    [[elisp:(org-shifttab)][<)]] E|
 ####+END
 ** +
-** For distribution. Create distRecipsFiles.fv -- as a list of .el
-** Start MTDT-2 by updating figure and panel. Get the module file names. ReFactor exisiting code.
-** B|
-####+BEGIN: blee:bxPanel:foldingSection :outLevel 1 :sep t :title "BLEE-MTDT-PKG -- Elisp Design" :anchor "" :extraInfo ""
-* /[[elisp:(beginning-of-buffer)][|^]]  [[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]] [[elisp:(delete-other-windows)][|1]]/
-* [[elisp:(show-all)][(>]]  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_  _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_       [[elisp:(outline-show-subtree+toggle)][| *BLEE-MTDT-PKG -- Elisp Design:* |]]    [[elisp:(org-shifttab)][<)]] E|
-####+END
-** Overview And Direction:
-There are two layers
-MTDT consists of:
-1)   mtdt-lib.el    --- General purpose libraries
-2)   mtdt-newMail.el   --- Initial outgoing email -- User Interface (currently mtdt-if.el)
-3)   mtdt-contextedMail.el  --- Replies and Forwards
-User documentation is primarily limited to mtdt-if.el
-B|
-####+BEGIN: blee:bxPanel:foldingSection :outLevel 1 :sep t :title "Elisp Implementation Plan" :anchor "" :extraInfo "TODOs"
-* /[[elisp:(beginning-of-buffer)][|^]]  [[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]] [[elisp:(delete-other-windows)][|1]]/
-* [[elisp:(show-all)][(>]]  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_  _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_       [[elisp:(outline-show-subtree+toggle)][| *Elisp Implementation Plan:* |]]  TODOs  [[elisp:(org-shifttab)][<)]] E|
-####+END
-** +
-** TODO Package mtdt for elpa
-** TODO Revisit bueMailingStatic.sh templates -- Headers becomes a single file, no directory of its own
-** TODO After creating unsent mail buffer, save it as "unsent mailing"
-** TODO Revisit bueMailingStatic.sh templates -- Add "unsent mailing" as a buffer visit
-** TODO On entry into "unsent mailing" buffer, update all dblocks
-** TODO Revisit, to save current all tex buffers then  [[elisp:(lsip-local-run-command-here "lcntProc.sh -v -n showRun -i buildResultsRelease")][lcntProc.sh -v -n showRun -i buildResultsRelease]]
-** TODO Modernize mailing.ttytex buffer
-** WAITING Look into org-mime and org-msg
-** TODO Figure how to deal with mail citations -- htmlized supercite
-** TODO Adopt and automate LaTeX email quoting ---  https://tex.stackexchange.com/questions/49587/typesetting-email-with-internet-style-quoting-using-latex
-** -
-####+BEGIN: blee:bxPanel:foldingSection :outLevel 2 :sep t :title "mtdt-if.el" :anchor "" :extraInfo "file:/bisos/blee/env3/boot/mtdt-if.el"
-** /[[elisp:(beginning-of-buffer)][|^]]  [[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]] [[elisp:(delete-other-windows)][|1]]/
-** [[elisp:(show-all)][(>]]  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_  _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_       [[elisp:(outline-show-subtree+toggle)][| /mtdt-if.el:/ |]]  file:/bisos/blee/env3/boot/mtdt-if.el  [[elisp:(org-shifttab)][<)]] E|
-####+END
+** DEFERRED For distribution. Create distRecipsFiles.fv -- as a list of .el
+** TODO [#B] mtdt-assemble readme.org --- complete and use as template.
+** =====   <<MTDT Release Strategy>>  ======
+** Only support straight for packaging
+** Make it self-contained and usable with limited number of packages.
+** Test out those packages as well.
+** Use MELP, elpa  model for package release.
+** =======   MTDT-MAILING Layer  ======  12 hours
+** DONE [#A] Instead of MUA/Gnus use the concept of response
+** TODO [#A] In lcntProc.sh mailing add docMailOut.orgMsg
+** TODO [#A] Add X-MailingPurpose to templates and mailingStart.sh
+** DONE [#A] Add more examples --- ./examples/mailings/extContent
+** WAITING [#A] Complete and test external content  --- 3 hours
 *** +
-*** Per Mailing commands creation
-*** B|
+*** DONE adopt compose extCompose (instead of originate) and mailPre (dblock mailing file)
+*** TODO lcnt build outside of lcnt directories have problem. For now in /lcnt. Will revisi t later.
+*** TODO for article lcnLcntGens.sh enabled list should also have html by default -- only has 8.5 now.
+*** DONE In html results is pdf --- it should be html
+*** -
+** DONE [#A] Add more examples --- ./examples/mailings/testMsg with customize.el
+** DONE [#A] Complete and test customize.el --- 3 hours
+** TODO [#A] Add more examples --- ./examples/mailings/MUA
+** TODO [#A] Complete and test MUA replies --- 4 hours
+** TODO [#A] Adopt and automate LaTeX email quoting ---  https://tex.stackexchange.com/questions/49587/typesetting-email-with-internet-style-quoting-using-latex
+** TODO [#A] MTDT documentation update --- modernize bx-graphvize, Add new headers, update panels, include graphvise in readme
+**  =======   MTDT-DISTRIBUTION Layer  ======
+** TODO [#A] Basic Testing
+** TODO [#A] MTDT documentation update ---  Add new headers, update panels, include graphvise in readme
+**  =======   MTDT-NAMES Layer (Bbdb)  ======
+** TODO [#A] Basic Testing
+** TODO [#A] MTDT documentation update ---  Add new headers, update panels, include graphvise in readme
+**  =======   MTDT-SHARE Layer  ======
+** TODO [#A] Basic Testing --- Re-capture web interface
+** TODO [#A] MTDT documentation update ---  Add new headers, update panels, include graphvise in readme
+**  =======   MTDT Packages Release  ======
+** TODO [#A] See [[MTDT Release Strategy]]
+** B|
 ####+BEGIN: blee:bxPanel:separator :outLevel 1
 * /[[elisp:(beginning-of-buffer)][|^]] [[elisp:(blee:menu-sel:navigation:popupMenu)][==]] [[elisp:(delete-other-windows)][|1]]/
 ####+END
