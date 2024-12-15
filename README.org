@@ -31,8 +31,10 @@ Key components of BISOS and Blee that interact with MTDT include:
 
 A graphical overview of the MTDT model is provided below.
 
-## # #+html: <p align="center"><img src="images/mtdtModel.jpg" /></p>.
-## #+html: <p align="center"><img src="images/mtdtModel.jpg" /></p>
+#+BEGIN_COMMENT
+#+html: <p align="center"><img src="images/mtdtModel.jpg" /></p>.
+#+html: <p align="center"><img src="images/mtdtModel.jpg" /></p>
+#+BEGIN_COMMENT
 
 #+CAPTION: MTDT Model C-c C-x C-v (org-toggle-inline-images)
 #+NAME:   fig:images/mtdtModel.jpg]]
