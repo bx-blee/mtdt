@@ -1,9 +1,14 @@
 #+title: MTDT: Mail Templating, Distribution and Tracking Emacs Package
+#+DATE: <2024-02-19 Mon 16:27>
+#+AUTHOR: Mohsen BANAN
+#+OPTIONS: toc:4
 
-Panel Controls:: [[elisp:(show-all)][Show-All]]  [[elisp:(org-shifttab)][Overview]]  [[elisp:(progn (org-shifttab) (org-content))][Content]] | [[elisp:(delete-other-windows)][(1)]] | [[elisp:(progn (save-buffer) (kill-buffer))][S&Q]] [[elisp:(save-buffer)][Save]] [[elisp:(kill-buffer)][Quit]] [[elisp:(bury-buffer)][Bury]]
+~Blee Panel Controls~: [[elisp:(show-all)][Show-All]] | [[elisp:(org-shifttab)][Overview]] | [[elisp:(progn (org-shifttab) (org-content))][Content]] | [[elisp:(delete-other-windows)][(1)]] | [[elisp:(progn (save-buffer) (kill-buffer))][S&Q]] | [[elisp:(save-buffer)][Save]]  | [[elisp:(kill-buffer)][Quit]]  | [[elisp:(bury-buffer)][Bury]]  \\
+~Panel Links~:  [[file:../_nodeBase_/fullUsagePanel-en.org][Blee Panel]]  | [[file:./py3/panels/bisos.facter/_nodeBase_/fullUsagePanel-en.org][Github Panel]]
+~See Also~: [[https://pypi.org/project/bisos.facter][At PYPI]] | [[https://github.com/bisos-pip/pycs][bisos.PyCS]] | [[https://github.com/bisos-pip/cmdb][bisos.cmdb]]
 Links: [[file:./panels/mtdt/_nodeBase_/fullUsagePanel-en.org]] (Package Blee Panel)
 
-
+* Overview
 MTDT (Mail Templating, Distribution and Tracking) is part of Blee. Blee (ByStar Libre-Halaal Emacs Environment)
 serves as the usage environment of BISOS (ByStar Internet Services OS). BISOS forms the foundation of the
 "Libre-Halaal ByStar Digital Ecosystem." ByStar is rooted in the model of proper governance of polyexistentials
@@ -19,6 +24,60 @@ MTDT allows you to create *Mailing Tempaltes* with content in 1) Plain Text, 2) 
 The Mailing Templates can then be used to =Send= or =Distribute=  to =Recipients=.
 =Recipients= can be derived from =Names= in address books such as =BBDB3=.
 
+* Table of Contents     :TOC:
+- [[#overview][Overview]]
+- [[#mtdt-features-summary][MTDT Features Summary]]
+  - [[#mailings-content-creation][Mailings Content Creation]]
+    - [[#plain-text][Plain Text]]
+    - [[#org-msg--with-html-exports][Org-Msg  (with html exports)]]
+    - [[#latex-with-havea-html-exports-and-pdf-of-content-attachment][LaTeX (with HaVeA html exports and pdf of content attachment)]]
+    - [[#html][Html]]
+  - [[#mailings-customization][Mailings Customization]]
+    - [[#header-customization][Header Customization]]
+    - [[#content-customization][Content Customization]]
+  - [[#mail-templates----mailings-with-pre-specified-recipients][Mail Templates -- Mailings with pre-specified recipients]]
+  - [[#reply-and-forward-stensils][Reply and Forward Stensils]]
+  - [[#mailings-selection][Mailings Selection]]
+  - [[#extensive-global-minor-mode-menus][Extensive Global Minor Mode Menus]]
+  - [[#mail-sending-and-origination-editing][Mail Sending and Origination Editing]]
+    - [[#batch][Batch]]
+    - [[#unsent-buffer-editing][UnSent Buffer Editing]]
+    - [[#external-compostionediting][External Compostion/Editing]]
+  - [[#mtdt-send----addressbook-bbdb-integration][MTDT-Send -- AddressBook (bbdb) Integration]]
+  - [[#mtdt-distribution][MTDT-Distribution]]
+  - [[#distribution-list-selection][Distribution List Selection]]
+  - [[#mtdt-share][MTDT-Share]]
+    - [[#dired-mail-sharing][Dired Mail Sharing]]
+    - [[#browser-mail-sharing][Browser Mail Sharing]]
+- [[#blee-panels-and-documentation][Blee Panels and Documentation]]
+- [[#packages-overview][Packages Overview]]
+
+* MTDT Features Summary
+** Mailings Content Creation
+*** Plain Text
+*** Org-Msg  (with html exports)
+*** LaTeX (with HaVeA html exports and pdf of content attachment)
+*** Html
+** Mailings Customization
+*** Header Customization
+*** Content Customization
+** Mail Templates -- Mailings with pre-specified recipients
+** Reply and Forward Stensils
+** Mailings Selection
+** Extensive Global Minor Mode Menus
+** Mail Sending and Origination Editing
+*** Batch
+*** UnSent Buffer Editing
+*** External Compostion/Editing
+** MTDT-Send -- AddressBook (bbdb) Integration
+** MTDT-Distribution
+** Distribution List Selection
+** MTDT-Share
+*** Dired Mail Sharing
+*** Browser Mail Sharing
+
+* Blee Panels and Documentation
+
 Documentation of MTDT is in the form of a series of related panels. Primary MTDT Blee-Panel is
 [[file:./panels/mtdt/_nodeBase_/fullUsagePanel-en.org]].
 With some limitations, MTDT can be used as a stand alone Emacs package.
@@ -28,6 +87,8 @@ Key components of BISOS and Blee that interact with MTDT include:
 - MARMEE -- Multi-Account Resident Mail Exchange Environment
 - LCNT -- ByStar Libre Content production, publication
 - Mailings, Names, Dist facilities of BISOS
+
+* Packages Overview
 
 A graphical overview of the layering MTDT model is provided below.
 
@@ -41,10 +102,18 @@ A graphical overview of the layering MTDT model is provided below.
 #+ATTR_HTML: :width 1100px
 [[./images/mtdtModel.jpg]]
 
+
+The graphviz below provides an overview of the key concepts and abstractions of
+MTDT packages.
+
+
 #+CAPTION: MTDT Concepts Graphviz C-c C-x C-v (org-toggle-inline-images)
 #+NAME:   fig:images/mtdtConcepts
 #+ATTR_HTML: :width 1100px
 [[./images/mtdtConcepts.svg]]
+
+The graphviz below provides an overview of headers used in MTDT-Mailings. See
+https://github.com/bx-blee/mtdt-mailing for more details.
 
 
 #+CAPTION: MTDT Concepts Graphviz C-c C-x C-v (org-toggle-inline-images)
@@ -52,15 +121,28 @@ A graphical overview of the layering MTDT model is provided below.
 #+ATTR_HTML: :width 1100px
 [[./images/mtdtConcepts_l0.svg]]
 
+The graphviz below provides an overview of headers used in MTDT-Mailings. See
+https://github.com/bx-blee/mtdt-mailing for more details.
+
+
 #+CAPTION: MTDT Concepts Graphviz C-c C-x C-v (org-toggle-inline-images)
 #+NAME:   fig:images/mtdtConcepts_l1
 #+ATTR_HTML: :width 1100px
 [[./images/mtdtConcepts_l1.svg]]
 
+The graphviz below provides an overview of headers used in MTDT-Distributions. See
+https://github.com/bx-blee/mtdt-distribution for more details.
+
+
+
 #+CAPTION: MTDT Concepts Graphviz C-c C-x C-v (org-toggle-inline-images)
 #+NAME:   fig:images/mtdtConcepts_l2
 #+ATTR_HTML: :width 1100px
 [[./images/mtdtConcepts_l2.svg]]
+
+The graphviz below provides an overview of headers used in MTDT-Share. See
+https://github.com/bx-blee/mtdt-share for more details.
+
 
 #+CAPTION: MTDT Concepts Graphviz C-c C-x C-v (org-toggle-inline-images)
 #+NAME:   fig:images/mtdtConcepts_l3
