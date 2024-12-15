@@ -50,7 +50,7 @@ The Mailing Templates can then be used to =Send= or =Distribute=  to =Recipients
     - [[#dired-mail-sharing][Dired Mail Sharing]]
     - [[#browser-mail-sharing][Browser Mail Sharing]]
 - [[#blee-panels-and-documentation][Blee Panels and Documentation]]
-- [[#packages-overview][Packages Overview]]
+- [[#mtdt-layering-and-packages-overview][MTDT-Layering and Packages Overview]]
 
 * MTDT Features Summary
 ** Mailings Content Creation
@@ -88,7 +88,23 @@ Key components of BISOS and Blee that interact with MTDT include:
 - LCNT -- ByStar Libre Content production, publication
 - Mailings, Names, Dist facilities of BISOS
 
-* Packages Overview
+* MTDT-Layering and Packages Overview
+
+Analysis and implementation of MTDT lends itself well to layering.
+This table, provides a summary.
+
+|--------+-------------------+----------------------+--------------+-------------------------------------------|
+|   MTDT | Layer             | Package Repo         | Blee         | Description                               |
+| Layers | Name              | URL                  | Panel        |                                           |
+|--------+-------------------+----------------------+--------------+-------------------------------------------|
+|      1 | <<mailings>>      | [[https://github.com/bx-blee/mtdt-mailing][bx-blee/mtdt-mailing]] | [[file:][mtdt-mailing]] | Create&Use of Mailings/Templates/Stensils |
+|      2 | <<distributions>> | [[https://github.com/bx-blee/mtdt-mailing][bx-blee/distribution]] | [[file:][mtdt-distg]]   | of Mailings/Templates/Stensils            |
+|      3 | <<names>>         | [[https://github.com/bx-blee/mtdt-mailing][bx-blee/mtdt-mailing]] | [[file:][mtdt-mailing]] | of Mailings/Templates/Stensils            |
+|      4 | <<shares>>        | [[https://github.com/bx-blee/mtdt-mailing][bx-blee/mtdt-mailing]] | [[file:][mtdt-mailing]] | of Mailings/Templates/Stensils            |
+|      5 | <<tracking>>      | [[https://github.com/bx-blee/mtdt-mailing][bx-blee/mtdt-mailing]] | [[file:][mtdt-mailing]] | of Mailings/Templates/Stensils            |
+|--------+-------------------+----------------------+--------------+-------------------------------------------|
+
+
 
 A graphical overview of the layering MTDT model is provided below.
 
