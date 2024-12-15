@@ -39,9 +39,9 @@
 ** MTDT is part of Blee and BISOS. See the blee-core/mail/mailing panel for related information.
 ** Start with  an overview at  [[elisp:(blee:bnsm:panel-goto "/bisos/panels/blee-core/mail/mailings/mtdt/README")][README]].
 ** B|
-####+BEGIN: blee:bxPanel:foldingSection :outLevel 1 :sep t :title "MTDT-2 Evolution" :anchor "" :extraInfo ""
+####+BEGIN: blee:bxPanel:foldingSection :outLevel 1 :sep t :title "MTDT-2 Evolution -- TODOs and Plans" :anchor "" :extraInfo ""
 * /[[elisp:(beginning-of-buffer)][|^]]  [[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]] [[elisp:(delete-other-windows)][|1]]/
-* [[elisp:(show-all)][(>]]  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_  _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_       [[elisp:(outline-show-subtree+toggle)][| *MTDT-2 Evolution:* |]]    [[elisp:(org-shifttab)][<)]] E|
+* [[elisp:(show-all)][(>]]  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_  _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_       [[elisp:(outline-show-subtree+toggle)][| *MTDT-2 Evolution -- TODOs and Plans:* |]]    [[elisp:(org-shifttab)][<)]] E|
 ####+END
 ** +
 ** ---------- mtdt-send /dist/mailing/names/share BEGIN   <2024-12-12 Thu>

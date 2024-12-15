@@ -3,10 +3,10 @@
 #+AUTHOR: Mohsen BANAN
 #+OPTIONS: toc:4
 
+
 ~Blee Panel Controls~: [[elisp:(show-all)][Show-All]] | [[elisp:(org-shifttab)][Overview]] | [[elisp:(progn (org-shifttab) (org-content))][Content]] | [[elisp:(delete-other-windows)][(1)]] | [[elisp:(progn (save-buffer) (kill-buffer))][S&Q]] | [[elisp:(save-buffer)][Save]]  | [[elisp:(kill-buffer)][Quit]]  | [[elisp:(bury-buffer)][Bury]]  \\
-~Panel Links~:  [[file:../_nodeBase_/fullUsagePanel-en.org][Blee Panel]]  | [[file:./py3/panels/bisos.facter/_nodeBase_/fullUsagePanel-en.org][Github Panel]]
-~See Also (Repo URls~:  [[https://github.com/bx-blee/mtdt][mtdt]] |  [[https://github.com/bx-blee/mtdt-mailing][mailing]] | [[https://github.com/bx-blee/mtdt-distribution][distribution]] |  [[https://github.com/bx-blee/mtdt-names][names]]  |  [[https://github.com/bx-blee/mtdt-share][share]] |  [[https://github.com/bx-blee/mtdt-track][track]]
-Links: [[file:./panels/mtdt/_nodeBase_/fullUsagePanel-en.org]] (Package Blee Panel)
+~Panel Links~:  [[file:../_nodeBase_/fullUsagePanel-en.org][Blee Panel]]  \\
+~See Also (Repo URls)~:  [[https://github.com/bx-blee/mtdt][mtdt]] |  [[https://github.com/bx-blee/mtdt-mailing][mailing]] | [[https://github.com/bx-blee/mtdt-distribution][distribution]] |  [[https://github.com/bx-blee/mtdt-names][names]]  |  [[https://github.com/bx-blee/mtdt-share][share]] |  [[https://github.com/bx-blee/mtdt-track][track]] \\
 
 * Overview
 MTDT (Mail Templating, Distribution and Tracking) is part of Blee. Blee (ByStar Libre-Halaal Emacs Environment)
@@ -28,10 +28,13 @@ The Mailing Templates can then be used to =Send= or =Distribute=  to =Recipients
 - [[#overview][Overview]]
 - [[#mtdt-features-summary][MTDT Features Summary]]
   - [[#mailings-content-creation][Mailings Content Creation]]
-    - [[#plain-text][Plain Text]]
-    - [[#org-msg--with-html-exports][Org-Msg  (with html exports)]]
-    - [[#latex-with-havea-html-exports-and-pdf-of-content-attachment][LaTeX (with HaVeA html exports and pdf of content attachment)]]
-    - [[#html][Html]]
+    - [[#plain-text-native][Plain Text /Native/]]
+    - [[#org-msg-native--with-html-exports][Org-Msg /Native/  (with html exports)]]
+    - [[#latex-external-with-havea-html-exports-and-pdf-of-content-attachment][LaTeX /External/ (with HaVeA html exports and pdf of content attachment)]]
+    - [[#html-external][Html /External/]]
+  - [[#mailings-content-external-composition][Mailings Content External Composition]]
+    - [[#latex-lcnt][Latex (Lcnt)]]
+    - [[#html-editor][HTML Editor]]
   - [[#mailings-customization][Mailings Customization]]
     - [[#header-customization][Header Customization]]
     - [[#content-customization][Content Customization]]
@@ -54,10 +57,18 @@ The Mailing Templates can then be used to =Send= or =Distribute=  to =Recipients
 
 * MTDT Features Summary
 ** Mailings Content Creation
-*** Plain Text
-*** Org-Msg  (with html exports)
-*** LaTeX (with HaVeA html exports and pdf of content attachment)
-*** Html
+MTDT allows you to create *Mailing Tempaltes* with content in 1) Plain Text, 2) Org-Msg, 3) LaTeX and 4) Plain
+Html.
+*** Plain Text /Native/
+Mailings and Templates
+*** Org-Msg /Native/  (with html exports)
+OrgMsg https://github.com/jeremy-compostella/org-msg is a GNU/Emacs global minor mode mixing up Org mode and
+Message mode to compose and reply to emails.
+*** LaTeX /External/ (with HaVeA html exports and pdf of content attachment)
+*** Html /External/
+** Mailings Content External Composition
+*** Latex (Lcnt)
+*** HTML Editor
 ** Mailings Customization
 *** Header Customization
 *** Content Customization
@@ -93,16 +104,16 @@ Key components of BISOS and Blee that interact with MTDT include:
 Analysis and implementation of MTDT lends itself well to layering.
 This table, provides a summary.
 
-|--------+-------------------+----------------------+--------------+-------------------------------------------|
-|   MTDT | Layer             | Package Repo         | Blee         | Description                               |
-| Layers | Name              | URL                  | Panel        |                                           |
-|--------+-------------------+----------------------+--------------+-------------------------------------------|
-|      1 | <<mailings>>      | [[https://github.com/bx-blee/mtdt-mailing][bx-blee/mtdt-mailing]] | [[file:][mtdt-mailing]] | Create&Use of Mailings/Templates/Stensils |
-|      2 | <<distributions>> | [[https://github.com/bx-blee/mtdt-mailing][bx-blee/distribution]] | [[file:][mtdt-dist]]]]  | Distribute to recips lists                |
-|      3 | <<names>>         | [[https://github.com/bx-blee/mtdt-names][bx-blee/mtdt-names]]   | [[file:][mtdt-names]]   | Use AddressBook to create recips          |
-|      4 | <<shares>>        | [[https://github.com/bx-blee/mtdt-share][bx-blee/mtdt-share]]   | [[file:][mtdt-share]]   | Send from browser/dired/etc               |
-|      5 | <<tracking>>      | [[https://github.com/bx-blee/mtdt-track][bx-blee/mtdt-track]]   | [[file:][mtdt-mailing]] | Handle Non Delivery Reports etc           |
-|--------+-------------------+----------------------+--------------+-------------------------------------------|
+|--------+-------------------+----------------------+-------------------------------------------|
+|   MTDT | Layer             | Package Repo         | Description                               |
+| Layers | Name              | URL                  |                                           |
+|--------+-------------------+----------------------+-------------------------------------------|
+|      1 | <<mailings>>      | [[https://github.com/bx-blee/mtdt-mailing][bx-blee/mtdt-mailing]] | Create&Use of Mailings/Templates/Stensils |
+|      2 | <<distributions>> | [[https://github.com/bx-blee/mtdt-mailing][bx-blee/distribution]] | Distribute to recips lists                |
+|      3 | <<names>>         | [[https://github.com/bx-blee/mtdt-names][bx-blee/mtdt-names]]   | Use AddressBook to create recips          |
+|      4 | <<shares>>        | [[https://github.com/bx-blee/mtdt-share][bx-blee/mtdt-share]]   | Send from browser/dired/etc               |
+|      5 | <<tracking>>      | [[https://github.com/bx-blee/mtdt-track][bx-blee/mtdt-track]]   | Handle Non Delivery Reports etc           |
+|--------+-------------------+----------------------+-------------------------------------------|
 
 
 
