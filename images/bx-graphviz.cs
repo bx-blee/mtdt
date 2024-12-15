@@ -280,6 +280,13 @@ def mtdtConceptsGraph(
     dot.node('MailingMenu', 'Mailing Menu', style='filled', fillcolor='green')
     dot.node('DistMenu', 'Distribution Menu', style='filled', fillcolor='green')
 
+    #
+    dot.node('CompositionModel', 'Composition Model', style='filled', fillcolor='green')
+    dot.node('NativeComposition', 'Native Composition', style='filled', fillcolor='green')
+    dot.node('ExternalComposition', 'External Composition', style='filled', fillcolor='green')
+
+    dot.node('ContentCustomization', 'Content Customization', style='filled', fillcolor='green')
+
     # 1.2.1.1
     dot.node('SendExtent', 'Send Extent', style='filled', fillcolor='green')
     dot.node('doSend', 'doSend', style='filled', fillcolor='green')
@@ -291,7 +298,7 @@ def mtdtConceptsGraph(
     dot.node('RecipientsListForm', 'Recipients List Form',  style='filled', fillcolor='darksalmon')
     dot.node('RecipientsListFormFile', 'Recipients List Form File',  style='filled', fillcolor='darksalmon')
     
-    dot.node('bbdb2', 'bbdb2', style='filled', fillcolor='darksalmon')
+    # dot.node('bbdb2', 'bbdb2', style='filled', fillcolor='darksalmon')
     dot.node('bbdb3', 'bbdb3', style='filled', fillcolor='darksalmon')
 
     dot.node('NamesFile', 'namesFile', style='filled', fillcolor='darksalmon')
@@ -313,21 +320,27 @@ def mtdtConceptsGraph(
     #####  Adding edges to define hierarchy
     #####
     # 1.1  -- 1.2 -- 1.3
-    dot.edge('MTDT', 'SelectedCompositionFwrk', label='Enum')
-    dot.edge('MTDT', 'MailingFile', label='Enum')
-    dot.edge('MTDT', 'Interactive', label='Enum')
-    dot.edge('MTDT', 'SendExtent', label='Enum')
-    dot.edge('MTDT', 'OorR', label='Enum')
-    dot.edge('MTDT', 'AddressBook', label='Enum')
-    dot.edge('MTDT', 'Names', label='Enum')
-    dot.edge('MTDT', 'Distributions', label='Enum')
-    dot.edge('MTDT', 'Tracking', label='Enum')
+    dot.edge('MTDT', 'SelectedCompositionFwrk', label='Abstraction')
+    dot.edge('MTDT', 'MailingFile', label='Abstraction')
+    dot.edge('MTDT', 'Interactive', label='Abstraction')
+    dot.edge('MTDT', 'SendExtent', label='Abstraction')
+    dot.edge('MTDT', 'OorR', label='Abstraction')
+    dot.edge('MTDT', 'AddressBook', label='Abstraction')
+    dot.edge('MTDT', 'Names', label='Abstraction')
+    dot.edge('MTDT', 'Distributions', label='Abstraction')
+    dot.edge('MTDT', 'Tracking', label='Abstraction')
+    dot.edge('MTDT', 'CompositionModel', label='Abstraction')
+    dot.edge('MTDT', 'ContentCustomization', label='Abstraction')
+
 
     dot.edge('SelectedCompositionFwrk', 'PlainText', label='Enum')
     dot.edge('SelectedCompositionFwrk', 'OrgMsg', label='Enum')
     dot.edge('SelectedCompositionFwrk', 'LaTeX', label='Enum')
     dot.edge('SelectedCompositionFwrk', 'Html', label='Enum')
     dot.edge('SelectedCompositionFwrk', 'WithSelMailing', label='Enum')
+
+    dot.edge('CompositionModel', 'NativeComposition', label='Enum')
+    dot.edge('CompositionModel', 'ExternalComposition', label='Enum')
 
     #
     dot.edge('MailingFile', 'TemplateFile')
@@ -365,7 +378,7 @@ def mtdtConceptsGraph(
     dot.edge('RecipientsListForm', 'RecipientsListFormFile')
 
 
-    dot.edge('AddressBook', 'bbdb2')
+    # dot.edge('AddressBook', 'bbdb2')
     dot.edge('AddressBook', 'bbdb3')
 
     dot.edge('Names', 'NamesFile')
@@ -389,6 +402,9 @@ def mtdtConceptsGraph(
     dot.edge('sendWithExtent', 'sent')
 
     dot.edge('SendExtent', 'sendWithExtent')
+
+    dot.edge('CompositionModel', 'sendWithExtent')
+    dot.edge('ContentCustomization', 'sendWithExtent')
 
 
     return dot
