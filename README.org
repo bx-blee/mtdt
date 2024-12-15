@@ -29,17 +29,46 @@ Key components of BISOS and Blee that interact with MTDT include:
 - LCNT -- ByStar Libre Content production, publication
 - Mailings, Names, Dist facilities of BISOS
 
-A graphical overview of the MTDT model is provided below.
+A graphical overview of the layering MTDT model is provided below.
 
 #+BEGIN_COMMENT
 #+html: <p align="center"><img src="images/mtdtModel.jpg" /></p>.
 #+html: <p align="center"><img src="images/mtdtModel.jpg" /></p>
 #+END_COMMENT
 
-#+CAPTION: MTDT Model C-c C-x C-v (org-toggle-inline-images)
-#+NAME:   fig:images/mtdtModel.jpg]]
+#+CAPTION: MTDT Layering C-c C-x C-v (org-toggle-inline-images)
+#+NAME:   fig:images/mtdtModel.jpg
 #+ATTR_HTML: :width 1100px
 [[./images/mtdtModel.jpg]]
+
+#+CAPTION: MTDT Concepts Graphviz C-c C-x C-v (org-toggle-inline-images)
+#+NAME:   fig:images/mtdtConcepts
+#+ATTR_HTML: :width 1100px
+[[./images/mtdtConcepts.svg]]
+
+
+#+CAPTION: MTDT Concepts Graphviz C-c C-x C-v (org-toggle-inline-images)
+#+NAME:   fig:images/mtdtConcepts_l0
+#+ATTR_HTML: :width 1100px
+[[./images/mtdtConcepts_l0.svg]]
+
+#+CAPTION: MTDT Concepts Graphviz C-c C-x C-v (org-toggle-inline-images)
+#+NAME:   fig:images/mtdtConcepts_l1
+#+ATTR_HTML: :width 1100px
+[[./images/mtdtConcepts_l1.svg]]
+
+#+CAPTION: MTDT Concepts Graphviz C-c C-x C-v (org-toggle-inline-images)
+#+NAME:   fig:images/mtdtConcepts_l2
+#+ATTR_HTML: :width 1100px
+[[./images/mtdtConcepts_l2.svg]]
+
+#+CAPTION: MTDT Concepts Graphviz C-c C-x C-v (org-toggle-inline-images)
+#+NAME:   fig:images/mtdtConcepts_l3
+#+ATTR_HTML: :width 1100px
+[[./images/mtdtConcepts_l3.svg]]
+
+
+
 
 
 # ###+BEGIN: blee:bxPanel:footerOrgParams
