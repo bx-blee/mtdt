@@ -34,7 +34,7 @@ A graphical overview of the MTDT model is provided below.
 #+BEGIN_COMMENT
 #+html: <p align="center"><img src="images/mtdtModel.jpg" /></p>.
 #+html: <p align="center"><img src="images/mtdtModel.jpg" /></p>
-#+BEGIN_COMMENT
+#+END_COMMENT
 
 #+CAPTION: MTDT Model C-c C-x C-v (org-toggle-inline-images)
 #+NAME:   fig:images/mtdtModel.jpg]]
