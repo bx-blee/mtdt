@@ -10,7 +10,7 @@
 **  [[elisp:(bap:magit:bisos:current-bpo-repos/visit)][BPO-Repos-Magit]] ||
 **  [[elisp:(blee:buf:re-major-mode)][Re-Major-Mode]] ||  [[elisp:(org-dblock-update-buffer-bx)][Update Buf Dblocks]] || [[elisp:(org-dblock-bx-blank-buffer)][Blank Buf Dblocks]] || [[elisp:(bx:panel:variablesShow)][bx:panel:variablesShow]]
 **  [[elisp:(blee:menu-sel:comeega:maintenance:popupMenu)][||Maintenance]]
-**  This File :: *= /bisos/panels/blee-core/mail/mailings/mtdt/_nodeBase_/fullUsagePanel-en.org =*
+**  This File :: *= /bisos/git/bxRepos/blee/mtdt/TODOs.org =*
 * /file-truename:/  /bisos/git/auth/bxRepos/blee/mtdt/panels/mtdt/_nodeBase_/fullUsagePanel-en.org
 *  [[elisp:(org-cycle)][|#Select|]]  :: (Results: [[elisp:(blee:bnsm:results-here)][Here]] | [[elisp:(blee:bnsm:results-split-below)][Below]] | [[elisp:(blee:bnsm:results-split-right)][Right]] | [[elisp:(blee:bnsm:results-other)][Other]] | [[elisp:(blee:bnsm:results-popup)][Popup]]) (Select:  [[elisp:(lsip-local-run-command "lpCurrentsAdmin.sh -i currentsGetThenShow")][Show Currents]]  [[elisp:(lsip-local-run-command "lpCurrentsAdmin.sh")][lpCurrentsAdmin.sh]] ) [[elisp:(org-cycle)][| ]]
 **  #See:  (Window: [[elisp:(blee:bnsm:results-window-show)][?]] | [[elisp:(blee:bnsm:results-window-set 0)][0]] | [[elisp:(blee:bnsm:results-window-set 1)][1]] | [[elisp:(blee:bnsm:results-window-set 2)][2]] | [[elisp:(blee:bnsm:results-window-set 3)][3]] ) || [[elisp:(lsip-local-run-command-here "echo pushd dest")][echo pushd dir]] || [[elisp:(lsip-local-run-command-here "lsf")][lsf]] || [[elisp:(lsip-local-run-command-here "pwd")][pwd]] |
@@ -44,6 +44,26 @@
 * [[elisp:(show-all)][(>]]  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_  _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_       [[elisp:(outline-show-subtree+toggle)][| *MTDT-2 Evolution:* |]]    [[elisp:(org-shifttab)][<)]] E|
 ####+END
 ** +
+** ---------- mtdt-send /dist/mailing/names/share BEGIN   <2024-12-12 Thu>
+** TODO unsent-buffer needs to be passed around up to the sending end
+** ---------- mtdt-send /dist/mailing/names/share END   <2024-12-12 Thu>
+** ---------- F3-c-c BEGIN   <2024-12-12 Thu>
+** TODO Turn it into a hierarchical panel
+** TODO Add test and probe sub-panel
+** TODO Replace all msgOrg with orgMsg
+** ---------- F3-c-c END   <2024-12-12 Thu>
+** ---------- MTDT Dblocks BEGIN   <2024-12-12 Thu>
+** TODO De-Derive is NOTYET
+** TODO Send with Sel Recipients is NOTYET
+** TODO Select Mailing --- (void-function b:mtdt:derive/fromFilesAndSelect)
+** TODO In bpos file hierarchy replace all msgOrg with orgMsg
+** ---------- MTDT Dblocks END   <2024-12-12 Thu>
+** ---------- startMailing.sh Dblocks BEGIN   <2024-12-12 Thu>
+** TODO Evaluate it NOTYET
+** ---------- startMailing.sh Dblocks END   <2024-12-12 Thu>
+** ---------- distProc.sh Dblocks BEGIN   <2024-12-12 Thu>
+** TODO Add selected-recips.el  NOTYET
+** ---------- distProc.sh Dblocks END   <2024-12-12 Thu>
 ** WAITING [#A] MTDT ToDos: Add examples and send test message and external composition
 ** TODO [#A] MTDT ToDos: Add Gnus examples
 ** WAITING [#A] MTDT ToDos: Add *<actuate* to defcustom menu.
@@ -66,7 +86,6 @@
 *** TODO for article lcnLcntGens.sh enabled list should also have html by default -- only has 8.5 now.
 *** DONE In html results is pdf --- it should be html
 *** -
-
 ** DONE [#A] Add more examples --- ./examples/mailings/testMsg with customize.el
 ** DONE [#A] Complete and test customize.el --- 3 hours
 ** TODO [#A] Add more examples --- ./examples/mailings/MUA

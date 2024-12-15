@@ -21,7 +21,7 @@ The Mailing Templates can then be used to =Send= or =Distribute=  to =Recipients
 
 Documentation of MTDT is in the form of a series of related panels. Primary MTDT Blee-Panel is
 [[file:./panels/mtdt/_nodeBase_/fullUsagePanel-en.org]].
-With some limitations, MTDT can be used an a stand alone Emacs package.
+With some limitations, MTDT can be used as a stand alone Emacs package.
 
 Key components of BISOS and Blee that interact with MTDT include:
 
@@ -31,8 +31,8 @@ Key components of BISOS and Blee that interact with MTDT include:
 
 A graphical overview of the MTDT model is provided below.
 
-# #+html: <p align="center"><img src="images/mtdtModel.jpg" /></p>.
-#+html: <p align="center"><img src="images/mtdtModel.jpg" /></p>
+## # #+html: <p align="center"><img src="images/mtdtModel.jpg" /></p>.
+## #+html: <p align="center"><img src="images/mtdtModel.jpg" /></p>
 
 #+CAPTION: MTDT Model C-c C-x C-v (org-toggle-inline-images)
 #+NAME:   fig:images/mtdtModel.jpg]]
