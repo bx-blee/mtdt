@@ -5,7 +5,7 @@
 
 ~Blee Panel Controls~: [[elisp:(show-all)][Show-All]] | [[elisp:(org-shifttab)][Overview]] | [[elisp:(progn (org-shifttab) (org-content))][Content]] | [[elisp:(delete-other-windows)][(1)]] | [[elisp:(progn (save-buffer) (kill-buffer))][S&Q]] | [[elisp:(save-buffer)][Save]]  | [[elisp:(kill-buffer)][Quit]]  | [[elisp:(bury-buffer)][Bury]]  \\
 ~Panel Links~:  [[file:../_nodeBase_/fullUsagePanel-en.org][Blee Panel]]  | [[file:./py3/panels/bisos.facter/_nodeBase_/fullUsagePanel-en.org][Github Panel]]
-~See Also~: [[https://pypi.org/project/bisos.facter][At PYPI]] | [[https://github.com/bisos-pip/pycs][bisos.PyCS]] | [[https://github.com/bisos-pip/cmdb][bisos.cmdb]]
+~See Also (Repo URls~:  [[https://github.com/bx-blee/mtdt][mtdt]] |  [[https://github.com/bx-blee/mtdt-mailing][mailing]] | [[https://github.com/bx-blee/mtdt-distribution][distribution]] |  [[https://github.com/bx-blee/mtdt-names][names]]  |  [[https://github.com/bx-blee/mtdt-share][share]] |  [[https://github.com/bx-blee/mtdt-track][track]]
 Links: [[file:./panels/mtdt/_nodeBase_/fullUsagePanel-en.org]] (Package Blee Panel)
 
 * Overview
@@ -50,7 +50,7 @@ The Mailing Templates can then be used to =Send= or =Distribute=  to =Recipients
     - [[#dired-mail-sharing][Dired Mail Sharing]]
     - [[#browser-mail-sharing][Browser Mail Sharing]]
 - [[#blee-panels-and-documentation][Blee Panels and Documentation]]
-- [[#mtdt-layering-and-packages-overview][MTDT-Layering and Packages Overview]]
+- [[#mtdt-layering-packages-urls-and-overview][MTDT-Layering, Packages URLs and Overview]]
 
 * MTDT Features Summary
 ** Mailings Content Creation
@@ -88,7 +88,7 @@ Key components of BISOS and Blee that interact with MTDT include:
 - LCNT -- ByStar Libre Content production, publication
 - Mailings, Names, Dist facilities of BISOS
 
-* MTDT-Layering and Packages Overview
+* MTDT-Layering, Packages URLs and Overview
 
 Analysis and implementation of MTDT lends itself well to layering.
 This table, provides a summary.
@@ -98,10 +98,10 @@ This table, provides a summary.
 | Layers | Name              | URL                  | Panel        |                                           |
 |--------+-------------------+----------------------+--------------+-------------------------------------------|
 |      1 | <<mailings>>      | [[https://github.com/bx-blee/mtdt-mailing][bx-blee/mtdt-mailing]] | [[file:][mtdt-mailing]] | Create&Use of Mailings/Templates/Stensils |
-|      2 | <<distributions>> | [[https://github.com/bx-blee/mtdt-mailing][bx-blee/distribution]] | [[file:][mtdt-distg]]   | of Mailings/Templates/Stensils            |
-|      3 | <<names>>         | [[https://github.com/bx-blee/mtdt-mailing][bx-blee/mtdt-mailing]] | [[file:][mtdt-mailing]] | of Mailings/Templates/Stensils            |
-|      4 | <<shares>>        | [[https://github.com/bx-blee/mtdt-mailing][bx-blee/mtdt-mailing]] | [[file:][mtdt-mailing]] | of Mailings/Templates/Stensils            |
-|      5 | <<tracking>>      | [[https://github.com/bx-blee/mtdt-mailing][bx-blee/mtdt-mailing]] | [[file:][mtdt-mailing]] | of Mailings/Templates/Stensils            |
+|      2 | <<distributions>> | [[https://github.com/bx-blee/mtdt-mailing][bx-blee/distribution]] | [[file:][mtdt-dist]]]]  | Distribute to recips lists                |
+|      3 | <<names>>         | [[https://github.com/bx-blee/mtdt-names][bx-blee/mtdt-names]]   | [[file:][mtdt-names]]   | Use AddressBook to create recips          |
+|      4 | <<shares>>        | [[https://github.com/bx-blee/mtdt-share][bx-blee/mtdt-share]]   | [[file:][mtdt-share]]   | Send from browser/dired/etc               |
+|      5 | <<tracking>>      | [[https://github.com/bx-blee/mtdt-track][bx-blee/mtdt-track]]   | [[file:][mtdt-mailing]] | Handle Non Delivery Reports etc           |
 |--------+-------------------+----------------------+--------------+-------------------------------------------|
 
 
