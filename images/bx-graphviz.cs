@@ -564,13 +564,17 @@ def mtdtConceptsGraph_l1(
     )
 
     # 1- Gnu-Emacs
-    dot.node('MTDT-Mailing', 'LAYER 2:\nMTDT\nMailing\nConcepts', shape='circle', style='filled', fillcolor='darkseagreen3')
+    dot.node('MTDT-Mailing', 'LAYER 1:\nMTDT\nMailing\nConcepts', shape='circle', style='filled', fillcolor='darkseagreen3')
 
     # 1.1  1.2 1.3 - Redist Types
     dot.node('SelectedCompositionFwrk', 'Selected\nCompositionn\nFramework', shape='cylinder', style='filled', fillcolor='green')
     dot.node('SelectedCompositionModel', 'Selected\nComposition\nModel', shape='cylinder', style='filled', fillcolor='green')
     dot.node('Interactive', 'Interactive\nUsage', shape='circle', style='filled', fillcolor='darksalmon')
+
+    dot.node('X-MailingName', 'X-Mailing\nName', shape='parallelogram', style='filled', fillcolor='khaki1')
+
     dot.node('MailingFile', 'Mailing\nFile', shape='parallelogram', style='filled', fillcolor='khaki1')
+    dot.node('CommencingFile', 'Commencing\nFile', shape='parallelogram', style='filled', fillcolor='khaki1')
     dot.node('TemplateFile', 'Template\nFile',  shape='parallelogram', style='filled', fillcolor='khaki1')
     dot.node('MuaStencil', 'Mua\nStencil',  shape='parallelogram', style='filled', fillcolor='khaki1')
     dot.node('CustomizeFile', 'Customize.el\nFile', shape='parallelogram', style='filled', fillcolor='khaki1')
@@ -627,12 +631,13 @@ def mtdtConceptsGraph_l1(
     dot.edge('MTDT-Mailing', 'Interactive', label='Usage')
     dot.edge('MTDT-Mailing', 'SelectedCompositionFwrk', label='Configuration')
     dot.edge('MTDT-Mailing', 'SelectedCompositionModel', label='Configuration')
-    dot.edge('MTDT-Mailing', 'MailingFile', label='Specification')
-    dot.edge('MTDT-Mailing', 'TemplateFile', label='Specification')
-    dot.edge('MTDT-Mailing', 'MuaStencil', label='Specification')
+    dot.edge('MTDT-Mailing', 'X-MailingName', label='Specification')
     dot.edge('MTDT-Mailing', 'CustomizeFile', label='Specification')
 
-
+    dot.edge('X-MailingName', 'CommencingFile', label='Specification')
+    dot.edge('X-MailingName', 'MailingFile', label='Specification')
+    dot.edge('X-MailingName', 'TemplateFile', label='Specification')
+    dot.edge('X-MailingName', 'MuaStencil', label='Specification')
 
     dot.edge('SelectedCompositionFwrk', 'PlainText', dir='back', label='Enum')
     dot.edge('SelectedCompositionFwrk', 'OrgMsg',  dir='back', label='Enum')
@@ -650,9 +655,10 @@ def mtdtConceptsGraph_l1(
     dot.edge('SelectedCompositionFwrk', 'Gnus', label='Inform')
     dot.edge('SelectedCompositionFwrk', 'MtdtMailingMenu', label='Inform')
 
-    dot.edge('MailingFile', 'CustomizeFile', dir='back', label='Execute')
+    dot.edge('unsentBuffer', 'CustomizeFile', dir='back', label='Execute')
     dot.edge('MailingFile', 'MailingCmnd', label='Derive')
     dot.edge('TemplateFile', 'MailingCmnd', label='Derive')
+    dot.edge('CommencingFile', 'MailingCmnd', label='Derive')
     dot.edge('MuaStencil', 'MailingCmnd', label='Derive')
     dot.edge('MailingCmnd', 'SelectedGnusMailing')
     dot.edge('MailingCmnd', 'ListOfMailingCmnds')

@@ -5,8 +5,9 @@
 
 
 ~Blee Panel Controls~: [[elisp:(show-all)][Show-All]] | [[elisp:(org-shifttab)][Overview]] | [[elisp:(progn (org-shifttab) (org-content))][Content]] | [[elisp:(delete-other-windows)][(1)]] | [[elisp:(progn (save-buffer) (kill-buffer))][S&Q]] | [[elisp:(save-buffer)][Save]]  | [[elisp:(kill-buffer)][Quit]]  | [[elisp:(bury-buffer)][Bury]]  \\
-~Panel Links~:  [[file:../_nodeBase_/fullUsagePanel-en.org][Blee Panel]]  \\
-~See Also (Repo URls)~:  [[https://github.com/bx-blee/mtdt][mtdt]] |  [[https://github.com/bx-blee/mtdt-mailing][mailing]] | [[https://github.com/bx-blee/mtdt-distribution][distribution]] |  [[https://github.com/bx-blee/mtdt-names][names]]  |  [[https://github.com/bx-blee/mtdt-share][share]] |  [[https://github.com/bx-blee/mtdt-track][track]] \\
+~Panel Links~:  [[file:../_nodeBase_/fullUsagePanel-en.org][Blee Panel]]
+
+~See Also (Repo URls)~:  [[https://github.com/bx-blee/mtdt][mtdt]] |  [[https://github.com/bx-blee/mtdt-mailing][mailing]] | [[https://github.com/bx-blee/mtdt-distribution][distribution]] |  [[https://github.com/bx-blee/mtdt-names][names]]  |  [[https://github.com/bx-blee/mtdt-share][share]] |  [[https://github.com/bx-blee/mtdt-track][track]]
 
 * Overview
 MTDT (Mail Templating, Distribution and Tracking) is part of Blee. Blee (ByStar Libre-Halaal Emacs Environment)
@@ -60,7 +61,7 @@ The Mailing Templates can then be used to =Send= or =Distribute=  to =Recipients
 MTDT allows you to create *Mailing Tempaltes* with content in 1) Plain Text, 2) Org-Msg, 3) LaTeX and 4) Plain
 Html.
 *** Plain Text /Native/
-Mailings and Templates
+Content of Mailings and Templates
 *** Org-Msg /Native/  (with html exports)
 OrgMsg https://github.com/jeremy-compostella/org-msg is a GNU/Emacs global minor mode mixing up Org mode and
 Message mode to compose and reply to emails.
