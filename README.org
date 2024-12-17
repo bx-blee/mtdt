@@ -36,31 +36,6 @@ The Mailing Templates can then be used to =Send= or =Distribute=  to =Recipients
 - [[#mtdt-installation][MTDT Installation]]
   - [[#point-to-the-mtdt-pkg-install-in-blee][Point to the MTDT pkg install in blee.]]
 - [[#mtdt-features-summary][MTDT Features Summary]]
-  - [[#mailings-content-creation][Mailings Content Creation]]
-    - [[#plain-text-native][Plain Text /Native/]]
-    - [[#org-msg-native--with-html-exports][Org-Msg /Native/  (with html exports)]]
-    - [[#latex-external-with-havea-html-exports-and-pdf-of-content-attachment][LaTeX /External/ (with HaVeA html exports and pdf of content attachment)]]
-    - [[#html-external][Html /External/]]
-  - [[#mailings-content-external-composition][Mailings Content External Composition]]
-    - [[#latex-lcnt][Latex (Lcnt)]]
-    - [[#html-editor][HTML Editor]]
-  - [[#mailings-customization][Mailings Customization]]
-    - [[#header-customization][Header Customization]]
-    - [[#content-customization][Content Customization]]
-  - [[#mail-templates----mailings-with-pre-specified-recipients][Mail Templates -- Mailings with pre-specified recipients]]
-  - [[#reply-and-forward-stensils][Reply and Forward Stensils]]
-  - [[#mailings-selection][Mailings Selection]]
-  - [[#extensive-global-minor-mode-menus][Extensive Global Minor Mode Menus]]
-  - [[#mail-sending-and-origination-editing][Mail Sending and Origination Editing]]
-    - [[#batch][Batch]]
-    - [[#unsent-buffer-editing][UnSent Buffer Editing]]
-    - [[#external-compostionediting][External Compostion/Editing]]
-  - [[#mtdt-send----addressbook-bbdb-integration][MTDT-Send -- AddressBook (bbdb) Integration]]
-  - [[#mtdt-distribution][MTDT-Distribution]]
-  - [[#distribution-list-selection][Distribution List Selection]]
-  - [[#mtdt-share][MTDT-Share]]
-    - [[#dired-mail-sharing][Dired Mail Sharing]]
-    - [[#browser-mail-sharing][Browser Mail Sharing]]
 - [[#blee-panels-and-documentation][Blee Panels and Documentation]]
 - [[#mtdt-usage-and-examples][MTDT Usage and Examples]]
 - [[#mtdt-layering-packages-urls-and-overview][MTDT-Layering, Packages URLs and Overview]]
@@ -83,12 +58,12 @@ This is an overview of <<MTDT-Mailings Layer>>.
 
 The primary concept of MTDT-Mailings  is the *X-Mailing-Name File*. This is a file that contains a complete or
 a partial email. Both its headers and its body can then be customized by MTDT facilities.
-*X-Mailing-Name File*s contain some special headers that direct and customize operations of MTDT facilities.
+*X-Mailing-Name File* s contain some special headers that direct and customize operations of MTDT facilities.
 These MTDT Headers include:
 
 - *X-Mailing-Name:* is a string that is used to internalize and identify the *X-Mailing-Name File* to
   MTDT. There is two-way and one-to-one mapping between these two. The *Derive* family of of functions of
-  MTDT are used create this mapping. Once *Derived/, the *X-Mailing-Name File* can be accessed through its
+  MTDT are used create this mapping. Once *Derived*, the *X-Mailing-Name File* can be accessed through its
   *X-Mailing-Name:*. *X-Mailing-Name File* can be anywhere in the file system and are not part of MTDT untill
   they are *Derived*.
 
@@ -104,7 +79,7 @@ These MTDT Headers include:
   *X-MailingParams: :extSrcBase <dirPath>* is set, when *sendingEnvironment* is created, the entire directory of
   *X-Mailing-Name File* is copied to the *sendingEnvironment* environemnt.
 
- - *X-MTDT-Customize:* specifies a path to an elisp file, or a function that can run in the *sendingEnvironment/
+ - *X-MTDT-Customize:* specifies a path to an elisp file, or a function that can run in the *sendingEnvironment*
    to customize both headers and body of the outgoing message.
 
 See  [[https://github.com/bx-blee/mtdt-mailing][mailing]] 's Blee-Panel for details.
@@ -129,7 +104,7 @@ This is an overview of <<MTDT-Distributions Layer>> which builds on the  [[MTDT-
 
 The primary concept of MTDT-Distributions  is the elisp abstraction of *Recipients*.
 *Recipients* apply to a single *OutGoingMessage*. A list of *Recipients* constitutes a
-*RecipientsList*. A *Distribution* is the exercising of  a *RecipientsList* to an *OutGoingMessagesList/
+*RecipientsList*. A *Distribution* is the exercising of  a *RecipientsList* to an *OutGoingMessagesList*
 where each *Recipients* is applied to each *OutGoingMessage*.
 
 When a *RecipientsList* is selected it comes the *SelectedRecipientsList*.
@@ -146,7 +121,7 @@ A *Name* maps to a single entry in the *AddressBook* say ~bbdb~. *Names* can be 
 This is an overview of <<MTD-Share Layer>> which builds on the
  [[MTDT-Names Laye]]r  and [[MTDT-Distributions Layer]] and [[MTDT-Mailings Layer]].
 
-Based on a *SelectedRecipientsList* MTDT facilities can provide for *Sharing/
+Based on a *SelectedRecipientsList* MTDT facilities can provide for *Sharing*
 when using Dire-mode or through interfacing with the browser.
 
 ** MTDT-Tracking Layer
@@ -167,36 +142,36 @@ See MARMEE for details.
 ** TODO Point to the MTDT pkg install in blee.
 
 * MTDT Features Summary
-** Mailings Content Creation
+- Mailings Content Creation
 MTDT allows you to create *Mailing Tempaltes* with content in 1) Plain Text, 2) Org-Msg, 3) LaTeX and 4) Plain
 Html.
-*** Plain Text /Native/
+    - Plain Text /Native/
 Content of Mailings and Templates
-*** Org-Msg /Native/  (with html exports)
+    - Org-Msg /Native/  (with html exports)
 OrgMsg https://github.com/jeremy-compostella/org-msg is a GNU/Emacs global minor mode mixing up Org mode and
 Message mode to compose and reply to emails.
-*** LaTeX /External/ (with HaVeA html exports and pdf of content attachment)
-*** Html /External/
-** Mailings Content External Composition
-*** Latex (Lcnt)
-*** HTML Editor
-** Mailings Customization
-*** Header Customization
-*** Content Customization
-** Mail Templates -- Mailings with pre-specified recipients
-** Reply and Forward Stensils
-** Mailings Selection
-** Extensive Global Minor Mode Menus
-** Mail Sending and Origination Editing
-*** Batch
-*** UnSent Buffer Editing
-*** External Compostion/Editing
-** MTDT-Send -- AddressBook (bbdb) Integration
-** MTDT-Distribution
-** Distribution List Selection
-** MTDT-Share
-*** Dired Mail Sharing
-*** Browser Mail Sharing
+    - LaTeX /External/ (with HaVeA html exports and pdf of content attachment)
+    - Html /External/
+- Mailings Content External Composition
+    - Latex (Lcnt)
+    - HTML Editor
+- Mailings Customization
+    - Header Customization
+    - Content Customization
+- Mail Templates -- Mailings with pre-specified recipients
+- Reply and Forward Stensils
+- Mailings Selection
+- Extensive Global Minor Mode Menus
+- Mail Sending and Origination Editing
+    - Batch
+    - UnSent Buffer Editing
+    - External Compostion/Editing
+- MTDT-Send -- AddressBook (bbdb) Integration
+- MTDT-Distribution
+- Distribution List Selection
+- MTDT-Share
+    - Dired Mail Sharing
+    - Browser Mail Sharing
 
 * Blee Panels and Documentation
 
