@@ -34,7 +34,8 @@ The Mailing Templates can then be used to =Send= or =Distribute=  to =Recipients
   - [[#mtdt-share-layer][MTDT-Share Layer]]
   - [[#mtdt-tracking-layer][MTDT-Tracking Layer]]
 - [[#mtdt-installation][MTDT Installation]]
-  - [[#point-to-the-mtdt-pkg-install-in-blee][Point to the MTDT pkg install in blee.]]
+  - [[#blee-installation][Blee Installation]]
+  - [[#straight-installation][Straight Installation]]
 - [[#mtdt-features-summary][MTDT Features Summary]]
 - [[#blee-panels-and-documentation][Blee Panels and Documentation]]
 - [[#mtdt-usage-and-examples][MTDT Usage and Examples]]
@@ -84,12 +85,12 @@ These MTDT Headers include:
 
 See  [[https://github.com/bx-blee/mtdt-mailing][mailing]] 's Blee-Panel for details.
 
-*X-Mailing-Name File* can be used for different purposes, including:
+*X-Mailing-Name File* can be used for different purposes, including as a:
 
-1) As a *CommenceMailing*.  No To Line, No Compleete Content,  From, Subject and Signature.
-2) As a *TemplateMailing*. To Line + No Complete Content, From, Subject and Signature.
-3) As a *DistributionMailing*. No To Line, Complete Content, From and Subject.
-4) As a *MuaStencilMailing*. MUA uses in Reply and Forward.
+1) *CommenceMailing*.  No To Line, Incompleete Content,  From, Subject and Signature.
+2) *TemplateMailing*. To Line + Incomplete Content, From, Subject and Signature.
+3) *DistributionMailing*. No To Line, Complete Content, From and Subject.
+4) *MuaStencilMailing*. MUA uses in Reply and Forward.
 
 The above types each have a *Selected* instance.
 
@@ -139,7 +140,30 @@ See MARMEE for details.
 
 * MTDT Installation
 
-** TODO Point to the MTDT pkg install in blee.
+As with all blee packages, blee-installation and straight-installation information is provided.
+
+As always, blee-installation is verified and with straight-installation you are on your own.
+
+** Blee Installation
+
+#+BEGIN_EXAMPLE
+/bisos/blee/env3/libs/bnpa:mtdt.el
+/bisos/blee/env3/libs/bnpa:mtdt-mailing.el
+/bisos/blee/env3/libs/bnpa:mtdt-distribution.el
+#+END_EXAMPLE
+
+
+** Straight Installation
+
+#+BEGIN_SRC elisp :results silent
+(progn
+   (straight-use-package '(mtdt-mailing :type git :host github :repo "bx-blee/mtdt"))
+   (straight-use-package '(mtdt-mailing :type git :host github :repo "bx-blee/mtdt-mailing"))
+   (straight-use-package '(mtdt-mailing :type git :host github :repo "bx-blee/mtdt-distribution"))
+   )
+
+#+END_SRC
+
 
 * MTDT Features Summary
 
