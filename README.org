@@ -28,7 +28,13 @@ The Mailing Templates can then be used to =Send= or =Distribute=  to =Recipients
 * Table of Contents     :TOC:
 - [[#overview][Overview]]
 - [[#abstract][Abstract]]
-  - [[#mtdt-mailings-layer][<<MTDT Mailings Layer>>]]
+  - [[#mtdt-mailings-layer][MTDT-Mailings Layer]]
+  - [[#mtdt-distributions-layer][MTDT-Distributions Layer]]
+  - [[#mtdt-names-layer][MTDT-Names Layer]]
+  - [[#mtdt-share-layer][MTDT-Share Layer]]
+  - [[#mtdt-tracking-layer][MTDT-Tracking Layer]]
+- [[#mtdt-installation][MTDT Installation]]
+  - [[#point-to-the-mtdt-pkg-install-in-blee][Point to the MTDT pkg install in blee.]]
 - [[#mtdt-features-summary][MTDT Features Summary]]
   - [[#mailings-content-creation][Mailings Content Creation]]
     - [[#plain-text-native][Plain Text /Native/]]
@@ -56,23 +62,26 @@ The Mailing Templates can then be used to =Send= or =Distribute=  to =Recipients
     - [[#dired-mail-sharing][Dired Mail Sharing]]
     - [[#browser-mail-sharing][Browser Mail Sharing]]
 - [[#blee-panels-and-documentation][Blee Panels and Documentation]]
+- [[#mtdt-usage-and-examples][MTDT Usage and Examples]]
 - [[#mtdt-layering-packages-urls-and-overview][MTDT-Layering, Packages URLs and Overview]]
 
 * Abstract
 
 Emacs has a very rich email environment. The scope of Emacs email environment is primarily that of sending,
 receiving, processing, searching, archiving and integration with address books, org-mode and other global
-minor-modes. Mail Templating, Distribution and Tracking (MTDT) are currently not well supported.
-In the context of *Email Marketting*, in the proprietary world,  things like *SendGrid* and *Constant Contact*
-have appeared on the scene. Such capabilities are best supported when they are integrated with the MUA.
-Hence, it does make sense to build much MTDT capabilities inside of emacs.  Mass email distribution and
-email templating have much overlap.
+minor-modes. Mail Templating, Distribution and Tracking (MTDT) are currently not well supported. In the context of
+*Email Marketting*, in the proprietary world, things like *SendGrid* and *Constant Contact* have appeared on the
+scene. Such capabilities are best supported when they are integrated with the MUA. Hence, it does make sense to
+build much MTDT capabilities inside of emacs. Mass email distribution, email commencing and email templating have
+much overlap.
 
 Implemetation of MTDT is layered. Each layer is implemented as an Emacs package. See  [[MTDT-Layering]] for details.
 
-** <<MTDT Mailings Layer>>
+** MTDT-Mailings Layer
 
-The primary concept of MTDT is the /X-Mailing-Name File/. This is a file that contains a complete or
+This is an overview of <<MTDT-Mailings Layer>>.
+
+The primary concept of MTDT-Mailings  is the /X-Mailing-Name File/. This is a file that contains a complete or
 a partial email. Both its headers and its body can then be customized by MTDT facilities.
 /X-Mailing-Name File/s contain some special headers that direct and customize operations of MTDT facilities.
 These MTDT Headers include:
@@ -107,12 +116,55 @@ See  [[https://github.com/bx-blee/mtdt-mailing][mailing]] 's Blee-Panel for deta
 3) As a /DistributionMailing/. No To Line, Complete Content, From and Subject.
 4) As a /MuaStencilMailing/. MUA uses in Reply and Forward.
 
- See  [[https://github.com/bx-blee/mtdt-mailing][mailing]] 's Blee-Panel for details.
+The above types each have a /Selected/ instance.
+
+When a /Selected/ mailing is /Sent/ it first becomes an /OutGoingMessage/.
+
+See  [[https://github.com/bx-blee/mtdt-mailing][mailing]] 's Blee-Panel for details.
 
 
-The above abstractions apply to the
+** MTDT-Distributions Layer
+
+This is an overview of <<MTDT-Distributions Layer>> which builds on the  [[MTDT-Mailings Layer]].
+
+The primary concept of MTDT-Distributions  is the elisp abstraction of /Recipients/.
+/Recipients/ apply to a single /OutGoingMessage/. A list of /Recipients/ constitutes a
+/RecipientsList/. A /Distribution/ is the exercising of  a /RecipientsList/ to an /OutGoingMessagesList/
+where each /Recipients/ is applied to each /OutGoingMessage/.
+
+When a /RecipientsList/ is selected it comes the /SelectedRecipientsList/.
+
+** MTDT-Names Layer
+
+This is an overview of <<MTDT-Names Layer>> which builds on the [[MTDT-Distributions Layer]] and [[MTDT-Mailings Layer]].
+
+The primary concept of MTDT-Names is the elisp abstraction of  /Name/ and /Names/.
+A /Name/ maps to a single entry in the /AddressBook/ say ~bbdb~. /Names/ can be converted to /RecipientsList/.
+
+** MTDT-Share Layer
+
+This is an overview of <<MTD-Share Layer>> which builds on the
+ [[MTDT-Names Laye]]r  and [[MTDT-Distributions Layer]] and [[MTDT-Mailings Layer]].
+
+Based on a /SelectedRecipientsList/ MTDT facilities can provide for /Sharing/
+when using Dire-mode or through interfacing with the browser.
+
+** MTDT-Tracking Layer
+
+This is an overview of <<MTD-Tracking Layer>> which builds on the [[MTD-Share Layer]] and
+ [[MTDT-Names Laye]]r  and [[MTDT-Distributions Layer]] and [[MTDT-Mailings Layer]].
+
+Sending and distributions can be tracked based on the information provided by logs of injection, submission
+and Non-Delivery-Reports and Delivery-Reports and Receipt-Notification.
+
+All of that tracking can be arranged per /OutGoingMessage/.
+
+See MARMEE for details.
 
 
+* MTDT Installation
+
+** TODO Point to the MTDT pkg install in blee.
 
 * MTDT Features Summary
 ** Mailings Content Creation
@@ -157,6 +209,12 @@ Key components of BISOS and Blee that interact with MTDT include:
 - MARMEE -- Multi-Account Resident Mail Exchange Environment
 - LCNT -- ByStar Libre Content production, publication
 - Mailings, Names, Dist facilities of BISOS
+
+* MTDT Usage and Examples
+
+The examples directory in each of the MTDT packages includes relevant examples.
+
+See ./examples/recipientsList.el for details.
 
 * MTDT-Layering, Packages URLs and Overview
 
