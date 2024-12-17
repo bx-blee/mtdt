@@ -147,8 +147,7 @@ MTDT allows you to create *Mailing Tempaltes* with content in 1) Plain Text, 2) 
 Html.
 - Mailings Content Creation
     - Plain Text /Native/ -- Content of Mailings and Templates
-    - Org-Msg /Native/  (with html exports) -- OrgMsg https://github.com/jeremy-compostella/org-msg is a GNU/Emacs global minor mode mixing up Org mode and
-Message mode to compose and reply to emails.
+    - Org-Msg /Native/  (with html exports) -- OrgMsg https://github.com/jeremy-compostella/org-msg is a GNU/Emacs global minor mode mixing up Org mode and Message mode to compose and reply to emails.
     - LaTeX /External/ (with HaVeA html exports and pdf of content attachment)
     - Html /External/
 - Mailings Content External Composition
