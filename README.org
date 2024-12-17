@@ -70,7 +70,7 @@ The Mailing Templates can then be used to =Send= or =Distribute=  to =Recipients
 Emacs has a very rich email environment. The scope of Emacs email environment is primarily that of sending,
 receiving, processing, searching, archiving and integration with address books, org-mode and other global
 minor-modes. Mail Templating, Distribution and Tracking (MTDT) are currently not well supported. In the context of
-*Email Marketting*, in the proprietary world, things like *SendGrid* and *Constant Contact* have appeared on the
+/Email Marketting/, in the proprietary world, things like /SendGrid/ and /Constant Contact/ have appeared on the
 scene. Such capabilities are best supported when they are integrated with the MUA. Hence, it does make sense to
 build much MTDT capabilities inside of emacs. Mass email distribution, email commencing and email templating have
 much overlap.
@@ -81,44 +81,44 @@ Implemetation of MTDT is layered. Each layer is implemented as an Emacs package.
 
 This is an overview of <<MTDT-Mailings Layer>>.
 
-The primary concept of MTDT-Mailings  is the /X-Mailing-Name File/. This is a file that contains a complete or
+The primary concept of MTDT-Mailings  is the *X-Mailing-Name File*. This is a file that contains a complete or
 a partial email. Both its headers and its body can then be customized by MTDT facilities.
-/X-Mailing-Name File/s contain some special headers that direct and customize operations of MTDT facilities.
+*X-Mailing-Name File*s contain some special headers that direct and customize operations of MTDT facilities.
 These MTDT Headers include:
 
-- /X-Mailing-Name:/ is a string that is used to internalize and identify the /X-Mailing-Name File/ to
-  MTDT. There is two-way and one-to-one mapping between these two. The /Derive/ family of of functions of
-  MTDT are used create this mapping. Once /Derived/, the /X-Mailing-Name File/ can be accessed through its
-  /X-Mailing-Name:/. /X-Mailing-Name File/ can be anywhere in the file system and are not part of MTDT untill
-  they are /Derived/.
+- *X-Mailing-Name:* is a string that is used to internalize and identify the *X-Mailing-Name File* to
+  MTDT. There is two-way and one-to-one mapping between these two. The *Derive* family of of functions of
+  MTDT are used create this mapping. Once *Derived/, the *X-Mailing-Name File* can be accessed through its
+  *X-Mailing-Name:*. *X-Mailing-Name File* can be anywhere in the file system and are not part of MTDT untill
+  they are *Derived*.
 
-- /X-ComposeFwrk:/ specifies the framework (mode) to be used for handling the body of an /X-Mailing-Name File/.
-  When the body of the message is in org-mode, /OrgMsg/ mode is used. Valid values of
+- *X-ComposeFwrk:* specifies the framework (mode) to be used for handling the body of an *X-Mailing-Name File*.
+  When the body of the message is in org-mode, *OrgMsg* mode is used. Valid values of
   1) Plain Text, 2) Org-Msg, 3) LaTeX and 4) Plain Html.  See  [[https://github.com/bx-blee/mtdt-mailing][mailing]] 's Blee-Panel for details.
 
-- /X-MailingParams:/ specifies named parameters for use by MTDT.
+- *X-MailingParams:* specifies named parameters for use by MTDT.
 
-- /X-MailingParams: :extSrcBase <dirPathOrNil>/ specifies as to whether or not the body of the message is to be
-  considered /External/ or /Native/. /External/ only applies to /X-ComposeFwrk:/ Org-Msg, LaTeX. For a
-  /X-Mailing-Name File/ whose body was produced using external facilities such as LaTeX (lcntProc.sh), when
-  /X-MailingParams: :extSrcBase <dirPath>/ is set, when /sendingEnvironment/ is created, the entire directory of
-  /X-Mailing-Name File/ is copied to the /sendingEnvironment/ environemnt.
+- *X-MailingParams: :extSrcBase <dirPathOrNil>* specifies as to whether or not the body of the message is to be
+  considered *External* or *Native*. *External* only applies to *X-ComposeFwrk:* Org-Msg, LaTeX. For a
+  *X-Mailing-Name File* whose body was produced using external facilities such as LaTeX (lcntProc.sh), when
+  *X-MailingParams: :extSrcBase <dirPath>* is set, when *sendingEnvironment* is created, the entire directory of
+  *X-Mailing-Name File* is copied to the *sendingEnvironment* environemnt.
 
- - /X-MTDT-Customize:/ specifies a path to an elisp file, or a function that can run in the /sendingEnvironment/
+ - *X-MTDT-Customize:* specifies a path to an elisp file, or a function that can run in the *sendingEnvironment/
    to customize both headers and body of the outgoing message.
 
 See  [[https://github.com/bx-blee/mtdt-mailing][mailing]] 's Blee-Panel for details.
 
-/X-Mailing-Name File/ can be used for different purposes, including:
+*X-Mailing-Name File* can be used for different purposes, including:
 
-1) As a /CommenceMailing/.  No To Line, No Compleete Content,  From, Subject and Signature.
-2) As a /TemplateMailing/. To Line + No Complete Content, From, Subject and Signature.
-3) As a /DistributionMailing/. No To Line, Complete Content, From and Subject.
-4) As a /MuaStencilMailing/. MUA uses in Reply and Forward.
+1) As a *CommenceMailing*.  No To Line, No Compleete Content,  From, Subject and Signature.
+2) As a *TemplateMailing*. To Line + No Complete Content, From, Subject and Signature.
+3) As a *DistributionMailing*. No To Line, Complete Content, From and Subject.
+4) As a *MuaStencilMailing*. MUA uses in Reply and Forward.
 
-The above types each have a /Selected/ instance.
+The above types each have a *Selected* instance.
 
-When a /Selected/ mailing is /Sent/ it first becomes an /OutGoingMessage/.
+When a *Selected* mailing is *Sent* it first becomes an *OutGoingMessage*.
 
 See  [[https://github.com/bx-blee/mtdt-mailing][mailing]] 's Blee-Panel for details.
 
@@ -127,26 +127,26 @@ See  [[https://github.com/bx-blee/mtdt-mailing][mailing]] 's Blee-Panel for deta
 
 This is an overview of <<MTDT-Distributions Layer>> which builds on the  [[MTDT-Mailings Layer]].
 
-The primary concept of MTDT-Distributions  is the elisp abstraction of /Recipients/.
-/Recipients/ apply to a single /OutGoingMessage/. A list of /Recipients/ constitutes a
-/RecipientsList/. A /Distribution/ is the exercising of  a /RecipientsList/ to an /OutGoingMessagesList/
-where each /Recipients/ is applied to each /OutGoingMessage/.
+The primary concept of MTDT-Distributions  is the elisp abstraction of *Recipients*.
+*Recipients* apply to a single *OutGoingMessage*. A list of *Recipients* constitutes a
+*RecipientsList*. A *Distribution* is the exercising of  a *RecipientsList* to an *OutGoingMessagesList/
+where each *Recipients* is applied to each *OutGoingMessage*.
 
-When a /RecipientsList/ is selected it comes the /SelectedRecipientsList/.
+When a *RecipientsList* is selected it comes the *SelectedRecipientsList*.
 
 ** MTDT-Names Layer
 
 This is an overview of <<MTDT-Names Layer>> which builds on the [[MTDT-Distributions Layer]] and [[MTDT-Mailings Layer]].
 
-The primary concept of MTDT-Names is the elisp abstraction of  /Name/ and /Names/.
-A /Name/ maps to a single entry in the /AddressBook/ say ~bbdb~. /Names/ can be converted to /RecipientsList/.
+The primary concept of MTDT-Names is the elisp abstraction of  *Name* and *Names*.
+A *Name* maps to a single entry in the *AddressBook* say ~bbdb~. *Names* can be converted to *RecipientsList*.
 
 ** MTDT-Share Layer
 
 This is an overview of <<MTD-Share Layer>> which builds on the
  [[MTDT-Names Laye]]r  and [[MTDT-Distributions Layer]] and [[MTDT-Mailings Layer]].
 
-Based on a /SelectedRecipientsList/ MTDT facilities can provide for /Sharing/
+Based on a *SelectedRecipientsList* MTDT facilities can provide for *Sharing/
 when using Dire-mode or through interfacing with the browser.
 
 ** MTDT-Tracking Layer
@@ -157,7 +157,7 @@ This is an overview of <<MTD-Tracking Layer>> which builds on the [[MTD-Share La
 Sending and distributions can be tracked based on the information provided by logs of injection, submission
 and Non-Delivery-Reports and Delivery-Reports and Receipt-Notification.
 
-All of that tracking can be arranged per /OutGoingMessage/.
+All of that tracking can be arranged per *OutGoingMessage*.
 
 See MARMEE for details.
 
