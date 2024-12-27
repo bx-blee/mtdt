@@ -27,8 +27,17 @@ The Mailing Templates can then be used to =Send= or =Distribute=  to =Recipients
 
 * Table of Contents     :TOC:
 - [[#overview][Overview]]
-- [[#abstract][Abstract]]
+- [[#abstract----concepts-and-terminoloy][Abstract -- Concepts and Terminoloy]]
+  - [[#marmee----multi-account-resident-mail-exchange-environment][MARMEE -- Multi-Account Resident Mail Exchange Environment]]
+  - [[#a-mailing][A Mailing]]
+  - [[#compose----native-compose--and-external-compose][Compose -- Native-Compose  and External-Compose]]
+  - [[#origination-----union-of-compose-reply-or-forward][Origination  -- Union of Compose, Reply or Forward]]
+  - [[#mailing-invocation-functions][Mailing Invocation Functions]]
+  - [[#related-mailing-buffers-and-directories][Related Mailing Buffers and Directories]]
+- [[#abstract----layering][Abstract -- Layering]]
   - [[#mtdt-mailings-layer][MTDT-Mailings Layer]]
+    - [[#mtdt-headers-tabular-summary][MTDT Headers (Tabular Summary)]]
+    - [[#related-headers-tabular-summary][Related Headers (Tabular Summary)]]
   - [[#mtdt-distributions-layer][MTDT-Distributions Layer]]
   - [[#mtdt-names-layer][MTDT-Names Layer]]
   - [[#mtdt-share-layer][MTDT-Share Layer]]
@@ -41,7 +50,7 @@ The Mailing Templates can then be used to =Send= or =Distribute=  to =Recipients
 - [[#mtdt-usage-and-examples][MTDT Usage and Examples]]
 - [[#mtdt-layering-packages-urls-and-overview][MTDT-Layering, Packages URLs and Overview]]
 
-* Abstract
+* Abstract -- Concepts and Terminoloy
 
 Emacs has a very rich email environment. The scope of Emacs email environment is primarily that of sending,
 receiving, processing, searching, archiving and integration with address books, org-mode and other global
@@ -50,6 +59,93 @@ minor-modes. Mail Templating, Distribution and Tracking (MTDT) are currently not
 scene. Such capabilities are best supported when they are integrated with the MUA. Hence, it does make sense to
 build much MTDT capabilities inside of emacs. Mass email distribution, email commencing and email templating have
 much overlap.
+
+To talk about email in detail and precisely we need a rich and explicit vocabulary to refer to well defined
+concepts and abstractions. We use four sources for our vocabulary and concepts. 1) X.400 Specifications, 2)
+Internet Email RFCs Specifications, 3) Gnus Manuals, 4) Our own extenstions (see below).
+
+** MARMEE -- Multi-Account Resident Mail Exchange Environment
+
+MTDT exists on top of MARMEE and uses MARMEE facilities for sending and receiving email.
+See https://github.com/bisos-pip/marmee for details.
+
+** A Mailing
+
+A Mailing-File is a partial or complete email that can be used to [[Compose]] a message. A /Mailing-File/ can reside
+anywhere on the file system. A Mailing-File can become part of MTDT (internalized in MTDTD) by being /Derived/.
+
+A <<Derived-Mailing>> always maps to a /Mailing-File/. A Derived-Mailing can then be used for [[Origination]].
+There are four types of Mailing-Files, used for 4 different purposes.:
+
+
+1) *CommenceMailing*.  No To Line, Incompleete Content,  From, Subject and Signature.
+2) *TemplateMailing*. To Line + Incomplete Content, From, Subject and Signature.
+3) *DistributionMailing*. No To Line, Complete Content, From and Subject.
+4) *MuaStencilMailing*. MUA uses in Reply and Forward.
+
+
+(1), (2) and (3) are used for Composition. (4) is used for Replys and Forwards.
+
+A *Mailing* can be any of (1), (2), (3) or (4).
+
+A *Compose-Mailing* can be any of (1), (2) or (3).
+
+** Compose -- Native-Compose  and External-Compose
+
+<<Compose>> is the act of starting to write a /new/ email. Replying and Forwarding are distinct and different from
+Composing. Composition can be from scratch or through a [[Derived Mailing]].
+
+MTDT currently supports 4 different /Compose-Frameworks/ for composing.
+These are 1) Plain Text, 2) Org-Msg, 3) LaTeX and 4) Html.
+
+Mailings with  /Compose-Frameworks/ of (1) and (2) are always invoked as Native-Compose.
+
+Mailings with  /Compose-Frameworks/ of (3) and (4)can be invoked as Native-Compose or External-Compose.
+Native-Compose of (3) and (4) allow for editing of headers but not body.
+External-Compose of (3) and (4) allow for editing of body and headers.
+
+** Origination  -- Union of Compose, Reply or Forward
+
+<<Origination>> is the act of starting a Compose, Reply or Forward.
+
+** Mailing Invocation Functions
+
+A Mailing-Invocation is the act of invoking a relevant function to a [[Derived-Mailing]].
+
+A Mailing-Invocation is labled with Mailing-Inv-
+
+For CommenceMailing and TemplateMailing and DistributionMailing
+
+- Mailing-Inv-Compose (auto determination of Mailing-Inv-Native-Compose or Mailing-Inv-External-Compose)
+- Mailing-Inv-Native-Compose
+- Mailing-Inv-External-Compose (Copies the LaTeX environment)
+
+With Selected-Recipients, for CommenceMailing and TemplateMailing and DistributionMailing
+
+- Mailing-Inv-Dist-Compose
+- Mailing-Inv-Dist-Native-Compose
+- Mailing-Inv-Dist-External-Compose (Copies the LaTeX environment)
+
+With Selected-Recipients, for DistributionMailing
+
+- Mailing-Inv-Dist-Send
+
+With Selected-Recipients-Forms-File, for DistributionMailing
+
+- Mailing-Inv-Dist-Send
+- Mailing-Inv-Dist-Compose
+- Mailing-Inv-Dist-Dispatch  (Based on DispatchControl, either Mailing-Inv-Dist-Send or Mailing-Inv-Dist-Compose )
+
+** Related Mailing Buffers and Directories
+
+The following Mailing Bufers are used.
+
+- Mailing-Buffer  --- That of Mailing-File
+- Compose-Buffer  --- The unsent-buffer used for Native or External Composition
+- unsent-buffer   --- Traditional buffer used by emacs
+- sent-buffer     --- After sending
+
+* Abstract -- Layering
 
 Implemetation of MTDT is layered. Each layer is implemented as an Emacs package. See  [[MTDT-Layering]] for details.
 
@@ -70,7 +166,8 @@ These MTDT Headers include:
 
 - *X-ComposeFwrk:* specifies the framework (mode) to be used for handling the body of an *X-Mailing-Name File*.
   When the body of the message is in org-mode, *OrgMsg* mode is used. Valid values of
-  1) Plain Text, 2) Org-Msg, 3) LaTeX and 4) Plain Html.  See  [[https://github.com/bx-blee/mtdt-mailing][mailing]] 's Blee-Panel for details.
+  1) Plain Text, 2) Org-Msg, 3) LaTeX and 4) Plain Html.
+  See  [[https://github.com/bx-blee/mtdt-mailing][mailing]] 's Blee-Panel for details.
 
 - *X-MailingParams:* specifies named parameters for use by MTDT.
 
@@ -87,16 +184,43 @@ See  [[https://github.com/bx-blee/mtdt-mailing][mailing]] 's Blee-Panel for deta
 
 *X-Mailing-Name File* can be used for different purposes, including as a:
 
-1) *CommenceMailing*.  No To Line, Incompleete Content,  From, Subject and Signature.
-2) *TemplateMailing*. To Line + Incomplete Content, From, Subject and Signature.
-3) *DistributionMailing*. No To Line, Complete Content, From and Subject.
-4) *MuaStencilMailing*. MUA uses in Reply and Forward.
+1) *CommenceMailing*. 2) *TemplateMailing*. 3) *DistributionMailing*. 4) *MuaStencilMailing*.
 
 The above types each have a *Selected* instance.
 
 When a *Selected* mailing is *Sent* it first becomes an *OutGoingMessage*.
 
 See  [[https://github.com/bx-blee/mtdt-mailing][mailing]] 's Blee-Panel for details.
+
+*** MTDT Headers (Tabular Summary)
+|------------------+-----------------+--------------------+-----------------------------------------------------|
+| Header Name      | Values          | Implementation     | Comments                                            |
+|------------------+-----------------+--------------------+-----------------------------------------------------|
+| [[X-MailingName]]    | AnyText         | [[file:../../../b:mtdt:mailings.el][b:mtdt:mailings.el]] | derive creates function  name maping to mailingFile |
+|------------------+-----------------+--------------------+-----------------------------------------------------|
+| X-MailingDoc     | nil             |                    |                                                     |
+| X-MailingDoc     | path            |                    | Informational - Path to file which created content  |
+|------------------+-----------------+--------------------+-----------------------------------------------------|
+| X-ComposeFwrk    | basic           | [[file:../../../b:mtdt:mailings.el][b:mtdt:mailings.el]] | Plain Text                                          |
+| X-ComposeFwrk    | orgMsg          | [[file:../../../b:mtdt:mailings.el][b:mtdt:mailings.el]] | *unsent buffer* is to be in OrgMsg mode               |
+| X-ComposeFwrk    | latex           | [[file:../../../b:mtdt:mailings.el][b:mtdt:mailings.el]] | extSrcBase determines Native of External            |
+| X-ComposeFwrk    | html            | [[file:../../../b:mtdt:mailings.el][b:mtdt:mailings.el]] | extSrcBase determines Native of External            |
+| X-ComposeFwrk    | ofSelMailing    | [[file:../../../b:mtdt:mailings.el][b:mtdt:mailings.el]] | Used in Stensils for Replies/Forwards               |
+|------------------+-----------------+--------------------+-----------------------------------------------------|
+| X-MailingParams: | :type compose   |                    |                                                     |
+| X-MailingParams: | :extSrcBase nil |                    |                                                     |
+|------------------+-----------------+--------------------+-----------------------------------------------------|
+
+*** Related Headers (Tabular Summary)
+|-----------------------+---------+--------------------+-------------------|
+| Header Name           | Values  | Implementation     | Comments          |
+|-----------------------+---------+--------------------+-------------------|
+| Return-Path           | AnyText | [[file:../../../b:mtdt:mailings.el][b:mtdt:mailings.el]] |                   |
+| X-Envelope            | AnyText | [[file:../../../b:mtdt:mailings.el][b:mtdt:mailings.el]] |                   |
+|-----------------------+---------+--------------------+-------------------|
+| X-Message-SMTP-Method | qmail   |                    | Uses Qmail Inject |
+|-----------------------+---------+--------------------+-------------------|
+
 
 
 ** MTDT-Distributions Layer
