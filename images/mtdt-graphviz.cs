@@ -21,19 +21,6 @@ import graphviz
 from bisos.graphviz import graphvizSeed
 ng = graphvizSeed.namedGraph
 
-def ghAptSource():
-    outcome =  b.subProc.WOpW(invedBy=None, log=1).bash(
-        f"""
-(type -p wget >/dev/null || (sudo apt update && sudo apt-get install wget -y)) \
-	&& sudo mkdir -p -m 755 /etc/apt/keyrings \
-	&& wget -qO- https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo tee /etc/apt/keyrings/githubcli-archive-keyring.gpg > /dev/null \
-	&& sudo chmod go+r /etc/apt/keyrings/githubcli-archive-keyring.gpg \
-	&& echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null \
-	&& sudo apt update \
-	&& sudo apt install gh -y
-""")
-
-
 
 ####+BEGIN: b:py3:cs:func/typing :funcName "mtdtConceptsGraph" :funcType "Typed" :deco "track"
 """ #+begin_org
@@ -763,6 +750,485 @@ def mtdtConceptsGraph_l3(
 
     return dot
 
+def mtdtConceptsGraphClustered() -> graphviz.Digraph:
+    dot = graphviz.Digraph(
+        comment='MTDT Concepts (Clustered)',
+        graph_attr={'rankdir': 'LR'},
+    )
+
+    # Central node
+    dot.node('MTDT', 'MTDT\nConcepts', shape='circle', style='filled', fillcolor='darkseagreen3')
+
+    # Cluster: Composition Framework
+    with dot.subgraph(name='cluster_composition') as c:
+        c.attr(label='Composition Framework', style='filled', color='lightgrey')
+        c.node('SelectedCompositionFwrk', 'Selected Composition Framework', shape='cylinder', style='filled', fillcolor='green')
+        for node in ['PlainText', 'OrgMsg', 'LaTeX', 'Html', 'WithSelMailing']:
+            c.node(node, node, style='filled', fillcolor='green')
+            c.edge('SelectedCompositionFwrk', node, label='Enum')
+        c.edge('MTDT', 'SelectedCompositionFwrk', label='Abstraction')
+
+    # Cluster: Composition Models
+    with dot.subgraph(name='cluster_models') as c:
+        c.attr(label='Composition Models', style='filled', color='lightgrey')
+        c.node('CompositionModel', 'Composition Model', style='filled', fillcolor='green')
+        c.node('NativeComposition', 'Native Composition', style='filled', fillcolor='green')
+        c.node('ExternalComposition', 'External Composition', style='filled', fillcolor='green')
+        c.edge('CompositionModel', 'NativeComposition', label='Enum')
+        c.edge('CompositionModel', 'ExternalComposition', label='Enum')
+        c.edge('MTDT', 'CompositionModel', label='Abstraction')
+
+    # Cluster: Mailing Configuration
+    with dot.subgraph(name='cluster_mailing') as c:
+        c.attr(label='Mailing Configuration', style='filled', color='lightgrey')
+        for node in ['MailingFile', 'TemplateFile', 'MailingCmnd', 'SelectedMailing', 'MailingMenu', 'DistMenu']:
+            fill = 'green' if node in ['TemplateFile', 'MailingCmnd', 'SelectedMailing', 'MailingMenu', 'DistMenu'] else 'darksalmon'
+            c.node(node, node, shape='cylinder' if 'File' in node else '', style='filled', fillcolor=fill)
+        c.edges([('MailingFile', 'TemplateFile'), ('MailingFile', 'MailingCmnd'),
+                 ('TemplateFile', 'MailingCmnd'), ('MailingCmnd', 'SelectedMailing'),
+                 ('SelectedMailing', 'MailingMenu'), ('SelectedMailing', 'DistMenu')])
+        c.edge('MTDT', 'MailingFile', label='Abstraction')
+
+    # Cluster: Interactive
+    with dot.subgraph(name='cluster_interactive') as c:
+        c.attr(label='Interactive Usage', style='filled', color='lightgrey')
+        for node in ['Interactive', 'Gnus', 'Reply', 'Forward', 'GnusCompose', 'MtdtMenu']:
+            c.node(node, node, style='filled', fillcolor='green')
+        c.edges([('Interactive', 'Gnus'), ('Gnus', 'Reply'), ('Gnus', 'Forward'), ('Gnus', 'GnusCompose'),
+                 ('Interactive', 'MtdtMenu'), ('MtdtMenu', 'DistMenu'), ('MtdtMenu', 'MailingMenu')])
+        c.edge('MTDT', 'Interactive', label='Abstraction')
+
+    # Cluster: Recipient Management
+    with dot.subgraph(name='cluster_recipients') as c:
+        c.attr(label='Recipient Management', style='filled', color='lightgrey')
+        nodes = ['OorR', 'Recipients', 'RecipientsList', 'RecipientsListForm',
+                 'RecipientsListFormFile', 'bbdb3', 'Names', 'NamesFile']
+        for node in nodes:
+            c.node(node, node, style='filled', fillcolor='darksalmon')
+        c.edge('MTDT', 'OorR', label='Abstraction')
+        c.edges([('OorR', 'Recipients'), ('Recipients', 'RecipientsList'),
+                 ('RecipientsList', 'RecipientsListForm'), ('RecipientsListForm', 'RecipientsListFormFile'),
+                 ('Names', 'NamesFile'), ('NamesFile', 'bbdb3'), ('bbdb3', 'RecipientsListFormFile')])
+
+    # Cluster: Distributions and Tracking
+    with dot.subgraph(name='cluster_distributions') as c:
+        c.attr(label='Distributions & Tracking', style='filled', color='lightgrey')
+        c.node('Distributions', 'Distributions', style='filled', fillcolor='darksalmon')
+        c.node('DistNamesFile', 'distNamesFile', style='filled', fillcolor='darksalmon')
+        c.node('Tracking', 'Tracking', style='filled', fillcolor='darksalmon')
+        c.node('LogFile', 'logFile', style='filled', fillcolor='darksalmon')
+        c.edges([('Distributions', 'DistNamesFile'), ('DistNamesFile', 'RecipientsListFormFile'),
+                 ('Tracking', 'LogFile')])
+        c.edge('MTDT', 'Distributions', label='Abstraction')
+        c.edge('MTDT', 'Tracking', label='Abstraction')
+
+    # Cluster: Dispatch
+    with dot.subgraph(name='cluster_dispatch') as c:
+        c.attr(label='Dispatch', style='filled', color='lightgrey')
+        for node in ['SendExtent', 'sendWithExtent', 'unsentBuffer', 'sent', 'doSend', 'unsentBuf', 'ContentCustomization']:
+            fill = 'green' if node in ['SendExtent', 'sendWithExtent', 'doSend', 'unsentBuf', 'ContentCustomization'] else 'darksalmon'
+            c.node(node, node, style='filled', fillcolor=fill)
+        c.edges([('SendExtent', 'doSend'), ('SendExtent', 'unsentBuf'),
+                 ('MailingMenu', 'sendWithExtent'), ('DistMenu', 'sendWithExtent'),
+                 ('sendWithExtent', 'unsentBuffer'), ('sendWithExtent', 'sent'),
+                 ('SendExtent', 'sendWithExtent'), ('CompositionModel', 'sendWithExtent'),
+                 ('ContentCustomization', 'sendWithExtent')])
+        c.edge('MTDT', 'SendExtent', label='Abstraction')
+        c.edge('MTDT', 'ContentCustomization', label='Abstraction')
+
+    return dot
+
+
+import graphviz
+
+def clustered_mtdtConceptsGraph_l0():
+    dot = graphviz.Digraph(comment='Clustered Mailing File Creation')
+
+    # Cluster: LCNT
+    with dot.subgraph(name='cluster_lcnt') as c:
+        c.attr(label='LCNT System', style='filled', color='lightgrey')
+        c.node('LCNT', 'LCNT:\nLibre\nContent', shape='circle', style='filled', fillcolor='darkseagreen3')
+        c.node('LcntMasFile', 'articleLtr.mastex\narticleRtl.mastex', shape='parallelogram', style='filled', fillcolor='khaki1')
+        c.node('LcntProcMailing', '\nlcntProc.sh\nMailing\n', shape='rarrow', style='filled', fillcolor='salmon3')
+        c.edge('LCNT', 'LcntMasFile', label='Specification')
+        c.edge('LCNT', 'LcntProcMailing', label='Usage')
+        c.edge('LcntMasFile', 'LcntProcMailing', label='Usage')
+        c.edge('LcntProcMailing', 'LcntMasFile', dir='back', label='Processing')
+
+    # Cluster: Mailing File Gen
+    with dot.subgraph(name='cluster_mailing') as c:
+        c.attr(label='Mailing File Generation', style='filled', color='lightyellow')
+        c.node('Start-Mailing', 'LAYER 1:\nCreate\nMailing\nFile', shape='circle', style='filled', fillcolor='darkseagreen3')
+        c.node('MailingFile', 'Mailing\nFile', shape='parallelogram', style='filled', fillcolor='khaki1')
+        c.node('TemplateFile', 'Template\nFile', shape='parallelogram', style='filled', fillcolor='khaki1')
+        c.node('MuaStencil', 'Mua\nStencil', shape='parallelogram', style='filled', fillcolor='khaki1')
+        c.edge('LcntMasFile', 'MailingFile', label='Content')
+        c.edge('LcntMasFile', 'TemplateFile', label='Content')
+        c.edge('LcntMasFile', 'MuaStencil', label='Content')
+        c.edge('Start-Mailing', 'MailingFile', label='Specification')
+        c.edge('Start-Mailing', 'TemplateFile', label='Specification')
+        c.edge('Start-Mailing', 'MuaStencil', label='Specification')
+
+    # Cluster: Header Metadata
+    with dot.subgraph(name='cluster_headers') as c:
+        c.attr(label='Mailing Header Metadata', style='filled', color='azure')
+        c.node('SelectedCompositionFwrk', 'X-ComposeFwrk', shape='cylinder', style='filled', fillcolor='green')
+        c.node('PlainText', 'PlainText', shape='rect', style='filled', fillcolor='azure3')
+        c.node('OrgMsg', 'OrgMsg', shape='rect', style='filled', fillcolor='azure3')
+        c.node('LaTeX', 'LaTeX', shape='rect', style='filled', fillcolor='azure3')
+        c.node('Html', 'Html', shape='rect', style='filled', fillcolor='azure3')
+        c.edge('SelectedCompositionFwrk', 'PlainText', dir='back', label='Enum')
+        c.edge('SelectedCompositionFwrk', 'OrgMsg', dir='back', label='Enum')
+        c.edge('SelectedCompositionFwrk', 'LaTeX', dir='back', label='Enum')
+        c.edge('SelectedCompositionFwrk', 'Html', dir='back', label='Enum')
+        c.edge('MailingFile', 'SelectedCompositionFwrk', dir='back', label='Header')
+        c.edge('TemplateFile', 'SelectedCompositionFwrk', dir='back', label='Header')
+        c.edge('MuaStencil', 'SelectedCompositionFwrk', dir='back', label='Header')
+
+    # Other Header Clusters
+    for concept, items in {
+        'Purpose': ['Mailing', 'Template', 'Mua'],
+        'SelectedCompositionModel': ['ComposeNatModel', 'ComposeExtModel'],
+    }.items():
+        with dot.subgraph(name=f'cluster_{concept.lower()}') as c:
+            c.attr(label=concept, style='filled', color='lightcyan')
+            c.node(concept, f'X-{concept}', shape='cylinder', style='filled', fillcolor='green')
+            for item in items:
+                c.node(item, item.replace('Compose', '').replace('Model', '').strip(), shape='rect', style='filled', fillcolor='azure3')
+                c.edge(concept, item, dir='back', label='Enum')
+            dot.edge('MailingFile', concept, dir='back', label='Header')
+            dot.edge('TemplateFile', concept, dir='back', label='Header')
+            dot.edge('MuaStencil', concept, dir='back', label='Header')
+
+    # Mailing Name and Customization
+    dot.node('MailingName', 'X-MailingName', shape='cylinder', style='filled', fillcolor='green')
+    dot.node('Customize', 'X-MTDT-Customize\n(file path)', shape='cylinder', style='filled', fillcolor='green')
+    for header in ['MailingName', 'Customize']:
+        for source in ['MailingFile', 'TemplateFile', 'MuaStencil']:
+            dot.edge(source, header, dir='back', label='Header')
+
+    # Mailing Usage
+    dot.node('MailingFileUsage', '\nMailing\nFile\nUsage\n', shape='rarrow', style='filled', fillcolor='lightsalmon1')
+    dot.edge('MailingFile', 'MailingFileUsage', label='Derive')
+    dot.edge('TemplateFile', 'MailingFileUsage', label='Derive')
+    dot.edge('MuaStencil', 'MailingFileUsage', label='Derive')
+    dot.edge('LcntProcMailing', 'MailingFileUsage', label='Usage')
+
+    return dot
+
+
+def clustered_mtdtConceptsGraph_l1() -> graphviz.Digraph:
+    """ #+begin_org
+** [[elisp:(org-cycle)][| *DocStr | ]
+    #+end_org """
+
+    dot = graphviz.Digraph(
+        comment='MTDT-Distribution Concepts',
+    )
+
+    # -------------------------------
+    # Global Style Shortcuts
+    # -------------------------------
+    def add_node(name, label, shape='ellipse', color='khaki1', **kwargs):
+        dot.node(name, label, shape=shape, style='filled', fillcolor=color, **kwargs)
+
+    def add_edge(src, dst, label='', **kwargs):
+        dot.edge(src, dst, label=label, **kwargs)
+
+    # -------------------------------
+    # Layer 1: Mailing Summary
+    # -------------------------------
+    with dot.subgraph(name='cluster_layer1') as l1:
+        l1.attr(label='Layer 1: Mailing Concepts', style='dashed')
+
+        add_node('MTDT-Mailing', 'MTDT\nMailing\nConcepts\nLAYER 1', shape='circle', color='darkseagreen3')
+        add_node('MailingFile', 'Mailing\nFile', shape='parallelogram')
+        add_node('TemplateFile', 'Template\nFile', shape='parallelogram')
+        add_node('MailingCmnd', 'Mailing\nCommand')
+        add_node('ListOfMailingCmnds', 'List of\nMailing\nCommands')
+        add_node('SelectedMailings', 'Selected\nMailings', color='green')
+
+        # Layer 1 Edges
+        add_edge('MTDT-Mailing', 'MailingFile', label='Specification')
+        add_edge('MailingFile', 'TemplateFile')
+        add_edge('MailingFile', 'MailingCmnd', label='Derive')
+        add_edge('TemplateFile', 'MailingCmnd', label='Derive')
+        add_edge('MailingCmnd', 'ListOfMailingCmnds')
+        add_edge('ListOfMailingCmnds', 'SelectedMailings')
+
+    # -------------------------------
+    # Layer 2: Distribution Concepts
+    # -------------------------------
+    with dot.subgraph(name='cluster_layer2') as l2:
+        l2.attr(label='Layer 2: Distribution Concepts', style='dashed')
+
+        add_node('MTDT-Distribution', 'MTDT\nDistribution\nConcepts\nLAYER 2', shape='circle', color='darkseagreen3')
+
+        # Core Process Nodes
+        add_node('Interactive', 'Interactive\nUsage', shape='circle', color='darksalmon')
+        add_node('SendExtent', 'Selected\nSend\nExtent', shape='cylinder', color='green')
+        add_node('OorR', 'Orig or\nRecipients', shape='cylinder')
+        add_node('AddressBook', 'Address\nBook', shape='cylinder')
+        add_node('Names', 'Names', shape='cylinder')
+        add_node('Distributions', 'Distributions', shape='cylinder')
+        add_node('Tracking', 'Tracking', shape='cylinder')
+        add_node('MtdtMenu', 'MTDT\nMenu', shape='rarrow', color='salmon')
+        add_node('lcntProcMailing', 'lcntProc.sh\nMailing', shape='rarrow', color='salmon3')
+
+        # Edges: Core Process
+        add_edge('MTDT-Distribution', 'Interactive', label='Execution')
+        add_edge('MTDT-Distribution', 'SendExtent', label='Configuration')
+        add_edge('MTDT-Distribution', 'OorR', label='Machinery')
+        add_edge('MTDT-Distribution', 'AddressBook', label='Specification')
+        add_edge('MTDT-Distribution', 'Names', label='Specification')
+        add_edge('MTDT-Distribution', 'Distributions', label='Specification')
+        add_edge('MTDT-Distribution', 'Tracking', label='Machinery')
+
+        add_edge('SelectedMailings', 'MtdtMenu')
+        add_edge('Interactive', 'MtdtMenu')
+        add_edge('Interactive', 'lcntProcMailing')
+        add_edge('MtdtMenu', 'sendWithExtent')
+        add_edge('lcntProcMailing', 'sendWithExtent')
+
+        # Process Chain
+        add_node('sendWithExtent', 'sendWithExtent', color='darksalmon')
+        add_node('unsentBuffer', 'Unsent\nMail\nBuffer', shape='invtrapezium', color='deepskyblue')
+        add_node('sent', 'Resident\nMTA\n(MARMEE)', shape='cds', color='cyan')
+        add_edge('sendWithExtent', 'unsentBuffer')
+        add_edge('sendWithExtent', 'sent')
+        add_edge('unsentBuffer', 'sent')
+
+    # -------------------------------
+    # Subcomponents: Recipients & Address Book
+    # -------------------------------
+    add_node('doSend', 'doSend', shape='rect', color='azure3')
+    add_node('unsentBuf', 'unsentBuffer', shape='rect', color='azure3')
+    add_edge('SendExtent', 'doSend', dir='back', label='Enum')
+    add_edge('SendExtent', 'unsentBuf', dir='back', label='Enum')
+    add_edge('SendExtent', 'sendWithExtent', label='inform')
+
+    # Recipients Chain
+    add_node('Recipients', 'Recipients')
+    add_node('RecipientsList', 'Recipients List')
+    add_node('RecipientsListForm', 'Recipients List\nForm')
+    add_node('RecipientsListFormFile', 'Selected\nRecipients\nForm File', color='green')
+
+    add_edge('OorR', 'Recipients')
+    add_edge('Recipients', 'RecipientsList')
+    add_edge('RecipientsList', 'RecipientsListForm')
+    add_edge('RecipientsListForm', 'RecipientsListFormFile')
+    add_edge('RecipientsListFormFile', 'MtdtMenu')
+
+    # Address Book
+    add_node('bbdb2', 'bbdb2')
+    add_node('bbdb3', 'bbdb3')
+    add_edge('AddressBook', 'bbdb2')
+    add_edge('AddressBook', 'bbdb3')
+
+    # Names
+    add_node('NamesFile', 'namesFile')
+    add_edge('Names', 'NamesFile')
+    add_edge('NamesFile', 'bbdb2')
+    add_edge('NamesFile', 'bbdb3')
+    add_edge('bbdb2', 'RecipientsListFormFile')
+    add_edge('bbdb3', 'RecipientsListFormFile')
+
+    # Distributions
+    add_node('DistNamesFile', 'distNamesFile')
+    add_edge('Distributions', 'DistNamesFile')
+    add_edge('DistNamesFile', 'RecipientsListFormFile')
+
+    # Tracking
+    add_node('LogFile', 'logFile')
+    add_edge('Tracking', 'LogFile')
+    add_edge('LogFile', 'Distributions')
+
+    return dot
+
+def clustered_mtdtConceptsGraph_l2() -> graphviz.Digraph:
+    """ #+begin_org
+** [[elisp:(org-cycle)][| *DocStr | ]
+    #+end_org """
+
+    dot = graphviz.Digraph(
+        comment='MTDT-Distribution Concepts',
+    )
+
+    # === Cluster: Layer 1 - Mailing Concepts ===
+    with dot.subgraph(name='cluster_L1_Mailing') as c:
+        c.attr(label='LAYER 1: Mailing Concepts', style='filled', color='lightgrey')
+        c.node('MTDT-Mailing', 'MTDT\nMailing\nConcepts\nLAYER 1', shape='circle', style='filled', fillcolor='darkseagreen3')
+        c.node('MailingFile', 'Mailing\nFile', shape='parallelogram', style='filled', fillcolor='khaki1')
+        c.node('TemplateFile', 'Template\nFile', shape='parallelogram', style='filled', fillcolor='khaki1')
+        c.node('MailingCmnd', 'Mailing\nCommand', shape='oval', style='filled', fillcolor='khaki1')
+        c.node('ListOfMailingCmnds', 'List of\nMailing\nCommand', shape='oval', style='filled', fillcolor='khaki1')
+        c.node('SelectedMailings', 'Selected\nList of\nMailings', style='filled', fillcolor='green')
+
+    # === Cluster: Layer 2 - Distribution Concepts ===
+    with dot.subgraph(name='cluster_L2_Distribution') as c:
+        c.attr(label='LAYER 2: Distribution Concepts', style='filled', color='lightgrey')
+        c.node('MTDT-Distribution', 'MTDT\nDistribution\nConcepts\nLAYER 2', shape='circle', style='filled', fillcolor='darkseagreen3')
+        c.node('Interactive', 'Interactive\nUsage', shape='circle', style='filled', fillcolor='darksalmon')
+        c.node('SendExtent', 'Selected\nSend\nExtent', shape='cylinder', style='filled', fillcolor='darksalmon')
+        c.node('OorR', 'Orig Or Recipients', shape='cylinder', style='filled', fillcolor='khaki1')
+        c.node('AddressBook', 'Address Book', shape='cylinder', style='filled', fillcolor='khaki1')
+        c.node('Names', 'Names', shape='cylinder', style='filled', fillcolor='khaki1')
+        c.node('Distributions', 'Distributions', shape='cylinder', style='filled', fillcolor='khaki1')
+        c.node('Tracking', 'Tracking', shape='cylinder', style='filled', fillcolor='khaki1')
+
+    # === Cluster: Menu and Commands ===
+    with dot.subgraph(name='cluster_MenuCmds') as c:
+        c.attr(label='Menus and Scripts', style='filled', color='lavender')
+        c.node('MtdtMenu', '\nMTDT-Distribution\nMenu\n', shape='rarrow', style='filled', fillcolor='salmon')
+        c.node('lcntProcMailing', '\nlcntProc.sh\nMailing\n', shape='rarrow', style='filled', fillcolor='salmon3')
+
+    # === Cluster: Sending ===
+    with dot.subgraph(name='cluster_Sending') as c:
+        c.attr(label='Sending Logic', style='filled', color='azure')
+        c.node('doSend', 'doSend', shape='rect', style='filled', fillcolor='azure3')
+        c.node('unsentBuf', 'unsentBuffer', shape='rect', style='filled', fillcolor='azure3')
+        c.node('sendWithExtent', 'sendWithExtent', style='filled', fillcolor='darksalmon')
+        c.node('unsentBuffer', 'Unsent\nMail\nBuffer', shape='invtrapezium', style='filled', fillcolor='deepskyblue')
+        c.node('sent', '\nResident\nMTA\n(MARMEE)\n', shape='cds', style='filled', fillcolor='cyan')
+
+    # === Cluster: Recipients and Lists ===
+    with dot.subgraph(name='cluster_Recipients') as c:
+        c.attr(label='Recipients & Addressing', style='filled', color='lightyellow')
+        c.node('Recipients', 'Recipients', style='filled', fillcolor='khaki1')
+        c.node('RecipientsList', 'Recipients List', style='filled', fillcolor='khaki1')
+        c.node('RecipientsListForm', 'Recipients List Form', style='filled', fillcolor='khaki1')
+        c.node('RecipientsListFormFile', 'Selected\nRecipients\nList\nForm\n File', style='filled', fillcolor='green')
+        c.node('bbdb2', 'bbdb2', style='filled', fillcolor='khaki1')
+        c.node('bbdb3', 'bbdb3', style='filled', fillcolor='khaki1')
+        c.node('NamesFile', 'namesFile', style='filled', fillcolor='khaki1')
+        c.node('DistNamesFile', 'distNamesFile', style='filled', fillcolor='khaki1')
+
+    # === Cluster: Logs ===
+    with dot.subgraph(name='cluster_Logs') as c:
+        c.attr(label='Tracking & Logs', style='filled', color='lightcyan')
+        c.node('LogFile', 'logFile', style='filled', fillcolor='khaki1')
+
+    # === Edges ===
+    dot.edge('MTDT-Mailing', 'MailingFile', label='Specification')
+    dot.edge('MailingFile', 'TemplateFile')
+    dot.edge('MailingFile', 'MailingCmnd', label='Derive')
+    dot.edge('TemplateFile', 'MailingCmnd', label='Derive')
+    dot.edge('MailingCmnd', 'ListOfMailingCmnds')
+    dot.edge('ListOfMailingCmnds', 'SelectedMailings')
+
+    dot.edge('MTDT-Distribution', 'Interactive', label='Execution')
+    dot.edge('MTDT-Distribution', 'SendExtent', label='Configuration')
+    dot.edge('MTDT-Distribution', 'OorR', label='Machinary')
+    dot.edge('MTDT-Distribution', 'AddressBook', label='Specification')
+    dot.edge('MTDT-Distribution', 'Names', label='Specification')
+    dot.edge('MTDT-Distribution', 'Distributions', label='Specification')
+    dot.edge('MTDT-Distribution', 'Tracking', label='Machinary')
+
+    dot.edge('SelectedMailings', 'MtdtMenu')
+    dot.edge('Interactive', 'MtdtMenu')
+    dot.edge('Interactive', 'lcntProcMailing')
+    dot.edge('MtdtMenu', 'sendWithExtent')
+    dot.edge('lcntProcMailing', 'sendWithExtent')
+    dot.edge('sendWithExtent', 'unsentBuffer')
+    dot.edge('sendWithExtent', 'sent')
+    dot.edge('unsentBuffer', 'sent')
+
+    dot.edge('SendExtent', 'doSend', dir='back', label='Enum')
+    dot.edge('SendExtent', 'unsentBuf', dir='back', label='Enum')
+    dot.edge('SendExtent', 'sendWithExtent', label='inform')
+
+    dot.edge('OorR', 'Recipients')
+    dot.edge('Recipients', 'RecipientsList')
+    dot.edge('RecipientsList', 'RecipientsListForm')
+    dot.edge('RecipientsListForm', 'RecipientsListFormFile')
+    dot.edge('AddressBook', 'bbdb2')
+    dot.edge('AddressBook', 'bbdb3')
+    dot.edge('Names', 'NamesFile')
+    dot.edge('NamesFile', 'bbdb2')
+    dot.edge('bbdb2', 'RecipientsListFormFile')
+    dot.edge('NamesFile', 'bbdb3')
+    dot.edge('bbdb3', 'RecipientsListFormFile')
+    dot.edge('RecipientsListFormFile', 'MtdtMenu')
+
+    dot.edge('Distributions', 'DistNamesFile')
+    dot.edge('DistNamesFile', 'RecipientsListFormFile')
+    dot.edge('Tracking', 'LogFile')
+    dot.edge('LogFile', 'Distributions')
+
+    return dot
+
+def clustered_mtdtConceptsGraph_l3() -> graphviz.Digraph:
+    dot = graphviz.Digraph(
+        comment='MTDT-Distribution Concepts',
+    )
+
+    with dot.subgraph(name='cluster_L1') as l1:
+        l1.attr(label='LAYER 1 - Mailing Concepts', style='filled', color='lightgrey')
+        l1.node('MTDT-Mailing', 'MTDT\nMailing\nConcepts\nLAYER 1', shape='circle', style='filled', fillcolor='darkseagreen3')
+        l1.node('MailingFile', 'Mailing\nFile', shape='parallelogram', style='filled', fillcolor='khaki1')
+        l1.node('TemplateFile', 'Template\nFile', shape='parallelogram', style='filled', fillcolor='khaki1')
+        l1.node('MailingCmnd', 'Mailing\nCommand', shape='oval', style='filled', fillcolor='khaki1')
+        l1.node('ListOfMailingCmnds', 'List of\nMailing\nCommand', shape='oval', style='filled', fillcolor='khaki1')
+        l1.node('SelectedMailings', 'Selected\nList of\nMailings ', style='filled', fillcolor='green')
+
+    with dot.subgraph(name='cluster_L2') as l2:
+        l2.attr(label='LAYER 2 - Distribution Concepts', style='filled', color='lightyellow')
+        l2.node('MTDT-Distribution', 'MTDT\nDistribution\nConcepts\nLAYER 2', shape='circle', style='filled', fillcolor='darkseagreen3')
+        l2.node('OorR', 'Orig Or Recipients', shape='cylinder', style='filled', fillcolor='khaki1')
+        l2.node('SendExtent', 'Selected\nSend\nExtent', style='filled', fillcolor='green')
+        l2.node('doSend', 'doSend', shape='rect', style='filled', fillcolor='azure3')
+        l2.node('unsentBuf', 'unsentBuffer', shape='rect', style='filled', fillcolor='azure3')
+        l2.node('Recipients', 'Recipients', style='filled', fillcolor='khaki1')
+        l2.node('RecipientsList', 'Recipients List', style='filled', fillcolor='khaki1')
+        l2.node('RecipientsListForm', 'Recipients List Form', style='filled', fillcolor='khaki1')
+        l2.node('RecipientsListFormFile', 'Selected\nRecipients\nList\nForm\n File', style='filled', fillcolor='green')
+        l2.node('sendWithExtent', 'sendWithExtent', style='filled', fillcolor='darksalmon')
+        l2.node('unsentBuffer', 'Unsent\nMail\nBuffer', shape='invtrapezium', style='filled', fillcolor='deepskyblue')
+        l2.node('sent', '\nResident\nMTA\n(MARMEE)\n ', shape='cds', style='filled', fillcolor='cyan')
+
+    with dot.subgraph(name='cluster_L3') as l3:
+        l3.attr(label='LAYER 3 - Share Concepts', style='filled', color='lightblue')
+        l3.node('MTDT-Share', 'MTDT\nShare\nConcepts\nLAYER 3', shape='circle', style='filled', fillcolor='darkseagreen3')
+        l3.node('Interactive', 'Interactive\nUsage', shape='circle', style='filled', fillcolor='darksalmon')
+        l3.node('BrowserShare', '\nBrowser\nShare\n ', shape='rarrow', style='filled', fillcolor='salmon')
+        l3.node('DiredShare', '\nDired\nShare\n ', shape='rarrow', style='filled', fillcolor='salmon3')
+
+    # L1 Edges
+    dot.edge('MTDT-Mailing', 'MailingFile', label='Specification')
+    dot.edge('MailingFile', 'TemplateFile')
+    dot.edge('MailingFile', 'MailingCmnd', label='Derive')
+    dot.edge('TemplateFile', 'MailingCmnd', label='Derive')
+    dot.edge('MailingCmnd', 'ListOfMailingCmnds')
+    dot.edge('ListOfMailingCmnds', 'SelectedMailings')
+
+    # L2 Edges
+    dot.edge('MTDT-Distribution', 'SendExtent', label='Configuration')
+    dot.edge('MTDT-Distribution', 'OorR', label='Machinary')
+    dot.edge('sendWithExtent', 'unsentBuffer')
+    dot.edge('sendWithExtent', 'sent')
+    dot.edge('unsentBuffer', 'sent')
+    dot.edge('SendExtent', 'doSend', dir='back', label='Enum')
+    dot.edge('SendExtent', 'unsentBuf', dir='back', label='Enum')
+    dot.edge('SendExtent', 'sendWithExtent', label='inform')
+    dot.edge('OorR', 'Recipients')
+    dot.edge('Recipients', 'RecipientsList')
+    dot.edge('RecipientsList', 'RecipientsListForm')
+    dot.edge('RecipientsListForm', 'RecipientsListFormFile')
+
+    # L3 Edges
+    dot.edge('MTDT-Share', 'Interactive', label='Execution')
+    dot.edge('SelectedMailings', 'BrowserShare')
+    dot.edge('SelectedMailings', 'DiredShare')
+    dot.edge('RecipientsListFormFile', 'BrowserShare')
+    dot.edge('RecipientsListFormFile', 'DiredShare')
+    dot.edge('Interactive', 'BrowserShare')
+    dot.edge('Interactive', 'DiredShare')
+    dot.edge('BrowserShare', 'sendWithExtent')
+    dot.edge('DiredShare', 'sendWithExtent')
+
+    return dot
+
+
 ####+BEGIN: b:py3:cs:orgItem/basic :type "=Seed Setup= " :title "*Common Facilities*" :comment "General"
 """ #+begin_org
 *  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  =Seed Setup=  [[elisp:(outline-show-subtree+toggle)][||]] *Common Facilities* General  [[elisp:(org-cycle)][| ]]
@@ -771,11 +1237,16 @@ def mtdtConceptsGraph_l3(
 
 
 namedGraphsList = [
+    ng("mtdtConceptsGraphClustered", func=mtdtConceptsGraphClustered),
     ng("mtdtConceptsGraph", func=mtdtConceptsGraph),   #
     ng("mtdtConceptsGraph_l0", func=mtdtConceptsGraph_l0),   #
+    ng("clustered_mtdtConceptsGraph_l0", func=clustered_mtdtConceptsGraph_l0),   ##
     ng("mtdtConceptsGraph_l1", func=mtdtConceptsGraph_l1),   #
+    ng("clustered_mtdtConceptsGraph_l1", func=clustered_mtdtConceptsGraph_l1),   ##
     ng("mtdtConceptsGraph_l2", func=mtdtConceptsGraph_l2),   #
+    ng("clustered_mtdtConceptsGraph_l2", func=clustered_mtdtConceptsGraph_l2),   #
     ng("mtdtConceptsGraph_l3", func=mtdtConceptsGraph_l3),   #
+    ng("clustered_mtdtConceptsGraph_l3", func=clustered_mtdtConceptsGraph_l3),   ##
 ]
 
 
